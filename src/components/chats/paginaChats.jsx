@@ -1,19 +1,31 @@
-import React from 'react'
-import { useEffect, useState } from 'react'
-import chatService from '../../assets/service/chatService'
-import NavBar from '../NavBar';
+import React, { useEffect } from 'react';
+import Talk from 'talkjs';
+import Chat from './Chat';
 
-export default function paginaChats() {
-    const [chats, setChats] = useState([]);
+const App = () => {
 
-    useEffect(() => {
-        chatService.getChats(setChats)
-    }, [])
+//Iria en el login
+  useEffect(() => {
+    /*Talk.ready.then(() => {
+      const talkSession = new Talk.Session({
+        appId: 'tvYAZZjb',
+        me: new Talk.User({
+          id: '123',
+          name: 'Nombre del Usuario',
+          email: 'correo@usuario.com',
+        }),
+      });
+    });*/
+  }, []);
 
-    return (
-        <>
-        <NavBar/>
-        <h1>Aquí van los chats</h1>
-        </>
-    )
-}
+
+
+  return (
+    <div>
+      <h6>Chat entre Usuario y Vendedor</h6>
+      <Chat />
+    </div>
+  );
+};
+
+export default App;
