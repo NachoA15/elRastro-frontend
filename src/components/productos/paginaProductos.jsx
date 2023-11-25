@@ -6,9 +6,9 @@ import NavBar from '../NavBar'
 export default function paginaProductos() {
     const [productos, setProductos] = useState([]);
     
-    /*useEffect(() => {
+    useEffect(() => {
         productoService.getProductos(setProductos)
-    }, [])*/
+    }, [])
 
     return(
         <>
