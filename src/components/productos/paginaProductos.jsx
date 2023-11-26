@@ -6,9 +6,23 @@ import NavBar from '../NavBar'
 export default function paginaProductos() {
     const [productos, setProductos] = useState([]);
     
+<<<<<<< Updated upstream
     useEffect(() => {
         productoService.getProductos(setProductos)
     }, [])
+=======
+    let params = useParams();
+    let usuario = params.usuario;
+    if (usuario !== undefined) {
+        useEffect(() => {
+            productoService.getProductosByUsuario(setProductos, usuario)
+        }, [])
+    } else {
+        useEffect(() => {
+            productoService.getProductos(setProductos)
+        }, [])
+    }
+>>>>>>> Stashed changes
 
     return(
         <>

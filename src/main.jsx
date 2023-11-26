@@ -14,6 +14,9 @@ const router = createBrowserRouter([
   {
     path: '/chats',
     element: <Chats />
+  },
+  {
+    path: '/chat/:idConv'
   }
 ])
 
