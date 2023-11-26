@@ -6,6 +6,7 @@ import PaginaPrincipal from './components/principal/Principal.jsx'
 import Chats from './components/chats/paginaChats.jsx'
 import App from './App.jsx'
 import './assets/css/index.css'
+import Checkout from './components/paypal/Checkout.jsx'
 
 const router = createBrowserRouter([
   {
@@ -13,6 +14,8 @@ const router = createBrowserRouter([
     element: <Productos />
   },
   {
+    path: '/checkout',
+    element: <Checkout />
     path: '/productos/:usuario',
     element: <Productos />
   },
