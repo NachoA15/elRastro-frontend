@@ -6,7 +6,7 @@ export default function producto({producto}) {
     <>
     <div className='card anuncio' tabIndex="0" aria-label={producto.nombre} style={{boxShadow: "2px 2px 5px"}}>
         <div className='card-header anuncio-header' tabIndex="0">
-            Subido por 
+            <span style={{float: "left"}}>Subido por <a href={'perfil/' + producto.usuario}>{producto.usuario}</a></span>
             {/*idUsuarioRegistrado === anuncio.idUsuario?
             <> ti</>
             :
@@ -20,7 +20,7 @@ export default function producto({producto}) {
             </div>
             <div className='anuncio-info'>
                 <p className='nombre-anuncio' tabIndex="0"><b>{producto.nombre}</b></p><br/>
-                <p className='precio-anuncio' tabIndex="0">Precio actual: &nbsp; <span class="new-price">{producto.puja !== undefined && producto.puja != {}? producto.puja.cantidad : producto.precioInicial} €</span></p> 
+                <p className='precio-anuncio' tabIndex="0">Precio actual: &nbsp; <span className="new-price">{producto.puja !== undefined && producto.puja != {}? producto.puja.cantidad : producto.precioInicial} €</span></p> 
                 <p className='precio-anuncio' tabIndex="0">Precio inicial: &nbsp; {producto.precioInicial} €</p> 
                 {/*<span style={{float: 'right'}} tabIndex="0">{producto.fechaInicio.toString().substring(0,10)}</span>*/}
             </div>
