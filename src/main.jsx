@@ -16,12 +16,16 @@ const router = createBrowserRouter([
   {
     path: '/checkout',
     element: <Checkout />
+  },
+  {
     path: '/productos/:usuario',
     element: <Productos />
   },
   {
     path: '/',
     element: <PaginaPrincipal /> 
+  },
+  {
     path: '/chats',
     element: <Chats />
   }
