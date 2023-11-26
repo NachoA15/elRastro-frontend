@@ -1,5 +1,6 @@
 import React from 'react';
 import ImageNotFound from '../../assets/images/imagenotfound.jpg'
+import chatService from '../../service/chatService'
 
 export default function producto({producto}) {
   return(
@@ -27,7 +28,7 @@ export default function producto({producto}) {
         </div>
         <div className='card-body' style={{width: '100%', marginTop: "20px", marginBottom: "0px"}}>
             <br/>
-            <button className='button-anuncio contacta' onClick={() => {}}>Contacta</button>
+            <button className='button-anuncio contacta' onClick={() => chatService.openChat(producto.id, producto.usuario, usuario)}>Contacta</button>
             <button className='button-anuncio info' onClick={() => {}}>+ Info</button>
         </div>
     </div>

@@ -9,6 +9,10 @@ import '../../assets/css/productsPage.css'
 export default function paginaProductos() {
     const [productos, setProductos] = useState([]);
     
+    useEffect(() => {
+        productoService.getProductos(setProductos)
+    }, [])
+  
     let params = useParams();
     let usuario = params.usuario;
 

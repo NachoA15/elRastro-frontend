@@ -14,6 +14,13 @@ const getProductosByUsuario = (setProductos, usuario) => {
     })
 }
 
-const productoService = {getProductos, getProductosByUsuario}
+const getProductoById = (setProductos, id) => {
+    Axios.get("http://127.0.0.1:5001/producto?id=" + id)
+    .then((res) => {
+        setProductos(res.data.producto)
+    })
+}
+
+const productoService = {getProductos, getProductosByUsuario, getProductoById}
 
 export default productoService;
