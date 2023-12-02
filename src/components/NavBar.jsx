@@ -13,8 +13,10 @@ export default function NavBar({ubicacion}) {
                             <li className="nav-item"><a className={ubicacion === 'Productos'? 'nav-link active' : 'nav-link'} href="/productos">Productos</a></li>
                             <li className="nav-item" style={{marginLeft: "20px"}}> <a className={ubicacion === 'Favoritos'? 'nav-link active' : 'nav-link'} href={"/favourites/"}>Mis productos</a></li> 
                             <li className="nav-item" style={{marginLeft: "20px"}}><a className={ubicacion === 'Mis chats'? 'nav-link active' : 'nav-link'} href="/chatList"> Mis chats</a></li> 
-                            <li className="nav-item" style={{marginLeft: "20px"}}><a className={ubicacion === 'Mis anuncios'? 'nav-link active' : 'nav-link'} href="/myProducts"> Mis pujas</a></li> 
+                            <li className="nav-item" style={{marginLeft: "20px"}}><a className={ubicacion === 'Mis anuncios'? 'nav-link active' : 'nav-link'} href="/myProducts"> Mis pujas</a></li>
+                            //Modificar para que solo apareza si estas logeado TODO
                             <li className="nav-item" style={{marginLeft: "20px"}}><a className={ubicacion === 'Mi perfil'? 'nav-link active' : 'nav-link'} href={"/profile/"}>Mi perfil</a></li>
+                            //Añadir boton de login y logout TODO
                             <li className="nav-item" style={{marginLeft: "20px"}}><a className="nav-link" href="/" onClick={(e) => {
                                 e.preventDefault();
                                 Swal.fire({
@@ -27,7 +29,7 @@ export default function NavBar({ubicacion}) {
                                 }).then((result) => {
 
                                 })
-                            }}>Cerrar sesión</a></li>
+                            }} >Cerrar sesión</a></li>
                         </ul>
                     </div>
                 </div>

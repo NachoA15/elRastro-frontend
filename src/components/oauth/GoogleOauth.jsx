@@ -1,6 +1,6 @@
 import { googleLogout, useGoogleLogin } from '@react-oauth/google';
 import { useEffect, useState } from "react";
-
+import usuarioService from '../../service/usuarioService.js';
 export default function GoogleOauth() {
     // Obtener el token del localStorage al cargar el componente
     const initialToken = localStorage.getItem("googleToken") || "";
@@ -15,6 +15,7 @@ export default function GoogleOauth() {
         onSuccess: tokenResponse => {
             const auxToken = tokenResponse.access_token;
             setToken(auxToken);
+            usuarioService.checkToken(auxToken);
         },
         onError: error => {
             console.log(error);
