@@ -22,7 +22,6 @@ const getRating = async (correo, setRating) => {
     })
 }
 
-const usuarioService = {getUsuarioByCorreo, getValoraciones, getRating}
 const getUsuario = (token) => {
     Axios.get("http://127.0.0.1:5001/usuario/fromToken?token=" + token)
         .then((res) => {
@@ -37,6 +36,6 @@ const checkToken = (token) => {
         })
 }
 
-const usuarioService = {getUsuario, checkToken}
+const usuarioService = {getUsuario, checkToken, getUsuarioByCorreo, getValoraciones, getRating}
 
 export default usuarioService;

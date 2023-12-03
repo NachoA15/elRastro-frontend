@@ -40,7 +40,6 @@ const router = createBrowserRouter([
   {
     path: '/usuario/:correo',
     element: <Usuario />
-    path: '/chat/:idConv'
   },
   {
     path: '/upload_product/',
