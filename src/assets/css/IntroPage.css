@@ -9,7 +9,7 @@ div#inicio {
     top: 56px;
     width: 100%;
     background-image: url('../images/intro1.jpg');
-    background-size: cover;
+    background-size: auto;
     background-repeat: no-repeat;
 }
 
