@@ -32,7 +32,7 @@ const App = () => {
         const json = await res.json();
         const conversations = json.data;
         setChats(conversations);
-        console.log(conversations[0].custom)
+        console.log(conversations)
       } catch (error){
         console.error('Error initializing TalkJS: ', error);
       }
@@ -63,7 +63,7 @@ const App = () => {
 const ClickableChat = ({ chat, onClick }) => {
   return (
     <div onClick={onClick} style={{ cursor: 'pointer', padding: '10px', borderBottom: '1px solid #ccc' }}>
-      <h6>{chat.subject}</h6>
+      <h6>{chat.id}</h6>
     </div>
   );
 };
