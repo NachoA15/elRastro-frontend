@@ -1,5 +1,6 @@
 import Axios from 'axios';
 
+
 const getProductos = async (setProductos) => {
     await Axios.get("http://127.0.0.1:5001/producto")
     .then((res) => {
@@ -21,6 +22,15 @@ const getProductosByUsuario = async (setProductos, usuario) => {
     })
 }
 
-const productoService = {getProductos, getProductoById, getProductosByUsuario}
+
+const addProduct = async (productoFormData) => {
+    try {
+      const response = await Axios.post("http://127.0.0.1:5001/producto", productoFormData);
+      console.log(response.data);
+    } catch (error) {
+      console.error('Error al enviar el producto:', error);
+    }
+  };
+const productoService = {getProductos, getProductosByUsuario, getProductoById, addProduct}
 
 export default productoService;
