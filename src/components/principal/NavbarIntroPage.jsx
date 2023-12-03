@@ -20,8 +20,8 @@ export default function NavbarIntroPage() {
                     <div className="collapse navbar-collapse" id="navbarResponsive">
                         <ul className="navbar-nav ms-auto">
                             <li className="nav-item" ><a id='link-inicio' aria-label='inicio' className="nav-link active" href="#inicio" onClick={() => {setNavLinkActive(document.getElementById("link-inicio"))}}>Inicio</a></li>
-                            <li className="nav-item"><a id='link-anuncios' label='anuncios' className="nav-link" href="#anuncios" onClick={() => {setNavLinkActive(document.getElementById("link-anuncios"))}}>Compra/vende equipo</a></li>
-                            <li className="nav-item"><a id='link-interactua' className="nav-link" href="#interactua" onClick={() => {setNavLinkActive(document.getElementById("link-interactua"))}}>Interactúa</a></li>
+                            <li className="nav-item"><a id='link-anuncios' label='pujas' className="nav-link" href="#anuncios" onClick={() => {setNavLinkActive(document.getElementById("link-anuncios"))}}>Subastas</a></li>
+                            <li className="nav-item"><a id='link-interactua' className="nav-link" href="#interactua" onClick={() => {setNavLinkActive(document.getElementById("link-interactua"))}}>Contacta</a></li>
                             <li className="nav-item"><a id='link-about' className="nav-link" href="#sobre-nosotros" onClick={() => {setNavLinkActive(document.getElementById("link-about"))}}>Sobre nosotros</a></li>
                             <li className="nav-item"><GoogleOauth/></li>
                         </ul>
