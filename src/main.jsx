@@ -8,6 +8,7 @@ import App from './App.jsx'
 import './assets/css/index.css'
 import Checkout from './components/paypal/Checkout.jsx'
 import { GoogleOAuthProvider } from '@react-oauth/google';
+import UploadProduct from './components/productos/upload_producto.jsx'
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
   },
   {
     path: '/chat/:idConv'
+  },
+  {
+    path: '/upload_product/',
+    element: <UploadProduct/>
   }
 ])
 
