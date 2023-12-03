@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Productos from './components/productos/paginaProductos.jsx'
+import Usuario from './components/usuarios/paginaUsuarios.jsx'
 import PaginaProducto from './components/productos/paginaProducto.jsx'
 import PaginaPrincipal from './components/principal/Principal.jsx'
 import Chats from './components/chats/paginaChats.jsx'
@@ -37,6 +38,8 @@ const router = createBrowserRouter([
     element: <Chats />
   },
   {
+    path: '/usuario/:correo',
+    element: <Usuario />
     path: '/chat/:idConv'
   },
   {

@@ -1,0 +1,29 @@
+.gradient-custom {
+  /* fallback for old browsers */
+  
+
+  width: 250px;
+  height: 1000px;
+
+  }
+
+section{
+  background-color: #f4f5f7;
+  width: 1400px;
+}
+
+#perfil{
+  width: 300px;
+}
+
+img{
+  width: 100px;
+  border-top-left-radius: 10rem;
+   border-bottom-left-radius: 10rem;
+   font-size: 0.8rem;
+   position: relative;
+}
+
+.custom-rating .star {
+  font-size: 24px; /* Adjust the font size as needed */
+}
