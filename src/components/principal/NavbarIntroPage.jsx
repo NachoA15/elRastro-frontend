@@ -1,4 +1,5 @@
 import React from 'react';
+import GoogleOauth from '../oauth/GoogleOauth.jsx';
 
 export default function NavbarIntroPage() {
 
@@ -22,8 +23,7 @@ export default function NavbarIntroPage() {
                             <li className="nav-item"><a id='link-anuncios' label='pujas' className="nav-link" href="#anuncios" onClick={() => {setNavLinkActive(document.getElementById("link-anuncios"))}}>Subastas</a></li>
                             <li className="nav-item"><a id='link-interactua' className="nav-link" href="#interactua" onClick={() => {setNavLinkActive(document.getElementById("link-interactua"))}}>Contacta</a></li>
                             <li className="nav-item"><a id='link-about' className="nav-link" href="#sobre-nosotros" onClick={() => {setNavLinkActive(document.getElementById("link-about"))}}>Sobre nosotros</a></li>
-                            <li className="nav-item"><a className="nav-link" href="/signUp">Regístrate</a></li>
-                            <li className="nav-item"><a className="nav-link" href="/login">Login</a></li>
+                            <li className="nav-item"><GoogleOauth/></li>
                         </ul>
                     </div>
                 </div>
