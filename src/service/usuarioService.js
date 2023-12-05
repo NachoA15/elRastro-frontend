@@ -22,18 +22,22 @@ const getRating = async (correo, setRating) => {
     })
 }
 
-const getUsuario = (token) => {
-    Axios.get("http://127.0.0.1:5001/usuario/fromToken?token=" + token)
-        .then((res) => {
-            res
-        })
+const getUsuario = async (token, setUsuario) => {
+    let result = await Axios.get("http://127.0.0.1:5001/usuario/checkOrCreate?token=" + token);
+    if(result.status === 200){
+        setUsuario(JSON.stringify(result.data));
+    }
+
 }
 
-const checkToken = (token) => {
-    Axios.get("http://127.0.0.1:5001/usuario/checkOrCreate?token=" + token)
-        .then((res) => {
-            res
-        })
+const checkToken = async (token,logOutUser) => {
+    let result = await Axios.get("http://127.0.0.1:5001/usuario/checkToken?token=" + token)
+
+    //En caso de que el token no sea valido se cierra la sesion
+    if(result.status !== 200){
+        logOutUser();
+    }
+
 }
 
 const usuarioService = {getUsuario, checkToken, getUsuarioByCorreo, getValoraciones, getRating}

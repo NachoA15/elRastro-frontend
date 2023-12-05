@@ -4,7 +4,13 @@ import usuarioService from '../../service/usuarioService.js';
 export default function GoogleOauth() {
     // Obtener el token del localStorage al cargar el componente
     const initialToken = localStorage.getItem("googleToken") || "";
+    const initialUsuario = localStorage.getItem("usuario") || "";
     const [token, setToken] = useState(initialToken);
+    const [usuario, setUsuario] = useState(initialUsuario);
+
+    useEffect(() => {
+        localStorage.setItem("usuario", usuario);
+    }, [usuario]);
 
     // Guardar en localStorage cuando el token cambia
     useEffect(() => {
@@ -15,7 +21,14 @@ export default function GoogleOauth() {
         onSuccess: tokenResponse => {
             const auxToken = tokenResponse.access_token;
             setToken(auxToken);
-            usuarioService.checkToken(auxToken);
+
+            usuarioService.checkToken(auxToken,logOutUser);
+
+            //Si el token se ha validado correctamente se carga el usuario en memoria
+
+            usuarioService.getUsuario(auxToken, setUsuario);
+
+
         },
         onError: error => {
             console.log(error);
@@ -25,7 +38,7 @@ export default function GoogleOauth() {
     const logOutUser = () => {
         googleLogout();
         setToken("");
-        window.location.reload();
+        setUsuario("");
     };
 
     if (token) {
