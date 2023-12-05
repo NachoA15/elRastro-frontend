@@ -7,13 +7,13 @@ export default function ComentariosUsuario({ valoraciones}) {
       <div className="row d-flex justify-content-center">
         <div className="col-md-9 col-lg-11">
          
-            <div id="valoracion" className="card-body p-2" >
+            <div className="card-body p-2" >
               {Array.isArray(valoraciones) && valoraciones.length > 0 ? (
                 valoraciones.map((valoracion, index) => (
-                  <div  id="v" key={index} className="card mb-8" >
+                  <div  id="comentario" key={index} className="card mb-8" >
                     <div  className="card-body" >
                         
-                            <div id="comentario" class="media-body u-shadow-v18 g-bg-secondary g-pa-30">
+                            <div id="valoracion" class="media-body u-shadow-v18 g-bg-secondary g-pa-30">
                            
                                 <img id="img" class="d-flex g-width-50 g-height-50 rounded-circle g-mt-3 g-mr-7" src="https://bootdey.com/img/Content/avatar/avatar7.png" alt="Image Description"></img>
                                 

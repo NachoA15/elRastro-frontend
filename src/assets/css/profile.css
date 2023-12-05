@@ -7,16 +7,16 @@
 
   }
 
-section{
+section#usuario{
   background-color: #f4f5f7;
   width: 1400px;
 }
 
-#perfil{
+div#perfil{
   width: 300px;
 }
 
-img{
+img#img-perfil{
   width: 100px;
   border-top-left-radius: 10rem;
    border-bottom-left-radius: 10rem;

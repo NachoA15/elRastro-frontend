@@ -9,14 +9,14 @@ export default function Usuario({ usuario, valoraciones, rating}) {
 
     return (
         <>
-            <section className="vh-100">
+            <section id="usuario" className="vh-100">
                 <div className="container-fluid py-5 h-100">
                     <div className="row d-flex justify-content-center align-items-center h-100">
                         <div className="col col-lg-12 mb-12 mb-lg-12">
                             <div className="card mb-2">
                                 <div className="row g-0">
                                     <div id="perfil" className="col-md-6 gradient-custom text-center">
-                                        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
+                                        <img id="img-perfil" src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
                                             alt="Avatar" className="img-fluid my-5" />
                                         <h4>{usuario.correo}</h4>
                                         <p>{usuario.nombre}</p>
