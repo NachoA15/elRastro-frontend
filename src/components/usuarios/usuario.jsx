@@ -5,7 +5,6 @@ import Rating from 'react-rating-stars-component';
 
 
 export default function Usuario({ usuario, valoraciones, rating}) {
-
     console.log(rating)
 
     return (

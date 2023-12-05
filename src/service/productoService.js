@@ -25,6 +25,7 @@ const getProductosByUsuario = async (setProductos, usuario) => {
 
 const addProduct = async (productoFormData) => {
     try {
+        console.log("HOLA")
       const response = await Axios.post("http://127.0.0.1:5001/producto", productoFormData);
       console.log(response.data);
     } catch (error) {

@@ -9,39 +9,49 @@ import '../../assets/css/profile.css'
 
 export default function paginaUsuario() {
 
-    const [usuario, setUsuario] = useState([]);
+    const token = localStorage.getItem("googleToken") || "";
+
+    console.log(token)
+
+    const [usuario, setUsuario] = useState({} );
     let params = useParams();
     let correo = params.correo;
-    
-    useEffect(() => {
-        usuarioService.getUsuarioByCorreo(correo, setUsuario);
-    }, []);
 
+    if(correo !== usuario.correo){
+        useEffect(() => {
+            usuarioService.getUsuarioByCorreo(correo, setUsuario);
+        }, []);
+    }else{
+        useEffect(() => {
+            usuarioService.getUsuario(token, setUsuario);
+        }, []);
+    }
 
     const [valoraciones, setValoraciones] = useState([]);
     
     useEffect(() => {
-        usuarioService.getValoraciones(correo, setValoraciones);
-    }, []);
+        usuarioService.getValoraciones(usuario.correo, setValoraciones);
+    }, [usuario.correo]);
 
     const [rating, setRating] = useState([]);
 
     useEffect(() => {
-        usuarioService.getRating(correo, setRating);
-    }, []);
+        usuarioService.getRating(usuario.correo, setRating);
+        
+    }, [usuario.correo]);
     
-   
-
     
     return(
         <>
          <div className='container-fluid'>
             <NavBar ubicacion={usuario.correo === correo ? 'Mi perfil' : ''}/>
-            {usuario && <Usuario usuario={usuario} valoraciones={valoraciones.usuario} rating={rating.usuario} />}
+            {usuario && valoraciones && rating && <Usuario usuario={usuario} valoraciones={valoraciones.usuario} rating={rating.usuario} />}
         </div>
         </>
         
     )
+
+    
 
     
 }
