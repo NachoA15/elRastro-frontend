@@ -1,15 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import NavBar from '../NavBar';
 import {
   TextField,
 } from '@mui/material';
-
+import usuarioService from '../../service/usuarioService';
 import productoService from '../../service/productoService';
 
 export default function upload_product() {
+  const token = localStorage.getItem("googleToken") || "";
+  const [usuario, setUsuario] = useState({});
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedImagePath, setSelectedImagePath] = useState(null);
-
+  useEffect(() => {
+    usuarioService.getUsuario(token, setUsuario);
+  }, []);
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
@@ -53,14 +57,18 @@ export default function upload_product() {
                     nombre: nombre,
                     precioInicial: precio,
                     descripcion: descripcion,
-                    //vendedor,
+                    usuario: usuario.correo,
                     imagen: selectedImagePath,
                     fechaCierre: selectedDate
                   };
+                  console.log(usuario)
+                  console.log(usuario.correo)
+                  console.log(anuncio)
 
                   productoService.addProduct(anuncio);
 
-                  window.location.href = '/productos';                }
+                  //window.location.href = '/productos';                
+                }
               }}
             >
               <br />
