@@ -1,7 +1,6 @@
 import Axios from 'axios';
 
 const getUsuarioByCorreo = async (correo, setUsuario) => {
-    
     await Axios.get("http://127.0.0.1:5001/usuario?correo=" + correo)
     .then ((res) => {
         setUsuario(res.data)
@@ -23,11 +22,14 @@ const getRating = async (correo, setRating) => {
 }
 
 const getUsuario = async (token, setUsuario) => {
+    await Axios.get("http://127.0.0.1:5001/usuario/fromToken?token=" + token)
+        .then((res) => {
+            setUsuario(res.data)
+        })
     let result = await Axios.get("http://127.0.0.1:5001/usuario/checkOrCreate?token=" + token);
     if(result.status === 200){
         setUsuario(JSON.stringify(result.data));
     }
-
 }
 
 const checkToken = async (token,logOutUser) => {
@@ -40,6 +42,16 @@ const checkToken = async (token,logOutUser) => {
 
 }
 
+const addValoracion = async(valoracionFormData) => {
+    try{
+        const response = await Axios.put("http://127.0.0.1:5001/usuario/valoracion", valoracionFormData);
+        console.log(response.data);
+    }catch(error){
+        console.error('Error al enviar la valoracion:', error);
+    }
+};
+
+const usuarioService = {getUsuario, checkToken, getValoraciones, getRating, getUsuarioByCorreo, addValoracion}
 const usuarioService = {getUsuario, checkToken, getUsuarioByCorreo, getValoraciones, getRating}
 
 export default usuarioService;

@@ -1,7 +1,10 @@
-import React from 'react';
+
 import routerService from '../../service/routerService'
 import ImageNotFound from '../../assets/images/imagenotfound.jpg'
 import chatService from '../../service/chatService'
+import usuarioService from '../../service/usuarioService';
+import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 
 export default function producto({producto}) {
 
@@ -11,6 +14,19 @@ export default function producto({producto}) {
 
     let diffTime = Math.abs(hoy - cierreSubasta);
     let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+
+    const token = localStorage.getItem("googleToken") || "";
+    let params = useParams();
+    let usuario = params.usuario;
+
+    /*const [usuario, setUsuario] = useState({} );
+
+    useEffect(() => {
+        usuarioService.getUsuario(token, setUsuario);
+    }, []);
+
+    console.log(token)*/
+    
 
   return(
     <>
@@ -46,7 +62,8 @@ export default function producto({producto}) {
         </div>
         <div className='card-body' style={{width: '100%', marginTop: "20px", marginBottom: "0px"}}>
             <br/>
-            <button className='button-anuncio contacta' onClick={() => {chatService.openChat(producto.id, producto.usuario, usuario)}}>Contacta</button>
+            {producto.usuario !== usuario && <button className='button-anuncio contacta' onClick={() => {chatService.openChat(producto.id, producto.usuario, usuario)}}>Contacta</button>}
+            {producto.usuario === usuario && subastaCerrada && <button className='button-anuncio contacta' onClick={() => {routerService.moveToValorarPage(producto._id, producto.usuario, producto.puja.usuario)}}>Valorar</button>}
             <button className='button-anuncio info' onClick={() => routerService.moveToProductPage(producto._id)}>+ Info</button>
         </div>
     </div>

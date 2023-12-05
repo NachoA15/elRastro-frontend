@@ -42,9 +42,9 @@ export default function GoogleOauth() {
     };
 
     if (token) {
-        return <button onClick={logOutUser}>Cerrar sesión</button>;
+        return <button onClick={logOutUser}>Cerrar sesión</button>
     } else {
-        return <button onClick={logUser}>Iniciar sesión con Google</button>;
+        return <button onClick={logUser}>Iniciar sesión con Google</button>
     }
 }
 
