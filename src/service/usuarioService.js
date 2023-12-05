@@ -21,15 +21,13 @@ const getRating = async (correo, setRating) => {
     })
 }
 
+
 const getUsuario = async (token, setUsuario) => {
-    await Axios.get("http://127.0.0.1:5001/usuario/fromToken?token=" + token)
-        .then((res) => {
-            setUsuario(res.data)
-        })
     let result = await Axios.get("http://127.0.0.1:5001/usuario/checkOrCreate?token=" + token);
     if(result.status === 200){
         setUsuario(JSON.stringify(result.data));
     }
+
 }
 
 const checkToken = async (token,logOutUser) => {
@@ -41,6 +39,7 @@ const checkToken = async (token,logOutUser) => {
     }
 
 }
+
 
 const addValoracion = async(valoracionFormData) => {
     try{
