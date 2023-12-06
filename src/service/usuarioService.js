@@ -31,12 +31,18 @@ const getUsuario = async (token, setUsuario) => {
 }
 
 const checkToken = async (token,logOutUser) => {
-    let result = await Axios.get("http://127.0.0.1:5001/usuario/checkToken?token=" + token)
+    try{
+        let result = await Axios.get("http://127.0.0.1:5001/usuario/checkToken?token=" + token)
 
-    //En caso de que el token no sea valido se cierra la sesion
-    if(result.status !== 200){
+        //En caso de que el token no sea valido se cierra la sesion
+        if(result.status !== 200){
+            logOutUser();
+        }
+    }catch (error) {
         logOutUser();
+        console.error('Error al verificar el token de Google:', error);
     }
+
 
 }
 
