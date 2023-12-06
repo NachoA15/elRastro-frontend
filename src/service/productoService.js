@@ -1,8 +1,8 @@
 import Axios from 'axios';
 
 
-const getProductos = async (setProductos) => {
-    await Axios.get("http://127.0.0.1:5001/producto")
+const getProductos = async (setProductos, filtro = 'Fecha_Desc') => {
+    await Axios.get("http://127.0.0.1:5001/producto?filtro=" + filtro)
     .then((res) => {
         setProductos(res.data.productos)
     })
