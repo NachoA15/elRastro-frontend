@@ -25,7 +25,7 @@ const getRating = async (correo, setRating) => {
 const getUsuario = async (token, setUsuario) => {
     let result = await Axios.get("http://127.0.0.1:5001/usuario/checkOrCreate?token=" + token);
     if(result.status === 200){
-        setUsuario(result.data);
+        setUsuario(JSON.stringify(result.data));
     }
 
 }
