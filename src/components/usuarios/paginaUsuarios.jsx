@@ -9,9 +9,9 @@ import '../../assets/css/profile.css'
 
 export default function paginaUsuario() {
 
-    let usuario = JSON.parse(localStorage.getItem("usuario") || "{}");
+    const usuario = JSON.parse(localStorage.getItem("usuario") || "{}");
 
-    
+    console.log(usuario)
 
     const [user, setUsuario] = useState({});
     let params = useParams();
@@ -21,10 +21,14 @@ export default function paginaUsuario() {
         useEffect(() => {
             usuarioService.getUsuarioByCorreo(correo, setUsuario);
         }, []);
-        usuario = user;
+    }else{
     }
 
+    const [valoraciones, setValoraciones] = useState([]);
     
+    useEffect(() => {
+        usuarioService.getValoraciones(usuario.correo, setValoraciones);
+    }, [usuario.correo]);
 
     const [rating, setRating] = useState([]);
 
@@ -38,7 +42,7 @@ export default function paginaUsuario() {
         <>
          <div className='container-fluid'>
             <NavBar ubicacion={usuario.correo === correo ? 'Mi perfil' : ''}/>
-            {usuario && rating && <Usuario usuario={usuario} valoraciones={usuario.valoracion} rating={rating.usuario} />}
+            {usuario && valoraciones && rating && <Usuario usuario={usuario} valoraciones={usuario.valoracion} rating={rating.usuario} />}
         </div>
         </>
         
