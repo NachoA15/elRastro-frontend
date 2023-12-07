@@ -12,4 +12,5 @@ const moveToValorarPage = (idProducto, usuarioValorador, usuarioValorado) => {
 
 const routerService = {moveToProductPage, moveToValorarPage, moveToProductos}
 
+
 export default routerService;
