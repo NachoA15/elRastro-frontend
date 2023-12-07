@@ -18,6 +18,8 @@ export default function producto({producto}) {
     let params = useParams();
     let usuario = params.usuario;
 
+    const user = JSON.parse(localStorage.getItem("usuario") || "");
+
     /*const [usuario, setUsuario] = useState({} );
 
     useEffect(() => {
@@ -61,7 +63,9 @@ export default function producto({producto}) {
         </div>
         <div className='card-body' style={{width: '100%', marginTop: "20px", marginBottom: "0px"}}>
             <br/>
-            {producto.usuario !== usuario && <button className='button-anuncio contacta' onClick={() => {chatService.openChat(producto.id, producto.usuario, usuario)}}>Contacta</button>}
+            {producto.usuario !== usuario && <button className='button-anuncio contacta' onClick={() => {
+                chatService.openChat(producto._id +"_" + producto.usuario + "_" + user.correo)}}>Contacta</button>
+                }
             {
                 producto.usuario === usuario && subastaCerrada && (
                     <button

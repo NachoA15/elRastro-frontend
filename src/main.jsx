@@ -6,6 +6,7 @@ import Usuario from './components/usuarios/paginaUsuarios.jsx'
 import PaginaProducto from './components/productos/paginaProducto.jsx'
 import PaginaPrincipal from './components/principal/Principal.jsx'
 import Chats from './components/chats/paginaChats.jsx'
+import Chat from './components/chats/Chat.jsx'
 import Valorar from './components/usuarios/paginaValorar.jsx'
 import App from './App.jsx'
 import './assets/css/index.css'
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
   {
     path: '/chats',
     element: <Chats />
+  },
+  {
+    path: '/chat/:id',
+    element: <Chat />
   },
   {
     path: '/usuario/:correo',

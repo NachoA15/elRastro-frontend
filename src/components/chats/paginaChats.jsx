@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import Talk from 'talkjs';
 import Chat from './Chat';
+import chatService from '../../service/chatService';
 
 const App = () => {
 
   const [chats, setChats] = useState([]);
+
+  const usuario = JSON.parse(localStorage.getItem("usuario") || "");
 
   useEffect(() => {
     const initializeTalkJS = async () => {
@@ -13,13 +16,12 @@ const App = () => {
         const talkSession = new Talk.Session({
           appId: 'tvYAZZjb',
           me: new Talk.User({
-            id: '2',
-            name: 'Nombre del Usuario',
-            email: 'correo@usuario.com',
+            id: usuario.correo,
+            name: usuario.correo,
           }),
         });
         const appId = 'tvYAZZjb';
-        const userId = '2';
+        const userId = usuario.correo;
         const apiKey = 'sk_test_1afi8LJyR7BPrOXlMp3VgK4aSniBaf9d';
         const res = await fetch(
           `https://api.talkjs.com/v1/${appId}/users/${userId}/conversations`,
@@ -40,12 +42,6 @@ const App = () => {
     initializeTalkJS();
   }, []);
 
-  const handleChatClick = (chatId) => {
-    // Lógica para manejar el clic en un chat
-    console.log(`Chat clicado: ${chatId}`);
-  };
-
-
   return (
     <div>
       <h2>Mis chats</h2>
@@ -53,17 +49,19 @@ const App = () => {
         <ClickableChat
           key={chat.id}
           chat={chat}
-          onClick={() => handleChatClick(chat.id)}
         />
       ))}
     </div>
   );
 };
 
-const ClickableChat = ({ chat, onClick }) => {
+const ClickableChat = ({ chat }) => {
+  const handleChatClick = () => {
+    chatService.openChat(chat.id);
+  };
   return (
-    <div onClick={onClick} style={{ cursor: 'pointer', padding: '10px', borderBottom: '1px solid #ccc' }}>
-      <h6>{chat.id}</h6>
+    <div onClick={handleChatClick} style={{ cursor: 'pointer', padding: '10px', borderBottom: '1px solid #ccc' }}>
+      <h6>{chat.subject}</h6>
     </div>
   );
 };

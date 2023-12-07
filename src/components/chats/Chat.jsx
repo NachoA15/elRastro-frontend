@@ -8,33 +8,51 @@ export default function Chat() {
 
   const [talkLoaded, markTalkLoaded] = useState(false);
   const [producto, setProducto] = useState();
+  const [productoFetched, setProductoFetched] = useState(false);
+
+  const usuario = localStorage.getItem("usuario") || "";
 
   let params = useParams();
-  let idConv = params.idConv;
+  let idConv = params.id;
   let idProd = idConv.split("_")[0];
-  let idVend = idConv.split("_")[1];
-  let idComp = idConv.split("_")[2];
+  let correoVend = idConv.split("_")[1];
+  let correoComp = idConv.split("_")[2];
 
   useEffect(() => {
-    productoService.getProductoById(setProducto, idProd);
-  }, []);
+    productoService.getProductoById((producto) => {
+      console.log("Producto pillado");
+      setProductoFetched(true);
+    }, idProd);
+  }, [idProd]);
 
   useEffect(() => {
     Talk.ready.then(() => markTalkLoaded(true));
 
-    if (talkLoaded) {
+    if (talkLoaded && productoFetched) {
+      console.log(producto)
       const vendedor = new Talk.User({
-        id: idVend
+        id: correoVend,
+        name: "Vendedor " + producto.nombre
       });
 
       const comprador = new Talk.User({
-        id: idComp
+        id: correoComp,
+        name: "Comprador " + producto.nombre
       });
 
-      const session = new Talk.Session({
-        appId: 'tvYAZZjb',
-        me: vendedor,
-      });
+      let session;
+
+      if(usuario === correoVend){
+        session = new Talk.Session({
+          appId: 'tvYAZZjb',
+          me: vendedor,
+        });
+      }else{
+        session = new Talk.Session({
+          appId: 'tvYAZZjb',
+          me: comprador,
+        });
+      }
 
       const conversation = session.getOrCreateConversation(idConv);
       conversation.setParticipant(vendedor);
@@ -45,60 +63,11 @@ export default function Chat() {
       chatbox.select(conversation);
       chatbox.mount(chatboxEl.current);
 
-      return () => session.destroy();
+      return () => {
+        session.destroy();
+      }
     }
   }, [talkLoaded]);
 
-  return <div ref={chatboxEl} style={{width: '100%', height: '500px'}}/>;
+  return <div ref={chatboxEl} style={{width: '200%', height: '800px'}}/>;
 }
-
-/*
-export default function Chat({}) {
-  const chatboxEl = useRef();
-
-  // wait for TalkJS to load
-  const [talkLoaded, markTalkLoaded] = useState(false);
-
-  useEffect(() => {
-    Talk.ready.then(() => markTalkLoaded(true));
-
-    if (talkLoaded) {
-      const currentUser = new Talk.User({
-        id: '2',
-        name: 'Henry Mill',
-        email: 'henrymill@example.com',
-        photoUrl: 'henry.jpeg',
-        welcomeMessage: 'Hello!',
-        role: 'default',
-      });
-
-      const otherUser = new Talk.User({
-        id: '1',
-        name: 'Jessica Wells',
-        email: 'jessicawells@example.com',
-        photoUrl: 'jessica.jpeg',
-        welcomeMessage: 'Hello!',
-        role: 'default',
-      });
-
-      const session = new Talk.Session({
-        appId: 'tvYAZZjb',
-        me: currentUser,
-      });
-
-      const conversationId = Talk.oneOnOneId(currentUser, otherUser);
-      const conversation = session.getOrCreateConversation(conversationId);
-      conversation.setParticipant(currentUser);
-      conversation.setParticipant(otherUser);
-
-      const chatbox = session.createChatbox();
-      chatbox.select(conversation);
-      chatbox.mount(chatboxEl.current);
-
-      return () => session.destroy();
-    }
-  }, [talkLoaded]);
-
-  return <div ref={chatboxEl} style={{width: '100%', height: '500px'}}/>;
-}
-*/
