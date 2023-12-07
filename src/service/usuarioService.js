@@ -51,7 +51,7 @@ const addValoracion = async(valoracionFormData) => {
     }
 };
 
+
 const usuarioService = {getUsuario, checkToken, getValoraciones, getRating, getUsuarioByCorreo, addValoracion}
-const usuarioService = {getUsuario, checkToken, getUsuarioByCorreo, getValoraciones, getRating}
 
 export default usuarioService;

@@ -45,12 +45,12 @@
 }
 
 
-#v{
+div#comentario{
    height: 50px;
    width: 755px;
 }
 
-#img{
+img#img{
    border-top-left-radius: 0.5rem;
    border-bottom-left-radius: 0.5rem;
    font-size: 0.8rem;
@@ -59,7 +59,7 @@
    left: 2%;
 }
 
-#comentario{
+div#valoracion{
    height: 110px;
    width: 750px;
    border-top-left-radius: 0.5rem;
@@ -70,7 +70,7 @@
    left: 0;
 }
 
-#valorador {
+h5#valorador {
    font-size: 1rem;
    position: absolute;
    top: 0.5rem; /* Set the distance from the top to include margin */
@@ -78,7 +78,7 @@
    transform: translateX(-50%); /* Move it back half of its own width to center it horizontally */
  }
 
-#descripcion {
+p#descripcion {
    font-size: 1rem; /* Adjust the font size as needed */
    position: absolute;
    top: 50%;
@@ -87,7 +87,7 @@
    text-align: justify;
 }
 
-#stars{
+div#stars{
    position: absolute;
    top: 70%;
    left: 2%;
