@@ -13,7 +13,7 @@ export default function paginaUsuario() {
 
     console.log(token)
 
-    const [usuario, setUsuario] = useState({} );
+    const [usuario, setUsuario] = useState({});
     let params = useParams();
     let correo = params.correo;
 

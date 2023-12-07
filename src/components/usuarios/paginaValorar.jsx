@@ -5,30 +5,49 @@ import {
 import NavBar from '../NavBar';
 import { useParams } from 'react-router-dom';
 
+import Rating from 'react-rating-stars-component';
+import React, { useEffect, useState } from 'react';
+
 export default function PaginaValorar() {
     let params = useParams();
     let idProducto = params.idProducto;
     let usuarioValorado = params.usuarioValorado;
     let usuarioValorador = params.usuarioValorador;
-    
+
+    const [calidad, setCalidad] = useState(1);
+    const [fiabilidad, setFiabilidad] = useState(1);
+
+    const handleRatingChangeCalidad = (newValue) => {
+        setCalidad(newValue);
+        // Hacer algo con el nuevo valor, si es necesario
+        console.log('Nuevo valor de puntuación:', newValue);
+    };
+
+    const handleRatingChangeFiabilidad = (newValue) => {
+        setFiabilidad(newValue);
+        // Hacer algo con el nuevo valor, si es necesario
+        console.log('Nuevo valor de puntuación:', newValue);
+    };
 
     return(
         <>
         <NavBar />
-        <div className="container">
+        <div className="container" >
             <section className="panel panel-default">
-                <div id="addValoracionForm"></div>
-                    <form
+                <div id="addValoracionForm" style={{width: '100%'}}></div>
+                    <form 
                          onSubmit={(e) => {
                             const descripcion = document.getElementById('description').value;
-                            let puntuacion = document.getElementById('puntuacion').value;
                             
-                           if(descripcion !== '' && puntuacion !== ''){
+                            
+                           if(descripcion !== '' && calidad !== '' && fiabilidad !== ''){
+                                
                                 e.preventDefault();
                                 
                                 const valoration = {
                                     valoracion:{
-                                        puntuacion: puntuacion,
+                                        calidad: calidad,
+                                        fiabilidad: fiabilidad,
                                         descripcion: descripcion
                                     },
                                     valorado: usuarioValorado,
@@ -45,39 +64,80 @@ export default function PaginaValorar() {
                          }}
                     >
                         <br />
-                        <div className="container center" style={{ maxWidth: 450 }}>
+                        <div className="container center" style={{ maxWidth: 700 }}>
                             <div className="card bg-light">
                             <div className="card-body">
                                 <div className="row text-center">
-                                <h3 className="card-title" tabIndex="0">Introduzca la información de la valoracion:</h3>
-                                <h6 tabIndex="0">Los campos obligatorios se muestran con un asterisco (*)</h6>
+                                <h3 className="card-title" tabIndex="0">Introduzca la información de la valoración:</h3>
                                 </div>
 
                                 <br />
 
                                 <div className="row text-left">
-                                <div className="col-md-2"></div>
-                                <div className="col-md-8">
+                                <div className="col-md-1"></div>
+                                <div className="col-md-10">
                                     <div>
-                                    <TextField
-                                        required
-                                        id="puntuacion"
-                                        label="Puntuación "
-                                        variant="standard"
-                                        size="small"
-                                        inputProps={{ inputMode: 'numeric', pattern: '[0-5,.]*' }}
-                                    />
+                                    <div className="d-flex flex-row align-items-center">
+                                        
+                                        
+                                            <>
+                                            Calidad del producto:  
+                                            
+                                            <Rating
+                                                required
+                                                id="calidad"
+                                                value={1} // Valor por defecto establecido en 1
+                                                readonly={true}
+                                                fractions={2}
+                                                onChange={handleRatingChangeCalidad}
+                                                size={18}
+                                                style={{ float: 'right' }}
+                                            />
+                                            </>
+                                            
+                                    </div>
+                                    
+                                    
                                     </div>
                                 </div>
-                                <div className="col-md-2"></div>
+                                <div className="col-md-1"></div>
+                                </div>
+
+                                <br />
+
+                                <div className="row text-left">
+                                <div className="col-md-1"></div>
+                                <div className="col-md-10">
+                                    <div>
+                                    <div className="d-flex flex-row align-items-center">
+                                        
+                                            <>
+                                            Fiabilidad del producto:  
+                                            <Rating
+                                                required
+                                                id="fiabilidad"
+                                                value={1} // Valor por defecto establecido en 1
+                                                readonly={true}
+                                                fractions={2}
+                                                onChange={handleRatingChangeFiabilidad}
+                                                size={18}
+                                                style={{ float: 'right' }}
+                                            />
+                                            </>
+                                    </div>
+                                    
+                                    
+                                    </div>
+                                </div>
+                                <div className="col-md-1"></div>
                                 </div>
 
                                 <br />
                                 
 
                                 <div className="row text-left">
-                                    <div className="col-md-2"></div>
-                                    <div className="col-md-8">
+                                    <div className="col-md-1"></div>
+                                    <div className="col-md-10">
                                         <div>
                                             <TextField
                                                 required
@@ -87,11 +147,11 @@ export default function PaginaValorar() {
                                                 size="small"
                                                 multiline
                                                 rows={5}
-                                             
+                                                style={{ width: '100%' }}
                                             />
                                         </div>
                                     </div>
-                                    <div className="col-md-2"></div>
+                                    <div className="col-md-1"></div>
                                 </div>
 
                                 <br />
@@ -110,4 +170,5 @@ export default function PaginaValorar() {
         </div>
         </>
     )
+    
 }
