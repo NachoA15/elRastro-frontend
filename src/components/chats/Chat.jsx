@@ -2,6 +2,7 @@ import Talk from 'talkjs';
 import { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router';
 import productoService from '../../service/productoService';
+import NavBar from '../NavBar';
 
 export default function Chat() {
   const chatboxEl = useRef();
@@ -19,16 +20,20 @@ export default function Chat() {
   let correoComp = idConv.split("_")[2];
 
   useEffect(() => {
-    productoService.getProductoById((producto) => {
-      console.log("Producto pillado");
-      setProductoFetched(true);
-    }, idProd);
+    const fetchProducto = async () => { 
+      try{
+        productoService.getProductoById(setProducto, idProd);
+        setProductoFetched(true);
+      }catch(error){
+        console.log("Error al coger el producto: ", error);
+      }
+    }
+    fetchProducto();
   }, [idProd]);
 
   useEffect(() => {
-    Talk.ready.then(() => markTalkLoaded(true));
 
-    if (talkLoaded && productoFetched) {
+    if (talkLoaded && productoFetched && producto) {
       console.log(producto)
       const vendedor = new Talk.User({
         id: correoVend,
@@ -67,7 +72,11 @@ export default function Chat() {
         session.destroy();
       }
     }
-  }, [talkLoaded]);
+  }, [talkLoaded, productoFetched, producto]);
+
+  useEffect(() => {
+    Talk.ready.then(() => markTalkLoaded(true));
+  }, [])
 
   return <div ref={chatboxEl} style={{width: '200%', height: '800px'}}/>;
 }

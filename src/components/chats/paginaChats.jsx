@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Talk from 'talkjs';
-import Chat from './Chat';
 import chatService from '../../service/chatService';
+import NavBar from '../NavBar';
 
 const App = () => {
 
