@@ -7,12 +7,11 @@ import PaginaProducto from './components/productos/paginaProducto.jsx'
 import PaginaPrincipal from './components/principal/Principal.jsx'
 import Chats from './components/chats/paginaChats.jsx'
 import Valorar from './components/usuarios/paginaValorar.jsx'
+import App from './App.jsx'
 import './assets/css/index.css'
 import Checkout from './components/paypal/Checkout.jsx'
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import UploadProduct from './components/productos/upload_producto.jsx'
-
-const usuarioLogueado = localStorage.getItem('usuario')
 
 const router = createBrowserRouter([
   {
@@ -32,10 +31,6 @@ const router = createBrowserRouter([
     element: <Productos />
   },
   {
-    path: '/misProductos',
-    element: <Productos usuarioLogueado={usuarioLogueado}/>
-  },
-  {
     path: '/producto/:id',
     element: <PaginaProducto />
   },
@@ -53,16 +48,15 @@ const router = createBrowserRouter([
   },
   {
     path: '/valorar/:idProducto/:usuarioValorador/:usuarioValorado',
-    element: <Valorar/> 
+    element: <Valorar/>
   }
 ])
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <GoogleOAuthProvider clientId="755104758477-ftim848a1unjm8a85sge1h7jts0qb4ec.apps.googleusercontent.com">
-    <React.StrictMode>
-      <RouterProvider router={router}>
-        {/*<App />*/}
-      </RouterProvider>
-    </React.StrictMode>
-  </GoogleOAuthProvider>,
+  <React.StrictMode>
+    <GoogleOAuthProvider clientId="755104758477-ftim848a1unjm8a85sge1h7jts0qb4ec.apps.googleusercontent.com">
+      <RouterProvider router={router} />
+      {/*<App />*/}
+    </GoogleOAuthProvider>
+  </React.StrictMode>,
 )
