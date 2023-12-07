@@ -13,7 +13,7 @@ export default function NavBar({ubicacion}) {
                             <li className="nav-item" style={{marginLeft: "20px"}}><a className={ubicacion === 'Productos'? 'nav-link active' : 'nav-link'} href="/productos">Productos</a></li>
                             <li className="nav-item" style={{marginLeft: "20px"}}><a className={ubicacion === 'Subir Producto'? 'nav-link active' : 'nav-link'} href={"/upload_product/"}>Subir Producto</a></li> 
                             <li className="nav-item" style={{marginLeft: "20px"}}> <a className={ubicacion === 'Favoritos'? 'nav-link active' : 'nav-link'} href={"/favourites/"}>Mis productos</a></li> 
-                            <li className="nav-item" style={{marginLeft: "20px"}}><a className={ubicacion === 'Mis chats'? 'nav-link active' : 'nav-link'} href="/chatList"> Mis chats</a></li> 
+                            <li className="nav-item" style={{marginLeft: "20px"}}><a className={ubicacion === 'Mis chats'? 'nav-link active' : 'nav-link'} href="/chats"> Mis chats</a></li> 
                             <li className="nav-item" style={{marginLeft: "20px"}}><a className={ubicacion === 'Mis anuncios'? 'nav-link active' : 'nav-link'} href="/myProducts"> Mis pujas</a></li>
                             <li className="nav-item" style={{marginLeft: "20px"}}><a className={ubicacion === 'Mi perfil'? 'nav-link active' : 'nav-link'} href={"/profile/"}>Mi perfil</a></li>
                             <li className="nav-item" style={{marginLeft: "20px"}}><a className="nav-link" href="/" onClick={(e) => {

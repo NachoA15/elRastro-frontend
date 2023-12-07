@@ -78,5 +78,10 @@ export default function Chat() {
     Talk.ready.then(() => markTalkLoaded(true));
   }, [])
 
-  return <div ref={chatboxEl} style={{width: '200%', height: '800px'}}/>;
+  return (
+    <>
+    <NavBar ubicacion={'Mis chats'}/>
+      <div ref={chatboxEl} style={{height: '800px', width: '150%', margin: '0px'}}/>
+    </>
+  )
 }

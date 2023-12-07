@@ -60,9 +60,13 @@ const ClickableChat = ({ chat }) => {
     chatService.openChat(chat.id);
   };
   return (
+    <>
+    <NavBar ubicacion={"Mis chats"}/>
     <div onClick={handleChatClick} style={{ cursor: 'pointer', padding: '10px', borderBottom: '1px solid #ccc' }}>
       <h6>{chat.subject}</h6>
     </div>
+    </>
+
   );
 };
 
