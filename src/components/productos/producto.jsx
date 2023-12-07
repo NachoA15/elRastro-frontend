@@ -50,7 +50,7 @@ export default function producto({producto}) {
         productoService.deleteProduct(productoId);
       
         // Redireccionar a la página de productos (o donde sea necesario)
-        routerService.moveToProductPage(productoId);
+        window.location.reload();
       };
 
     

@@ -189,7 +189,7 @@ button.info {
 	float: right;
 }
 
-button.elimina:hover{
+button.eliminar:hover{
 	background-color: rgb(255, 101, 101);
 	color: black;
 }

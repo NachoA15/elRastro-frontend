@@ -27,6 +27,7 @@ const Valoracion = ({ index, valoracion }) => {
                         value={valoracion.calidad}
                         edit={false} // set to true if you want it to be interactive
                         isHalf={true} // set to true if you want half stars
+                        size={18}
                     />
                 </div>
 
@@ -38,6 +39,7 @@ const Valoracion = ({ index, valoracion }) => {
                         value={valoracion.fiabilidad}
                         edit={false} // set to true if you want it to be interactive
                         isHalf={true} // set to true if you want half stars
+                        size={18}
                     />
                 </div>
 

@@ -91,7 +91,6 @@ export default function PaginaValorar() {
                                                 fractions={2}
                                                 onChange={handleRatingChangeCalidad}
                                                 size={18}
-                                                style={{ float: 'right' }}
                                             />
                                             </>
                                             
