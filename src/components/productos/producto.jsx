@@ -105,7 +105,6 @@ export default function producto({producto}) {
                     className='button-anuncio valora'
                     onClick={() => {routerService.moveToValorarPage(producto._id, producto.usuario, producto.puja.usuario)}}
                     disabled={valorado !== undefined } 
-                    
                     >
                     Valorar
                     </button>
