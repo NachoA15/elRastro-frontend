@@ -67,7 +67,8 @@ export default function producto({producto}) {
                     <button
                     className='button-anuncio contacta'
                     onClick={() => {routerService.moveToValorarPage(producto._id, producto.usuario, producto.puja.usuario)}}
-                    //disabled={usuarioService.checkValoracion(producto._id, producto.usuario, producto.puja.usuario) === "A este usuario ya se le ha valorado por este producto"}
+                    disabled={valorado !== undefined } 
+
                     >
                     Valorar
                     </button>

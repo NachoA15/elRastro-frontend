@@ -10,6 +10,7 @@ export default function GoogleOauth() {
     const [usuario, setUsuario] = useState(initialUsuario);
     const [logout, setLogout] = useState(initialLogout);
 
+
     useEffect(() => {
         localStorage.setItem("usuario", usuario);
     }, [usuario]);
@@ -43,7 +44,6 @@ export default function GoogleOauth() {
         }
         usuarioService.checkToken(token,logOutUser);
     }
-
 
 
     const logOutUser = () => {
