@@ -9,11 +9,11 @@ import '../../assets/css/profile.css'
 
 export default function paginaUsuario() {
 
-    const token = localStorage.getItem("googleToken") || "";
+    let usuario = JSON.parse(localStorage.getItem("usuario") || "{}");
 
-    console.log(token)
+    
 
-    const [usuario, setUsuario] = useState({} );
+    const [user, setUsuario] = useState({});
     let params = useParams();
     let correo = params.correo;
 
@@ -21,17 +21,10 @@ export default function paginaUsuario() {
         useEffect(() => {
             usuarioService.getUsuarioByCorreo(correo, setUsuario);
         }, []);
-    }else{
-        useEffect(() => {
-            usuarioService.getUsuario(token, setUsuario);
-        }, []);
+        usuario = user;
     }
 
-    const [valoraciones, setValoraciones] = useState([]);
     
-    useEffect(() => {
-        usuarioService.getValoraciones(usuario.correo, setValoraciones);
-    }, [usuario.correo]);
 
     const [rating, setRating] = useState([]);
 
@@ -45,7 +38,7 @@ export default function paginaUsuario() {
         <>
          <div className='container-fluid'>
             <NavBar ubicacion={usuario.correo === correo ? 'Mi perfil' : ''}/>
-            {usuario && valoraciones && rating && <Usuario usuario={usuario} valoraciones={valoraciones.usuario} rating={rating.usuario} />}
+            {usuario && rating && <Usuario usuario={usuario} valoraciones={usuario.valoracion} rating={rating.usuario} />}
         </div>
         </>
         

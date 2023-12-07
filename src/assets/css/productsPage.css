@@ -167,11 +167,29 @@ button.contacta {
 	float: left;
 }
 
+button.valora{
+	float: left;
+}
+
+button.valora:disabled {
+	border: 2px solid #ffffff;
+	background-color: #ccc;
+  	cursor: not-allowed;
+	color: white;
+}
+
+button.eliminar {
+	float: left;
+	background-color: rgb(229, 44, 44);
+	color: white;
+	border: 2px solid #ffffff;
+}
+
 button.info {
 	float: right;
 }
 
-button.elimina:hover{
+button.eliminar:hover{
 	background-color: rgb(255, 101, 101);
 	color: black;
 }

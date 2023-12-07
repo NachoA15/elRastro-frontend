@@ -32,6 +32,17 @@ const addProduct = async (productoFormData) => {
       console.error('Error al enviar el producto:', error);
     }
   };
-const productoService = {getProductos, getProductosByUsuario, getProductoById, addProduct}
+
+
+const deleteProduct = async (producto) => {
+    try {
+      const response = await Axios.delete("http://127.0.0.1:5001/producto/" + producto);
+      console.log(response.data);
+    } catch (error) {
+      console.error('Error al eliminar el producto:', error);
+    }
+};
+
+const productoService = {getProductos, getProductosByUsuario, getProductoById, addProduct, deleteProduct}
 
 export default productoService;
