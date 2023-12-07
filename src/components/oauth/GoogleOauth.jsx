@@ -1,62 +1,51 @@
-import { googleLogout, useGoogleLogin } from '@react-oauth/google';
-import { useEffect, useState } from "react";
-import usuarioService from '../../service/usuarioService.js';
-export default function GoogleOauth() {
-    // Obtener el token del localStorage al cargar el componente
-    const initialToken = localStorage.getItem("googleToken") || "";
-    const initialUsuario = localStorage.getItem("usuario") || "";
-    const initialLogout = localStorage.getItem("logout") || "false";
-    const [token, setToken] = useState(initialToken);
-    const [usuario, setUsuario] = useState(initialUsuario);
-    const [logout, setLogout] = useState(initialLogout);
+import React from "react";
+import { useState, useEffect } from 'react';
+import axios from 'axios'
+import { googleLogout, useGoogleLogin } from '@react-oauth/google'
+import routerService from "../../service/routerService";
 
-    useEffect(() => {
-        localStorage.setItem("usuario", usuario);
-    }, [usuario]);
+export default function GoogleOAuth({ perfil }) {
+    const [user, setUser] = useState([]);
+    const [profile, setProfile] = useState([]);
 
-    // Guardar en localStorage cuando el token cambia
-    useEffect(() => {
-        localStorage.setItem("googleToken", token);
-    }, [token]);
-
-    useEffect(() => {
-        localStorage.setItem("logout", logout);
-    }, [logout]);
-
-    const logUser = useGoogleLogin({
-        onSuccess: tokenResponse => {
-            const auxToken = tokenResponse.access_token;
-            setToken(auxToken);
-            setLogout("false");
-            usuarioService.checkToken(auxToken,logOutUser);
-            usuarioService.getUsuario(auxToken, setUsuario);
-        },
-        onError: error => {
-            console.log(error);
-        }
+    const login = useGoogleLogin({
+        onSuccess: (codeResponse) => setUser(codeResponse),
+        onError: (error) => console.log('Login failed: ', error)
     });
 
-    //En caso de que la sesion este iniciada va a hacer un checktoken para comprobar si el token ha caducado
-    if(token !== "" && usuario !== ""){
-        if(logout.localeCompare("true")){ // En caso de que la sesion este iniciada y logout este a true cierra sesion
-            logOutUser();
-        }
-        usuarioService.checkToken(token,logOutUser);
-    }
-
-
-
-    const logOutUser = () => {
+    const logOut = () => {
         googleLogout();
-        setToken("");
-        setUsuario("");
+        setProfile([]);
+        setUser([]);
+        appService.moveToMainPage();
     };
 
-    if (token) {
-        return <button onClick={logOutUser}>Cerrar sesión</button>
-    } else {
-        return <button onClick={logUser}>Iniciar sesión con Google</button>
-    }
+    useEffect(() => {
+        if (user.length !== 0) {
+        axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
+            headers: {
+            Authorization: `Bearer ${user.access_token}`,
+            Accept: 'application/json'
+            }
+        }).then((res) => {
+            setProfile(res.data);
+            localStorage.setItem('email', res.data.email)
+        }).catch((err) => console.log(err));
+        }
+    }, [user]);
+
+    return(
+        <>
+        {(profile !== undefined && profile.length !== 0) || (perfil !== undefined && perfil.length !== 0)? (
+          <div>
+              <button onClick={logOut}>Log out</button>
+          </div>
+        ) : (
+            <button onClick={() => {
+                login();
+                routerService.moveToProductos();
+            }}>Sign in with Google </button>
+        )}
+        </>
+    )
 }
-
-
