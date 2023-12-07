@@ -6,7 +6,6 @@ export default function ComentariosUsuario({ valoraciones}) {
     <>
       <div className="row d-flex justify-content-center">
         <div className="col-md-9 col-lg-11">
-         
             <div className="card-body p-2" >
               {Array.isArray(valoraciones) && valoraciones.length > 0 ? (
                 valoraciones.map((valoracion, index) => (

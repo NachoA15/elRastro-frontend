@@ -10,6 +10,7 @@ export default function PaginaValorar() {
     let idProducto = params.idProducto;
     let usuarioValorado = params.usuarioValorado;
     let usuarioValorador = params.usuarioValorador;
+    
 
     return(
         <>
@@ -37,7 +38,7 @@ export default function PaginaValorar() {
                                 console.log(valoration)
                                 usuarioService.addValoracion(valoration);
 
-                                
+                                window.location.href = '/productos/' + usuarioValorador;  
                            }
 
                             
