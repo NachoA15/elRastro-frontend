@@ -21,26 +21,31 @@ const getRating = async (correo, setRating) => {
     })
 }
 
+
 const getUsuario = async (token, setUsuario) => {
-    await Axios.get("http://127.0.0.1:5001/usuario/fromToken?token=" + token)
-        .then((res) => {
-            setUsuario(res.data)
-        })
     let result = await Axios.get("http://127.0.0.1:5001/usuario/checkOrCreate?token=" + token);
     if(result.status === 200){
         setUsuario(JSON.stringify(result.data));
     }
+
 }
 
 const checkToken = async (token,logOutUser) => {
-    let result = await Axios.get("http://127.0.0.1:5001/usuario/checkToken?token=" + token)
+    try{
+        let result = await Axios.get("http://127.0.0.1:5001/usuario/checkToken?token=" + token)
 
-    //En caso de que el token no sea valido se cierra la sesion
-    if(result.status !== 200){
+        //En caso de que el token no sea valido se cierra la sesion
+        if(result.status !== 200){
+            logOutUser();
+        }
+    }catch (error) {
         logOutUser();
+        console.error('Error al verificar el token de Google:', error);
     }
 
+
 }
+
 
 const addValoracion = async(valoracionFormData) => {
     try{

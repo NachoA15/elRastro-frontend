@@ -1,4 +1,3 @@
-
 import routerService from '../../service/routerService'
 import ImageNotFound from '../../assets/images/imagenotfound.jpg'
 import chatService from '../../service/chatService'
@@ -37,7 +36,7 @@ export default function producto({producto}) {
         <div className='card-body anuncio-thumbnail' style={{width: '100%'}}>
             <div className='placement-imagen'>
                     <div className={subastaCerrada?  'fecha-cierre cerrada shadow-sm' : (diffDays <= 10? 'fecha-cierre peligro shadow-sm' : 'fecha-cierre abierta shadow-sm')}>
-                        Hasta {producto.fechaCierre.toString().substring(0,10)}
+                        Hasta {cierreSubasta.toString().substring(3,15)}
                     </div>
                     {
                         subastaCerrada?
