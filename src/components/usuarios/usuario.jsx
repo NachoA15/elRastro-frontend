@@ -5,7 +5,7 @@ import Rating from 'react-rating-stars-component';
 
 
 export default function Usuario({ usuario, valoraciones, rating}) {
-    console.log(rating)
+    console.log(usuario.imagen)
 
     return (
         <>
@@ -16,8 +16,8 @@ export default function Usuario({ usuario, valoraciones, rating}) {
                             <div className="card mb-2">
                                 <div className="row g-0">
                                     <div id="perfil" className="col-md-6 gradient-custom text-center">
-                                        <img id="img-perfil" src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-chat/ava1-bg.webp"
-                                            alt="Avatar" className="img-fluid my-5" />
+                                        <img id="img-perfil" src={usuario.imagen}
+                                            alt={usuario.imagen} className="img-fluid my-5" />
                                         <h4>{usuario.correo}</h4>
                                         <p>{usuario.nombre}</p>
                                         <div className="d-flex flex-row align-items-center">
@@ -26,6 +26,7 @@ export default function Usuario({ usuario, valoraciones, rating}) {
                                             value={rating}
                                             edit={false} // set to true if you want it to be interactive
                                             isHalf={true} // set to true if you want half stars
+                                            size={25}
                                             />
                                         )}
                                         </div>

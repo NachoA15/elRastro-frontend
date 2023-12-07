@@ -45,10 +45,7 @@
 }
 
 
-div#comentario{
-   height: 50px;
-   width: 755px;
-}
+
 
 img#img{
    border-top-left-radius: 0.5rem;
@@ -87,8 +84,14 @@ p#descripcion {
    text-align: justify;
 }
 
-div#stars{
+div#starsCalidad{
    position: absolute;
-   top: 70%;
+   top: 60%;
+   left: 2%;
+}
+
+div#starsFiabilidad{
+   position: absolute;
+   top: 80%;
    left: 2%;
 }

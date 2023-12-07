@@ -4,6 +4,7 @@ import chatService from '../../service/chatService'
 import usuarioService from '../../service/usuarioService';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import productoService from '../../service/productoService';
 
 export default function producto({producto}) {
 
@@ -18,6 +19,42 @@ export default function producto({producto}) {
     let params = useParams();
     let usuario = params.usuario;
 
+    
+
+    
+    const [usuarioValoracion, setUsuario] = useState({});
+
+    useEffect(() => {
+        if (producto.puja) {
+            // Lógica que se ejecuta solo si producto.puja existe
+            usuarioService.getUsuarioByCorreo(producto.puja.usuario, setUsuario);
+        }
+    }, [producto.puja]);
+
+    
+    
+
+    const valorado =
+        producto &&
+        producto.puja &&
+        producto.puja.usuario &&
+        usuarioValoracion.valoracion &&
+        Array.isArray(usuarioValoracion.valoracion) &&
+        usuarioValoracion.valoracion.find(valoracion => 
+            valoracion.valorador === producto.usuario && valoracion.producto === producto._id
+    );
+
+    
+    const handleEliminarProducto = (productoId) => {
+        // Lógica para eliminar el producto
+        productoService.deleteProduct(productoId);
+      
+        // Redireccionar a la página de productos (o donde sea necesario)
+        window.location.reload();
+      };
+
+    
+
     /*const [usuario, setUsuario] = useState({} );
 
     useEffect(() => {
@@ -31,7 +68,7 @@ export default function producto({producto}) {
     <>
     <div className='card anuncio' tabIndex="0" aria-label={producto.nombre} style={{boxShadow: "2px 2px 5px"}}>
         <div className='card-header anuncio-header' tabIndex="0">
-            <span style={{float: "left"}}>Subido por <a href={'perfil/' + producto.usuario}>{producto.usuario}</a></span>
+            <span style={{float: "left"}}>Subido por <a href={'/usuario/' + producto.usuario}>{producto.usuario}</a></span>
         </div>
         <div className='card-body anuncio-thumbnail' style={{width: '100%'}}>
             <div className='placement-imagen'>
@@ -61,19 +98,23 @@ export default function producto({producto}) {
         </div>
         <div className='card-body' style={{width: '100%', marginTop: "20px", marginBottom: "0px"}}>
             <br/>
-            {producto.usuario !== usuario && <button className='button-anuncio contacta' onClick={() => {chatService.openChat(producto.id, producto.usuario, usuario)}}>Contacta</button>}
-            {
-                producto.usuario === usuario && subastaCerrada && (
-                    <button
-                    className='button-anuncio contacta'
+            
+            { producto.usuario !== usuario && <button className='button-anuncio contacta' onClick={() => {chatService.openChat(producto.id, producto.usuario, usuario)}}>Contacta</button>}
+            { producto.usuario === usuario && subastaCerrada && producto.puja &&(
+                    <button type="button" 
+                    className='button-anuncio valora'
                     onClick={() => {routerService.moveToValorarPage(producto._id, producto.usuario, producto.puja.usuario)}}
                     disabled={valorado !== undefined } 
-
+                    
                     >
                     Valorar
                     </button>
-                )}
-                <button className='button-anuncio info' onClick={() => routerService.moveToProductPage(producto._id)}>+ Info</button>
+            )}
+
+            { producto.usuario === usuario  && subastaCerrada && producto.puja === undefined && <button className='button-anuncio eliminar' onClick={() => 
+                handleEliminarProducto(producto._id)}>Eliminar</button>
+            }
+            <button className='button-anuncio info' onClick={() => routerService.moveToProductPage(producto._id)}>+ Info</button>
         </div>
     </div>
     </>
