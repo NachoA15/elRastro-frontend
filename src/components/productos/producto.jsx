@@ -98,10 +98,10 @@ export default function producto({producto}) {
         </div>
         <div className='card-body' style={{width: '100%', marginTop: "20px", marginBottom: "0px"}}>
             <br/>
-            {producto.usuario !== usuario && <button className='button-anuncio contacta' onClick={() => {
-                chatService.openChat(producto._id +"_" + producto.usuario + "_" + user.correo)}}>Contacta</button>
+            {producto.usuario !== user && <button className='button-anuncio contacta' onClick={() => {
+                chatService.openChat(producto._id +"_" + producto.usuario + "_" + user)}}>Contacta</button>
             }
-            { producto.usuario === usuario && subastaCerrada && producto.puja &&(
+            { producto.usuario === user && subastaCerrada && producto.puja &&(
                     <button type="button" 
                     className='button-anuncio valora'
                     onClick={() => {routerService.moveToValorarPage(producto._id, producto.usuario, producto.puja.usuario)}}
