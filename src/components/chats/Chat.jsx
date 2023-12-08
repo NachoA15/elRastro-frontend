@@ -2,103 +2,112 @@ import Talk from 'talkjs';
 import { useEffect, useState, useRef } from 'react';
 import { useParams } from 'react-router';
 import productoService from '../../service/productoService';
+import NavBar from '../NavBar';
+import '../../assets/css/chat.css'
 
-export default function Chat() {
+export default function Chat({idConv}) {
   const chatboxEl = useRef();
 
   const [talkLoaded, markTalkLoaded] = useState(false);
   const [producto, setProducto] = useState();
+  const [productoFetched, setProductoFetched] = useState(false);
 
-  let params = useParams();
-  let idConv = params.idConv;
+  useEffect(() => {
+
+  }, [idConv]);
+
+  const usuario = localStorage.dgetItem("usuario") || "";
+  if(usuario === ""){
+    window.location.href = "/"
+  }
+
   let idProd = idConv.split("_")[0];
-  let idVend = idConv.split("_")[1];
-  let idComp = idConv.split("_")[2];
+  let correoVend = idConv.split("_")[1];
+  let correoComp = idConv.split("_")[2];
 
   useEffect(() => {
-    productoService.getProductoById(setProducto, idProd);
-  }, []);
+    const fetchProducto = async () => { 
+      try{
+        productoService.getProductoById(setProducto, idProd);
+        setProductoFetched(true);
+      }catch(error){
+        console.log("Error al coger el producto: ", error);
+      }
+    }
+    fetchProducto();
+  }, [idProd]);
 
   useEffect(() => {
-    Talk.ready.then(() => markTalkLoaded(true));
 
-    if (talkLoaded) {
+    if (talkLoaded && productoFetched && producto && usuario !== "") {
       const vendedor = new Talk.User({
-        id: idVend
+        id: correoVend,
+        name: "Vendedor " + producto.nombre
       });
 
       const comprador = new Talk.User({
-        id: idComp
+        id: correoComp,
+        name: "Comprador " + producto.nombre
       });
 
-      const session = new Talk.Session({
-        appId: 'tvYAZZjb',
-        me: vendedor,
-      });
+      let session;
+
+      if(usuario === correoVend){
+        session = new Talk.Session({
+          appId: 'tvYAZZjb',
+          me: vendedor,
+        });
+      }else{
+        session = new Talk.Session({
+          appId: 'tvYAZZjb',
+          me: comprador,
+        });
+      }
 
       const conversation = session.getOrCreateConversation(idConv);
       conversation.setParticipant(vendedor);
       conversation.setParticipant(comprador);
-      conversation.setAttributes({subject: producto.nombre})
+      conversation.setAttributes({subject: producto.nombre, photoUrl: producto.imagen})
 
       const chatbox = session.createChatbox();
       chatbox.select(conversation);
       chatbox.mount(chatboxEl.current);
 
-      return () => session.destroy();
+      return () => {
+        session.destroy();
+      }
     }
-  }, [talkLoaded]);
-
-  return <div ref={chatboxEl} style={{width: '100%', height: '500px'}}/>;
-}
-
-/*
-export default function Chat({}) {
-  const chatboxEl = useRef();
-
-  // wait for TalkJS to load
-  const [talkLoaded, markTalkLoaded] = useState(false);
+  }, [talkLoaded, productoFetched, producto]);
 
   useEffect(() => {
     Talk.ready.then(() => markTalkLoaded(true));
+  }, [])
 
-    if (talkLoaded) {
-      const currentUser = new Talk.User({
-        id: '2',
-        name: 'Henry Mill',
-        email: 'henrymill@example.com',
-        photoUrl: 'henry.jpeg',
-        welcomeMessage: 'Hello!',
-        role: 'default',
-      });
+  return (
+    <>
+    <NavBar ubicacion={'Mis chats'}/>
 
-      const otherUser = new Talk.User({
-        id: '1',
-        name: 'Jessica Wells',
-        email: 'jessicawells@example.com',
-        photoUrl: 'jessica.jpeg',
-        welcomeMessage: 'Hello!',
-        role: 'default',
-      });
-
-      const session = new Talk.Session({
-        appId: 'tvYAZZjb',
-        me: currentUser,
-      });
-
-      const conversationId = Talk.oneOnOneId(currentUser, otherUser);
-      const conversation = session.getOrCreateConversation(conversationId);
-      conversation.setParticipant(currentUser);
-      conversation.setParticipant(otherUser);
-
-      const chatbox = session.createChatbox();
-      chatbox.select(conversation);
-      chatbox.mount(chatboxEl.current);
-
-      return () => session.destroy();
-    }
-  }, [talkLoaded]);
-
-  return <div ref={chatboxEl} style={{width: '100%', height: '500px'}}/>;
+    <div className="container-fluid chat-div">
+      <br/>
+      <br/>
+      <br/>
+      <div className='row'>
+        <div className="col-md-6">
+          <button
+            className="btn"
+            onClick={() => {
+              window.location.href = "/chats";
+            }}
+          >Volver</button>
+        </div>
+      </div>
+      <div className='row' id="chat">
+        <div className="col-md-12 d-flex justify-content-center align-items-center">
+        <div ref={chatboxEl} style={{height: '900px', width: '700px', margin: '100px auto 0'}}/>
+        </div>
+      </div>
+    </div>
+    
+    </>
+  )
 }
-*/

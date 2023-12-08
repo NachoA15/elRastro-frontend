@@ -1,6 +1,5 @@
-const openChat = (idProducto, idVendedor, idComprador) => {
-    let conversationId = idProducto + "_" + idVendedor + "_" + idComprador;
-    window.location.href = "/chat/" + conversationId;
+const openChat = (idConv) => {
+    window.location.href = "/chat/" + idConv;
 }
 
 const chatService = {openChat}

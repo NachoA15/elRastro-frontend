@@ -19,6 +19,7 @@ export default function producto({producto}) {
     let params = useParams();
     let usuario = params.usuario;
 
+    const user = localStorage.getItem("email");
     
 
     
@@ -53,7 +54,6 @@ export default function producto({producto}) {
         window.location.reload();
       };
 
-    
 
     /*const [usuario, setUsuario] = useState({} );
 
@@ -98,8 +98,9 @@ export default function producto({producto}) {
         </div>
         <div className='card-body' style={{width: '100%', marginTop: "20px", marginBottom: "0px"}}>
             <br/>
-            
-            { producto.usuario !== usuario && <button className='button-anuncio contacta' onClick={() => {chatService.openChat(producto.id, producto.usuario, usuario)}}>Contacta</button>}
+            {producto.usuario !== usuario && <button className='button-anuncio contacta' onClick={() => {
+                chatService.openChat(producto._id +"_" + producto.usuario + "_" + user.correo)}}>Contacta</button>
+            }
             { producto.usuario === usuario && subastaCerrada && producto.puja &&(
                     <button type="button" 
                     className='button-anuncio valora'
