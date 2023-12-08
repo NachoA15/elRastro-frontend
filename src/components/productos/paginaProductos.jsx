@@ -6,13 +6,13 @@ import Producto from './producto'
 import '../../assets/css/productsPage.css'
 
 export default function paginaProductos({ misProductos }) {
-    let usuario = localStorage.getItem("email")
+    const usuario = localStorage.getItem("email")
     const [productos, setProductos] = useState([]);
 
     if (misProductos) {
         useEffect(() => {
             productoService.getProductosByUsuario(setProductos, usuario)
-        }, [])
+        }, [usuario])
     } else {
         useEffect(() => {
             productoService.getProductos(setProductos)

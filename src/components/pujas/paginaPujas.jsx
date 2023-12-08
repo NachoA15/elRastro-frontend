@@ -5,22 +5,20 @@ import React, { useEffect, useState } from 'react';
 import NavBar from '../NavBar'
 
 export default function paginaPujas() {
-
-    let params = useParams();
-    let correo = params.usuario
+    const usuario = localStorage.getItem("email")
 
     const [pujas, setPujas] = useState([]);
 
     useEffect(() => {
-        pujasService.getPujasByUser(correo, setPujas);
-    }, [correo]);
+        pujasService.getPujasByUser(usuario, setPujas);
+    }, [usuario]);
     
 
     return(
         <>
          <div className='container-fluid'>
-            <NavBar ubicacion={"Mis pujas"}/>
-            {pujas && <Pujas pujas={pujas} usuario={correo}/>}
+            <NavBar ubicacion={"Mis Pujas"}/>
+            {pujas && <Pujas pujas={pujas} usuario={usuario}/>}
         </div>
         </>
         

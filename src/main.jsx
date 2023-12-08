@@ -52,7 +52,7 @@ const router = createBrowserRouter([
     element: <Valorar/>
   },
   {
-    path: '/pujas/:usuario',
+    path: '/misPujas',
     element: <Pujas/>
   }
 ])

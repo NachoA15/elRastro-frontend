@@ -15,7 +15,7 @@ export default function NavBar({ubicacion}) {
                             <li className="nav-item" style={{marginLeft: "20px"}}><a className={ubicacion === 'Subir Producto'? 'nav-link active' : 'nav-link'} href={"/upload_product/"}>Subir Producto</a></li> 
                             <li className="nav-item" style={{marginLeft: "20px"}}> <a className={ubicacion === 'Mis Productos'? 'nav-link active' : 'nav-link'} href={"/misProductos"}>Mis productos</a></li> 
                             <li className="nav-item" style={{marginLeft: "20px"}}><a className={ubicacion === 'Mis chats'? 'nav-link active' : 'nav-link'} href="/chats"> Mis chats</a></li> 
-                            <li className="nav-item" style={{marginLeft: "20px"}}><a className={ubicacion === 'Mis productos'? 'nav-link active' : 'nav-link'} href={"/pujas/" + usuario}> Mis pujas</a></li>
+                            <li className="nav-item" style={{marginLeft: "20px"}}><a className={ubicacion === 'Mis Pujas'? 'nav-link active' : 'nav-link'} href={"/misPujas"}> Mis pujas</a></li>
                             <li className="nav-item" style={{marginLeft: "20px"}}><a className={ubicacion === 'Mi perfil'? 'nav-link active' : 'nav-link'} href={"/usuario/" + usuario}>Mi perfil</a></li>
                             <li className="nav-item" style={{marginLeft: "20px"}}><a className="nav-link" href="/" onClick={(e) => {
                             

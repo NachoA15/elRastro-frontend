@@ -111,7 +111,7 @@ export default function Pujas({ pujas, usuario }) {
             <div className="col-md-12">
                 
                 <h2 className="product-page-title title">
-                Pujas de <a href={'/usuario/' + usuario}>{usuario}</a>
+                <b>Mis pujas</b>
                 </h2>
 
                 
@@ -139,7 +139,7 @@ export default function Pujas({ pujas, usuario }) {
                     ))
                     ) : (
                     <tr>
-                        El usuario <a href={'/usuario/' + usuario}>{usuario}</a> no tiene actualmente pujas.
+                        No existe ningún producto actualmente por el que hayas pujado
                     </tr>
                     )}
                 </tbody>
