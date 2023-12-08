@@ -22,11 +22,10 @@ const Valoracion = ({ index, valoracion }) => {
   }, [valoracion]);
 
   return (
-    <div  id="comentario" key={index} className="card mb-8" style={{ width: '100%' }}>
-    <div  className="card-body" style={{ width: '100%' }}>
-        
-            <div id="valoracion" class="media-body u-shadow-v18 g-bg-secondary g-pa-30" style={{width: '100%' , height: '100%' }}>
-           
+    <>
+    <div key={index} className="card">
+    <div id="comentario"className="card-body" style={{height:'70px'}}>
+      <div id="valoracion" className="media-body u-shadow-v18 g-bg-secondary g-pa-30" style={{ width: '100%', height:'100%' }}>
                 <img id="img" class="d-flex g-width-50 g-height-50 rounded-circle g-mt-3 g-mr-7" src={usuario.imagen} alt="Image Description"></img>
                 
                 <h5 id="valorador" class="h5 g-color-gray-dark-v1 mb-0"><a href={'/usuario/' + valoracion.valorador}>{valoracion.valorador}</a> - <a href={'/producto/' + valoracion.producto}>{producto.nombre}</a></h5>
@@ -51,29 +50,38 @@ const Valoracion = ({ index, valoracion }) => {
                         size={18}
                     />
                 </div>
-
+                <div className='lead descripcion'>
+                  <p id="descripcion"  style={{maxWidth: '550px', whiteSpace: 'pre-line'}}>{valoracion.descripcion}</p>
+                </div>
 
             
         
-            <p id="descripcion">{valoracion.descripcion}</p>
-            </div>
+            
+      </div>
         
     </div>
+    <br></br>
     </div>
+    </>
   );
+  
 };
 
-export default function ComentariosUsuario({ valoraciones}) {
+export default function ComentariosUsuario({ valoraciones }) {
+  
 
   return (
     <>
-      <div className="row d-flex justify-content-center">
-        <div className="col-md-9 col-lg-11">
-            <div className="card-body p-2" >
+      <div className="row d-flex justify-content-center" >
+        <div className="col-md-9 col-lg-12">
+            <div className="card-body p-2" style={{height: '100%'}}>
               {Array.isArray(valoraciones) && valoraciones.length > 0 ? (
                 valoraciones.map((valoracion, index) => (
                   <Valoracion key={index} valoracion={valoracion} />
+                  
                 ))
+
+                
                 
               ) : (
 

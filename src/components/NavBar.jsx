@@ -1,6 +1,7 @@
 import React from "react";
 
 export default function NavBar({ubicacion}) {
+    let usuario = JSON.parse(localStorage.getItem("usuario") || "{}");
     return(
         <>
             <nav className="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" id="profilepNav">
@@ -12,10 +13,10 @@ export default function NavBar({ubicacion}) {
                             {/*<li className="nav-item"> <a href="/addProduct" className="addProducts nav-link"><button type="button" className="btn btn-outline-light btn-sm subir-anuncio">Subir producto</button></a></li>*/}
                             <li className="nav-item" style={{marginLeft: "20px"}}><a className={ubicacion === 'Productos'? 'nav-link active' : 'nav-link'} href="/productos">Productos</a></li>
                             <li className="nav-item" style={{marginLeft: "20px"}}><a className={ubicacion === 'Subir Producto'? 'nav-link active' : 'nav-link'} href={"/upload_product/"}>Subir Producto</a></li> 
-                            <li className="nav-item" style={{marginLeft: "20px"}}> <a className={ubicacion === 'Mis Productos'? 'nav-link active' : 'nav-link'} href={"/misProductos/"}>Mis productos</a></li> 
-                            <li className="nav-item" style={{marginLeft: "20px"}}><a className={ubicacion === 'Mis chats'? 'nav-link active' : 'nav-link'} href="/chatList"> Mis chats</a></li> 
-                            <li className="nav-item" style={{marginLeft: "20px"}}><a className={ubicacion === 'Mis anuncios'? 'nav-link active' : 'nav-link'} href="/myProducts"> Mis pujas</a></li>
-                            <li className="nav-item" style={{marginLeft: "20px"}}><a className={ubicacion === 'Mi perfil'? 'nav-link active' : 'nav-link'} href={"/profile/"}>Mi perfil</a></li>
+                            <li className="nav-item" style={{marginLeft: "20px"}}> <a className={ubicacion === 'Favoritos'? 'nav-link active' : 'nav-link'} href={"/productos/" + usuario.correo}>Mis productos</a></li> 
+                            <li className="nav-item" style={{marginLeft: "20px"}}><a className={ubicacion === 'Mis chats'? 'nav-link active' : 'nav-link'} href="/chats"> Mis chats</a></li> 
+                            <li className="nav-item" style={{marginLeft: "20px"}}><a className={ubicacion === 'Mis productos'? 'nav-link active' : 'nav-link'} href={"/pujas/" + usuario.correo}> Mis pujas</a></li>
+                            <li className="nav-item" style={{marginLeft: "20px"}}><a className={ubicacion === 'Mi perfil'? 'nav-link active' : 'nav-link'} href={"/usuario/" + usuario.correo}>Mi perfil</a></li>
                             <li className="nav-item" style={{marginLeft: "20px"}}><a className="nav-link" href="/" onClick={(e) => {
                             
                                 e.preventDefault();

@@ -33,7 +33,6 @@ export default function paginaUsuario() {
         
     }, [usuario.correo]);
     
-    
     return(
         <>
          <div className='container-fluid'>
