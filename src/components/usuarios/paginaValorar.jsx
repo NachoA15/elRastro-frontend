@@ -50,8 +50,6 @@ export default function PaginaValorar() {
                     <form 
                          onSubmit={(e) => {
                             
-                            console.log(descripcion)
-                            
                            if(descripcion !== '' && calidad !== '' && fiabilidad !== ''){
                                 
                                 e.preventDefault();
@@ -69,7 +67,7 @@ export default function PaginaValorar() {
                                 
                                 usuarioService.addValoracion(valoration);
 
-                                window.location.href = '/productos/' + usuarioValorador;  
+                                window.location.href = '/productos';  
                            }
 
                             

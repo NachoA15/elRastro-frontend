@@ -111,9 +111,11 @@ export default function producto({producto}) {
                     </button>
             )}
 
-            { producto.usuario === usuario  && subastaCerrada && producto.puja === undefined && <button className='button-anuncio eliminar' onClick={() => 
-                handleEliminarProducto(producto._id)}>Eliminar</button>
+            { producto.usuario === usuario && producto.puja === undefined && <button className='button-anuncio eliminar' 
+                onClick={() => handleEliminarProducto(producto._id)}>Eliminar</button>
             }
+
+            
             <button className='button-anuncio info' onClick={() => routerService.moveToProductPage(producto._id)}>+ Info</button>
         </div>
     </div>
