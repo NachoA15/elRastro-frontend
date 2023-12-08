@@ -1,25 +1,18 @@
 import React from 'react'
 import { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom';
 import productoService from '../../service/productoService';
 import NavBar from '../NavBar'
 import Producto from './producto'
 import '../../assets/css/productsPage.css'
 
-export default function paginaProductos() {
+export default function paginaProductos({ misProductos }) {
+    const usuario = localStorage.getItem("email")
     const [productos, setProductos] = useState([]);
-    
-    useEffect(() => {
-        productoService.getProductos(setProductos)
-    }, [])
-  
-    let params = useParams();
-    let usuario = params.usuario;
 
-    if (usuario !== undefined) {
+    if (misProductos) {
         useEffect(() => {
             productoService.getProductosByUsuario(setProductos, usuario)
-        }, [])
+        }, [usuario])
     } else {
         useEffect(() => {
             productoService.getProductos(setProductos)
@@ -28,12 +21,26 @@ export default function paginaProductos() {
 
     return(
         <>
-        <NavBar ubicacion={"Productos"}/>
+        <NavBar ubicacion={misProductos? 'Mis Productos' : "Productos"}/>
         
         <div className="container-fluid main-div">
             <div className="row" id='titulo'>
                 <div className="col-md-12">
-                    {usuario !== undefined? (productos.length === 0? <><h2 className='product-page-title title'>El usuario <a href={'/perfil/' + usuario}>{usuario}</a> no tiene actualmente productos registrados</h2></> : <h2 className='product-page-title title'>Productos de <a href={'/perfil/' + usuario}>{usuario}</a></h2>)  : productos.length !== 0? <h2 tabIndex="0" className='product-page-title title'><b>Sección de los productos</b></h2> : <h2 tabIndex="0" className='product-page-title title'><b>No hay ningún producto actualmente en subasta</b></h2>}
+                    {misProductos? 
+                        (
+                        productos.length === 0? 
+                            <><h2 className='product-page-title title'>No tienes productos registrados actualmente</h2></> 
+                        : 
+                            <h2 className='product-page-title title'><b>Mis productos</b></h2>
+                        )  
+                    : 
+                        (
+                        productos.length !== 0? 
+                            <h2 tabIndex="0" className='product-page-title title'><b>Sección de los productos</b></h2> 
+                        : 
+                            <h2 tabIndex="0" className='product-page-title title'><b>No hay ningún producto actualmente en subasta</b></h2>
+                        )
+                    }
                     
                     {/*<Filter anuncios={anuncios} setFiltro={setFiltro} setFiltrando={setFiltrando} filtrando={filtrando}/>*/}
                 </div>

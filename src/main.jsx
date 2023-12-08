@@ -8,6 +8,7 @@ import PaginaPrincipal from './components/principal/Principal.jsx'
 import Chats from './components/chats/paginaChats.jsx'
 import Chat from './components/chats/Chat.jsx'
 import Valorar from './components/usuarios/paginaValorar.jsx'
+import Pujas from './components/pujas/paginaPujas.jsx'
 import App from './App.jsx'
 import './assets/css/index.css'
 import Checkout from './components/paypal/Checkout.jsx'
@@ -24,12 +25,12 @@ const router = createBrowserRouter([
     element: <Productos />
   },
   {
-    path: '/checkout',
-    element: <Checkout />
+    path: '/misProductos',
+    element: <Productos misProductos={true}/>
   },
   {
-    path: '/productos/:usuario',
-    element: <Productos />
+    path: '/checkout',
+    element: <Checkout />
   },
   {
     path: '/producto/:id',
@@ -54,6 +55,10 @@ const router = createBrowserRouter([
   {
     path: '/valorar/:idProducto/:usuarioValorador/:usuarioValorado',
     element: <Valorar/>
+  },
+  {
+    path: '/misPujas',
+    element: <Pujas/>
   }
 ])
 
