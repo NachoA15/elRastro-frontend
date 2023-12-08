@@ -24,12 +24,12 @@ const router = createBrowserRouter([
     element: <Productos />
   },
   {
-    path: '/checkout',
-    element: <Checkout />
+    path: '/misProductos',
+    element: <Productos misProductos={true}/>
   },
   {
-    path: '/productos/:usuario',
-    element: <Productos />
+    path: '/checkout',
+    element: <Checkout />
   },
   {
     path: '/producto/:id',
