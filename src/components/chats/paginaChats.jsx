@@ -9,40 +9,39 @@ const paginaChats = () => {
 
   const [chats, setChats] = useState([]);
 
-  const usuario = JSON.parse(localStorage.getItem("usuario") || "");
+  const usuario = localStorage.getItem("email");
+
+  if(usuario === ""){
+    window.location.href = "/"
+  }
 
   useEffect(() => {
     const initializeTalkJS = async () => {
-      if(usuario !== ""){
-        try {
-          await Talk.ready;
-          const talkSession = new Talk.Session({
-            appId: 'tvYAZZjb',
-            me: new Talk.User({
-              id: usuario.correo,
-              name: usuario.correo,
-            }),
-          });
-          const appId = 'tvYAZZjb';
-          const userId = usuario.correo;
-          const apiKey = 'sk_test_1afi8LJyR7BPrOXlMp3VgK4aSniBaf9d';
-          const res = await fetch(
-            `https://api.talkjs.com/v1/${appId}/users/${userId}/conversations`,
-            {
-              headers: {
-                Authorization: `Bearer ${apiKey}`,
-              },
-            }
-          );
-          const json = await res.json();
-          const conversations = json.data;
-          setChats(conversations);
-          console.log(conversations)
-        } catch (error){
-          console.error('Error initializing TalkJS: ', error);
-        }
-      }else{
-        //Volver a pagina ppal
+      try {
+        await Talk.ready;
+        const talkSession = new Talk.Session({
+          appId: 'tvYAZZjb',
+          me: new Talk.User({
+            id: usuario,
+            name: usuario,
+          }),
+        });
+        const appId = 'tvYAZZjb';
+        const userId = usuario;
+        const apiKey = 'sk_test_1afi8LJyR7BPrOXlMp3VgK4aSniBaf9d';
+        const res = await fetch(
+          `https://api.talkjs.com/v1/${appId}/users/${userId}/conversations`,
+          {
+            headers: {
+              Authorization: `Bearer ${apiKey}`,
+            },
+          }
+        );
+        const json = await res.json();
+        const conversations = json.data;
+        setChats(conversations);
+      } catch (error){
+        console.error('Error initializing TalkJS: ', error);
       }
     };
     initializeTalkJS();

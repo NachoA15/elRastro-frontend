@@ -1,45 +1,59 @@
 import Talk from 'talkjs';
 import { useEffect, useState, useRef } from 'react';
-import { useParams } from 'react-router';
+import {useLocation} from 'react-router-dom'
 import productoService from '../../service/productoService';
 import NavBar from '../NavBar';
 import '../../assets/css/chat.css'
 
-export default function Chat({idConv}) {
+export default function Chat() {
   const chatboxEl = useRef();
 
   const [talkLoaded, markTalkLoaded] = useState(false);
   const [producto, setProducto] = useState();
-  const [productoFetched, setProductoFetched] = useState(false);
+  const [idConv, setIdConv] = useState("");
+
+  const location = useLocation();
+  const parametros = new URLSearchParams(location.search);
+  const parametroCifrado = parametros.get('id');
 
   useEffect(() => {
+    Talk.ready.then(() => markTalkLoaded(true));
+  }, [])
 
-  }, [idConv]);
+  useEffect(() => {
+    const idProd = decodeURIComponent(parametroCifrado.split("_")[0]);
+    const correoVend = decodeURIComponent(parametroCifrado.split("_")[1]);
+    const correoComp = decodeURIComponent(parametroCifrado.split("_")[2]);
+    setIdConv(idProd + "_" + correoVend + "_" + correoComp);
+  }, [parametroCifrado]);
 
-  const usuario = localStorage.dgetItem("usuario") || "";
+  const usuario = localStorage.getItem("email");
   if(usuario === ""){
     window.location.href = "/"
   }
 
-  let idProd = idConv.split("_")[0];
-  let correoVend = idConv.split("_")[1];
-  let correoComp = idConv.split("_")[2];
-
   useEffect(() => {
-    const fetchProducto = async () => { 
-      try{
-        productoService.getProductoById(setProducto, idProd);
-        setProductoFetched(true);
-      }catch(error){
-        console.log("Error al coger el producto: ", error);
+    if(idConv){
+      const fetchProducto = async () => { 
+        try{
+          let idProd = idConv.split("_")[0];
+          productoService.getProductoById(setProducto, idProd);
+          console.log(producto)
+        }catch(error){
+          console.log("Error al coger el producto: ", error);
+        }
       }
+      fetchProducto();
     }
-    fetchProducto();
-  }, [idProd]);
+  }, [idConv]);
+    
 
   useEffect(() => {
 
-    if (talkLoaded && productoFetched && producto && usuario !== "") {
+    if (talkLoaded && producto && idConv) {
+      console.log("Entra")
+      let correoVend = idConv.split("_")[1];
+      let correoComp = idConv.split("_")[2];
       const vendedor = new Talk.User({
         id: correoVend,
         name: "Vendedor " + producto.nombre
@@ -77,11 +91,7 @@ export default function Chat({idConv}) {
         session.destroy();
       }
     }
-  }, [talkLoaded, productoFetched, producto]);
-
-  useEffect(() => {
-    Talk.ready.then(() => markTalkLoaded(true));
-  }, [])
+  }, [talkLoaded, producto, idConv]);
 
   return (
     <>
