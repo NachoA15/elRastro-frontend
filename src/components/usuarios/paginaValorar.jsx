@@ -8,6 +8,8 @@ import { useParams } from 'react-router-dom';
 import Rating from 'react-rating-stars-component';
 import React, { useEffect, useState } from 'react';
 
+
+
 export default function PaginaValorar() {
     let params = useParams();
     let idProducto = params.idProducto;
@@ -16,18 +18,28 @@ export default function PaginaValorar() {
 
     const [calidad, setCalidad] = useState(1);
     const [fiabilidad, setFiabilidad] = useState(1);
+    const [descripcion, setDescripcion] = useState('');
+    const [charCount, setCharCount] = useState(0);
 
     const handleRatingChangeCalidad = (newValue) => {
         setCalidad(newValue);
-        // Hacer algo con el nuevo valor, si es necesario
-        console.log('Nuevo valor de puntuación:', newValue);
+        console.log('Nuevo valor de puntuación calidad:', newValue);
     };
 
     const handleRatingChangeFiabilidad = (newValue) => {
         setFiabilidad(newValue);
-        // Hacer algo con el nuevo valor, si es necesario
-        console.log('Nuevo valor de puntuación:', newValue);
+        console.log('Nuevo valor de puntuación fiabilidad:', newValue);
     };
+
+    const handleDescripcionChange = (event) => {
+        const inputValue = event.target.value;
+
+        if (inputValue.length <= 300) {
+        setDescripcion(inputValue);
+        setCharCount(inputValue.length);
+        }
+    };
+    
 
     return(
         <>
@@ -37,8 +49,8 @@ export default function PaginaValorar() {
                 <div id="addValoracionForm" style={{width: '100%'}}></div>
                     <form 
                          onSubmit={(e) => {
-                            const descripcion = document.getElementById('description').value;
                             
+                            console.log(descripcion)
                             
                            if(descripcion !== '' && calidad !== '' && fiabilidad !== ''){
                                 
@@ -54,7 +66,7 @@ export default function PaginaValorar() {
                                     valorador: usuarioValorador,
                                     producto: idProducto
                                 };
-                                console.log(valoration)
+                                
                                 usuarioService.addValoracion(valoration);
 
                                 window.location.href = '/productos/' + usuarioValorador;  
@@ -138,16 +150,19 @@ export default function PaginaValorar() {
                                     <div className="col-md-1"></div>
                                     <div className="col-md-10">
                                         <div>
-                                            <TextField
-                                                required
-                                                id="description"
-                                                label="Descripcion de la valoracion "
-                                                variant="standard"
-                                                size="small"
-                                                multiline
-                                                rows={5}
-                                                style={{ width: '100%' }}
-                                            />
+                                        <TextField
+                                            required
+                                            id="descripcion"
+                                            label={`Descripcion de la valoracion (${charCount}/300)`}
+                                            variant="standard"
+                                            size="small"
+                                            multiline
+                                            rows={5}
+                                            maxRows={10}
+                                            style={{ width: '100%' }}
+                                            value={descripcion}
+                                            onChange={handleDescripcionChange}
+                                        />
                                         </div>
                                     </div>
                                     <div className="col-md-1"></div>

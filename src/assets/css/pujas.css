@@ -5,10 +5,9 @@ img#img-producto{
     position: relative;
  }
 
- div#titulo {
-	position: absolute;
-    top: 0;
-    left: 0;
+ div#titulo-pujas {
+	position: relative;
+	top: 30px;
 }
 
 div.finalizada-aviso-imagen-pujas {

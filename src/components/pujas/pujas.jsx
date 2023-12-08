@@ -50,7 +50,7 @@ const Puja = ({ index, puja, usuario}) => {
             
                 <div style={{ position: 'relative', display: 'inline-block', marginTop: '30px'}}>
                 
-                    <img id="img-producto" className="d-flex g-width-50 g-height-50 rounded-circle g-mt-3 g-mr-7" src={producto.imagen} alt="Image Description" style={{ zIndex: 0, marginLeft: '10px'}} />
+                    <img id="img-producto" className="d-flex g-width-50 g-height-50 rounded-circle g-mt-3 g-mr-7" src={producto.imagen} alt={producto.descripcion} style={{ zIndex: 0, marginLeft: '10px'}} />
                     {
                         subastaCerrada?
                         <>
