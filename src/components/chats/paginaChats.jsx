@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Talk from 'talkjs';
 import chatService from '../../service/chatService';
 import NavBar from '../NavBar';
+import '../../assets/css/chatsPage.css'
 
 const App = () => {
 
@@ -43,15 +44,29 @@ const App = () => {
   }, []);
 
   return (
-    <div>
-      <h2>Mis chats</h2>
-      {chats.map((chat) => (
-        <ClickableChat
-          key={chat.id}
-          chat={chat}
-        />
-      ))}
+    <>
+    <NavBar ubicacion={"Mis chats"}/>
+    <div className="container-fluid main-div">
+      <div className="row" id="titulo">
+        <div className="col-md-12">
+          <h2 className='title'><b>Mis chats</b></h2>
+        </div>
+      </div>
+      <br/>
+      <br/>
+      <div className='row'>
+        {chats.map((chat) => (
+            <ClickableChat
+              key={chat.id}
+              chat={chat}
+            />
+          ))}
+      </div>
+
     </div>
+
+
+    </>
   );
 };
 
@@ -61,9 +76,9 @@ const ClickableChat = ({ chat }) => {
   };
   return (
     <>
-    <NavBar ubicacion={"Mis chats"}/>
-    <div onClick={handleChatClick} style={{ cursor: 'pointer', padding: '10px', borderBottom: '1px solid #ccc' }}>
-      <h6>{chat.subject}</h6>
+    <div className='chat' onClick={handleChatClick}>
+      <img className='img-chat' src={chat.photoUrl} alt=''/>
+      <h6 className='subject-chat'>{chat.subject}</h6>
     </div>
     </>
 

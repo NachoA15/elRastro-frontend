@@ -62,7 +62,7 @@ export default function Chat() {
       const conversation = session.getOrCreateConversation(idConv);
       conversation.setParticipant(vendedor);
       conversation.setParticipant(comprador);
-      conversation.setAttributes({subject: producto.nombre})
+      conversation.setAttributes({subject: producto.nombre, photoUrl: producto.imagen})
 
       const chatbox = session.createChatbox();
       chatbox.select(conversation);
@@ -81,7 +81,7 @@ export default function Chat() {
   return (
     <>
     <NavBar ubicacion={'Mis chats'}/>
-      <div ref={chatboxEl} style={{height: '800px', width: '150%', margin: '0px'}}/>
+      <div ref={chatboxEl} style={{height: '900px', width: '700px', margin: '0px'}}/>
     </>
   )
 }
