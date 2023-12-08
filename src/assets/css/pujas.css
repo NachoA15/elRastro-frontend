@@ -1,0 +1,25 @@
+img#img-producto{
+    border-top-left-radius: 0.5rem;
+    border-bottom-left-radius: 0.5rem;
+    font-size: 0.8rem;
+    position: relative;
+ }
+
+ div#titulo {
+	position: absolute;
+    top: 0;
+    left: 0;
+}
+
+div.finalizada-aviso-imagen-pujas {
+	position: 'absolute'; 
+    top: '0';
+    left: '0';  
+    background-color: #e33030;
+    color: #fff;
+    transform: rotate(-20deg);
+    font-size: 8px;
+    font-weight: 600;
+    border-radius: 3px;
+    text-transform: uppercase;
+}

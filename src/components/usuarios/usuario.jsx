@@ -5,8 +5,7 @@ import Rating from 'react-rating-stars-component';
 
 
 export default function Usuario({ usuario, valoraciones, rating}) {
-    console.log(usuario.imagen)
-
+    
     return (
         <>
             <section id="usuario" className="vh-100">

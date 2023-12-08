@@ -63,7 +63,8 @@ const Valoracion = ({ index, valoracion }) => {
   );
 };
 
-export default function ComentariosUsuario({ valoraciones}) {
+export default function ComentariosUsuario({ valoraciones }) {
+  
 
   return (
     <>

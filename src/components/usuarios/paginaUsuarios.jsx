@@ -32,7 +32,7 @@ export default function paginaUsuario() {
         usuarioService.getRating(usuario.correo, setRating);
         
     }, [usuario.correo]);
-    
+    console.log(usuario)
     
     return(
         <>
