@@ -9,35 +9,28 @@ import '../../assets/css/profile.css'
 
 export default function paginaUsuario() {
 
-    let usuario = JSON.parse(localStorage.getItem("usuario") || "{}");
-
-    
-
     const [user, setUsuario] = useState({});
     let params = useParams();
     let correo = params.correo;
 
-    if(correo !== usuario.correo){
-        useEffect(() => {
-            usuarioService.getUsuarioByCorreo(correo, setUsuario);
-        }, []);
-        usuario = user;
-    }
+    useEffect(() => {
+        usuarioService.getUsuarioByCorreo(correo, setUsuario);
+    }, []);    
 
-    
+  
 
     const [rating, setRating] = useState([]);
 
     useEffect(() => {
-        usuarioService.getRating(usuario.correo, setRating);
+        usuarioService.getRating(correo, setRating);
         
-    }, [usuario.correo]);
+    }, [correo]);
     
     return(
         <>
          <div className='container-fluid'>
-            <NavBar ubicacion={usuario.correo === correo ? 'Mi perfil' : ''}/>
-            {usuario && rating && <Usuario usuario={usuario} valoraciones={usuario.valoracion} rating={rating.usuario} />}
+            <NavBar ubicacion={user.correo === correo ? 'Mi perfil' : ''}/>
+            {user && rating && <Usuario usuario={user} valoraciones={user.valoracion} rating={rating.usuario} />}
         </div>
         </>
         

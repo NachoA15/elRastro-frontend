@@ -7,6 +7,7 @@ import Producto from './producto'
 import '../../assets/css/productsPage.css'
 
 export default function paginaProductos() {
+    let user = localStorage.getItem("email")
     const [productos, setProductos] = useState([]);
     
     useEffect(() => {
@@ -25,6 +26,8 @@ export default function paginaProductos() {
             productoService.getProductos(setProductos)
         }, [])
     }
+
+    console.log(user)
 
     return(
         <>
