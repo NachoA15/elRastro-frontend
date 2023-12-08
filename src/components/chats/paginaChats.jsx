@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
+import {useParams} from 'react-router-dom';
 import Talk from 'talkjs';
 import chatService from '../../service/chatService';
 import NavBar from '../NavBar';
 import '../../assets/css/chatsPage.css'
 
-const App = () => {
+const paginaChats = () => {
 
   const [chats, setChats] = useState([]);
 
@@ -12,32 +13,36 @@ const App = () => {
 
   useEffect(() => {
     const initializeTalkJS = async () => {
-      try {
-        await Talk.ready;
-        const talkSession = new Talk.Session({
-          appId: 'tvYAZZjb',
-          me: new Talk.User({
-            id: usuario.correo,
-            name: usuario.correo,
-          }),
-        });
-        const appId = 'tvYAZZjb';
-        const userId = usuario.correo;
-        const apiKey = 'sk_test_1afi8LJyR7BPrOXlMp3VgK4aSniBaf9d';
-        const res = await fetch(
-          `https://api.talkjs.com/v1/${appId}/users/${userId}/conversations`,
-          {
-            headers: {
-              Authorization: `Bearer ${apiKey}`,
-            },
-          }
-        );
-        const json = await res.json();
-        const conversations = json.data;
-        setChats(conversations);
-        console.log(conversations)
-      } catch (error){
-        console.error('Error initializing TalkJS: ', error);
+      if(usuario !== ""){
+        try {
+          await Talk.ready;
+          const talkSession = new Talk.Session({
+            appId: 'tvYAZZjb',
+            me: new Talk.User({
+              id: usuario.correo,
+              name: usuario.correo,
+            }),
+          });
+          const appId = 'tvYAZZjb';
+          const userId = usuario.correo;
+          const apiKey = 'sk_test_1afi8LJyR7BPrOXlMp3VgK4aSniBaf9d';
+          const res = await fetch(
+            `https://api.talkjs.com/v1/${appId}/users/${userId}/conversations`,
+            {
+              headers: {
+                Authorization: `Bearer ${apiKey}`,
+              },
+            }
+          );
+          const json = await res.json();
+          const conversations = json.data;
+          setChats(conversations);
+          console.log(conversations)
+        } catch (error){
+          console.error('Error initializing TalkJS: ', error);
+        }
+      }else{
+        //Volver a pagina ppal
       }
     };
     initializeTalkJS();
@@ -46,7 +51,8 @@ const App = () => {
   return (
     <>
     <NavBar ubicacion={"Mis chats"}/>
-    <div className="container-fluid main-div">
+
+    <div className="container-fluid chats-div">
       <div className="row" id="titulo">
         <div className="col-md-12">
           <h2 className='title'><b>Mis chats</b></h2>
@@ -54,14 +60,11 @@ const App = () => {
       </div>
       <br/>
       <br/>
-      <div className='row'>
         {chats.map((chat) => (
-            <ClickableChat
-              key={chat.id}
-              chat={chat}
-            />
+          <div key={chat.id} className='col-md-4 mx-auto'>
+            <ClickableChat chat={chat} />
+          </div>
           ))}
-      </div>
 
     </div>
 
@@ -85,4 +88,4 @@ const ClickableChat = ({ chat }) => {
   );
 };
 
-export default App;
+export default paginaChats;

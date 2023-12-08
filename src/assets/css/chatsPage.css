@@ -1,14 +1,5 @@
 @import url(https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css);
 
-body {
-    margin: 0;
-    display: flex;
-    place-items: center;
-    min-width: 320px;
-    min-height: 100vh;
-    background-color: rgb(227, 227, 227); /* Fondo de toda la página */
-  }
-
 h2.title {
 	color: #000;
 	font-size: 26px;
@@ -32,16 +23,14 @@ h2.title::after {
     background: #00afe9;
 }
 
-div.main-div {
-	padding: 0%;
-	height: fit-content;
+div.chats-div {
 	background-color: rgb(227, 227, 227);
-}
-
-.container-chats{
-    display: flex;
-    align-items: center;
-    flex-direction: column;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    overflow: auto;
 }
 
 .img-chat{
