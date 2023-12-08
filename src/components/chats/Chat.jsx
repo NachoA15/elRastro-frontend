@@ -81,7 +81,7 @@ export default function Chat() {
   return (
     <>
     <NavBar ubicacion={'Mis chats'}/>
-      <div ref={chatboxEl} style={{height: '900px', width: '700px', margin: '0px'}}/>
+    <div ref={chatboxEl} style={{height: '900px', width: '700px', margin: '0px'}}/>
     </>
   )
 }
