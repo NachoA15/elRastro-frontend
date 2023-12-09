@@ -3,17 +3,13 @@ import NavBar from '../NavBar';
 import {
   TextField,
 } from '@mui/material';
-import usuarioService from '../../service/usuarioService';
 import productoService from '../../service/productoService';
 
 export default function upload_product() {
-  const token = localStorage.getItem("googleToken") || "";
-  const [usuario, setUsuario] = useState({});
+  const correo = localStorage.getItem("email") || "";
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedImagePath, setSelectedImagePath] = useState(null);
-  useEffect(() => {
-    usuarioService.getUsuario(token, setUsuario);
-  }, []);
+
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
@@ -47,6 +43,8 @@ export default function upload_product() {
                 const nombre = document.getElementById('nombre').value;
                 let precio = document.getElementById('precio').value;
                 const descripcion = document.getElementById('descripcion').value;
+                const codPostal = document.getElementById('codPostal').value;
+
                 //const vendedor = idUsuarioRegistrado;
 
 
@@ -57,12 +55,12 @@ export default function upload_product() {
                     nombre: nombre,
                     precioInicial: precio,
                     descripcion: descripcion,
-                    usuario: usuario.correo,
+                    direccion: codPostal,
+                    usuario: correo,
                     imagen: selectedImagePath,
                     fechaCierre: selectedDate
                   };
-                  console.log(usuario)
-                  console.log(usuario.correo)
+                  
                   console.log(anuncio)
 
                   productoService.addProduct(anuncio);
@@ -108,6 +106,25 @@ export default function upload_product() {
                             required
                             id="precio"
                             label="Precio del producto"
+                            variant="standard"
+                            size="small"
+                            inputProps={{ inputMode: 'numeric', pattern: '[0-9,.]*' }}
+                          />
+                        </div>
+                      </div>
+                      <div className="col-md-2"></div>
+                    </div>
+
+                    <br />
+
+                    <div className="row text-left">
+                      <div className="col-md-2"></div>
+                      <div className="col-md-8">
+                        <div>
+                          <TextField
+                            required
+                            id="codPostal"
+                            label="Codigo Postal"
                             variant="standard"
                             size="small"
                             inputProps={{ inputMode: 'numeric', pattern: '[0-9,.]*' }}
