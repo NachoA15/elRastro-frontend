@@ -10,5 +10,13 @@ export default defineConfig(({ mode }) => {
       'process.env.REACT_APP_APIKEY': JSON.stringify(env.REACT_APP_APIKEY)
     },
     plugins: [react()],
+    server: {
+      watch: {
+        usePolling: true
+      },
+      host: true,
+      strictPort: true,
+      port: 5173,
+    }
   }
 })
