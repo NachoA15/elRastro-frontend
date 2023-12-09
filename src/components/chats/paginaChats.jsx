@@ -20,15 +20,15 @@ const paginaChats = () => {
       try {
         await Talk.ready;
         const talkSession = new Talk.Session({
-          appId: 'tvYAZZjb',
+          appId: process.env.REACT_APP_ID,
           me: new Talk.User({
             id: usuario,
             name: usuario,
           }),
         });
-        const appId = 'tvYAZZjb';
+        const appId = process.env.REACT_APP_ID;
         const userId = usuario;
-        const apiKey = 'sk_test_1afi8LJyR7BPrOXlMp3VgK4aSniBaf9d';
+        const apiKey = process.env.REACT_APP_APIKEY;
         const res = await fetch(
           `https://api.talkjs.com/v1/${appId}/users/${userId}/conversations`,
           {
@@ -40,6 +40,7 @@ const paginaChats = () => {
         const json = await res.json();
         const conversations = json.data;
         setChats(conversations);
+        console.log(conversations);
       } catch (error){
         console.error('Error initializing TalkJS: ', error);
       }

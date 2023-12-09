@@ -68,12 +68,12 @@ export default function Chat() {
 
       if(usuario === correoVend){
         session = new Talk.Session({
-          appId: 'tvYAZZjb',
+          appId: process.env.REACT_APP_ID,
           me: vendedor,
         });
       }else{
         session = new Talk.Session({
-          appId: 'tvYAZZjb',
+          appId: process.env.REACT_APP_ID,
           me: comprador,
         });
       }
