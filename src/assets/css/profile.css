@@ -1,16 +1,4 @@
-.gradient-custom {
-  /* fallback for old browsers */
-  
 
-  width: 250px;
-  height: 1000px;
-
-  }
-
-section#usuario{
-  background-color: #f4f5f7;
-  width: 1400px;
-}
 
 div#perfil{
   width: 300px;
@@ -24,8 +12,38 @@ img#img-perfil{
   border-bottom-right-radius: 10rem;
   font-size: 0.8rem;
   position: relative;
+  border-radius: 50%;
+  
 }
 
-.custom-rating .star {
-  font-size: 24px; /* Adjust the font size as needed */
+.react-rating-stars-component {
+  font-size: 30px; /* O ajusta según tus necesidades */
 }
+
+
+@media screen and (max-width: 1080px) {
+
+  #perfil {
+    text-align: center; /* Centra el texto en pantallas pequeñas */
+  }
+
+  img#img-perfil {
+    width: 60px; /* Reduce el tamaño de la imagen en pantallas pequeñas */
+    text-align: center;
+  }
+
+  h4#usuario-correo{
+    font-size: 0.8rem;
+    text-align: center;
+  }
+
+  p#usuario-nombre{
+    font-size: 0.8rem;
+    text-align: center;
+  }
+}
+
+
+
+  
+ 

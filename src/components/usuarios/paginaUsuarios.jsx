@@ -4,7 +4,6 @@ import NavBar from '../NavBar'
 
 import usuarioService from '../../service/usuarioService';
 import Usuario from './usuario';
-import '../../assets/css/profile.css'
 
 
 export default function paginaUsuario() {
