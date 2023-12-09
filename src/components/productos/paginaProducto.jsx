@@ -6,8 +6,11 @@ import productoService from "../../service/productoService";
 import Swal from 'sweetalert2';
 import GMap from '../maps/GoogleMap';
 import '../../assets/css/productPage.css'
+import routerService from '../../service/routerService';
 
 export default function PaginaProducto() {
+
+    const usuario = localStorage.getItem('email');
 
     const [producto, setProducto] = useState([]);
     const [coordenadas, setCoordenadas] = useState([]);
@@ -28,7 +31,7 @@ export default function PaginaProducto() {
         }
     }, [producto])
 
-    console.log(coordenadas)
+    //console.log(navigator.geolocation.getCurrentPosition())
 
     let cierreSubasta = new Date(producto.fechaCierre);
     let hoy = new Date();
@@ -59,7 +62,7 @@ export default function PaginaProducto() {
                     </div>
                     <div className='col-md-2' />
                     <div className="col-md-6 info-producto">
-                        <div className="small mb-1"><a href={'/perfil/' + producto.usuario}>{producto.usuario}</a></div>
+                        <div className="small mb-1"><a href={'/usuario/' + producto.usuario}>{producto.usuario}</a></div>
                         <h1 className="display-5 fw-bolder">{producto.nombre}</h1>
                         <hr/>
                         <p className="lead descripcion">{producto.descripcion}</p>
@@ -93,29 +96,88 @@ export default function PaginaProducto() {
                                                     <br/>
                                                     <span style={{float: 'right'}}>Realizada el {producto.puja.fecha.toString().substring(0,10).replaceAll('-', '/')} a las {producto.puja.fecha.toString().substring(11,16)}</span></>
                                                     :
-                                                    <><p>Aún no se ha realizado ninguna puja sobre este producto</p></>
+                                                    <><p>Aún no se ha realizado ninguna puja sobre este producto.</p></>
                                                 }
                                             </div> 
                                             {!subastaCerrada?
                                                 <>
                                                 <div className="text-center my-4"> 
-                                                    <a href="#" className="btn btn-warning" onClick={() => {
+                                                    {usuario !== producto.usuario? (
+                                                        <>
+                                                        <a href="#" className="btn btn-warning" onClick={(e) => {
+                                                            e.preventDefault();
+                                                            Swal.fire({
+                                                                icon: 'info',
+                                                                title: 'Vas a realizar una puja',
+                                                                showCancelButton: true,
+                                                                confirmButtonText: 'Entendido',
+                                                                html: 'Va a pujar sobre el producto ' + producto.nombre + '. <br/><br/> Por favor, entienda que al '
+                                                                + 'realizar esta operación se compromete a pagar la cantidad pujada en caso de ser el ganador '
+                                                                + 'de la subasta en un plazo menor a 7 días. En caso de no ser así, se le penalizará en esta '
+                                                                + 'aplicación. <br/><br/> <b>Esta acción no se podrá deshacer</b>'
+                                                                
+                                                            }).then((result) => {
+                                                                if (result.isConfirmed) {
+                                                                    Swal.fire({
+                                                                        title: 'Introduzca la cantidad a pujar',
+                                                                        input: 'number',
+                                                                        showCancelButton: true,
+                                                                        showLoaderOnConfirm: true,
+                                                                        preConfirm: async (cantidad) => {
+                                                                            console.log('Pujando...')
+                                                                            return await productoService.pujar(usuario, cantidad, producto._id);
+                                                                        },
+                                                                        allowOutsideClick: () => !Swal.isLoading()
+                                                                    }).then((result) => {
+                                                                        console.log(result)
+                                                                        if (result.value.status) {
+                                                                            Swal.fire({
+                                                                                icon: 'error',
+                                                                                title: 'No se puede realizar la puja',
+                                                                                text: result.value.mensaje
+                                                                            })
+                                                                        } else {
+                                                                            Swal.fire({
+                                                                                icon: 'success',
+                                                                                title: 'Puja realizada con éxito',
+                                                                                text: 'Ahora eres el usuario con la puja más alta para este producto. Puedes ver el estado de este producto en la sección de "Mis pujas".'
+                                                                            }).then((result) => {
+                                                                                if (result.isConfirmed) {
+                                                                                    routerService.moveToProductPage(producto._id);
+                                                                                }
+                                                                            })       
+                                                                        }
+                                                                    })
+                                                                }
+                                                            })
+                                                        }}><b>Pujar</b></a> 
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                        <a href="#" className="btn btn-secondary" onClick={() => {
                                                         Swal.fire({
                                                             icon: 'info',
-                                                            title: 'Vas a realizar una puja',
-                                                            html: 'Va a pujar sobre el producto ' + producto.nombre + '. <br/><br/> Por favor, entienda que al '
-                                                            + 'realizar esta operación se compromete a pagar la cantidad pujada en caso de ser el ganador '
-                                                            + 'de la subasta en un plazo menor a 7 días. En caso de no ser así, se le penalizará en esta '
-                                                            + 'aplicación.'
+                                                            title: 'No puedes realizar la puja',
+                                                            confirmButtonText: 'Entendido',
+                                                            html: 'Eres el propietario del producto ' + producto.nombre + ' y no puedes pujar sobre él.'
                                                             
                                                         })
-                                                    }}><b>Pujar</b></a> 
+                                                        }}><b>Pujar</b></a> 
+                                                        </>
+                                                    )}
                                                 </div> 
                                                 </>
                                                 :
                                                 <>                                                
                                                 <div className="text-center my-4"> 
-                                                    <a href="#" className="btn btn-secondary" style={{cursor: "default"}}><b>Pujar</b></a> 
+                                                    <a href="#" className="btn btn-secondary" style={{cursor: "default"}}
+                                                    onClick={() => {
+                                                        Swal.fire({
+                                                            icon: 'info',
+                                                            title: 'La subasta está cerrada',
+                                                            text: 'No puedes pujar por la subasta porque ya ha terminado.'
+                                                        })
+                                                    }}><b>Pujar</b></a> 
                                                 </div> 
                                                 </>
                                             }
@@ -129,9 +191,14 @@ export default function PaginaProducto() {
             </div>
         </section>
 
+        <hr/>
+        <p>Según la distancia entre su localización y la del producto se calcula una tasa extra por la huella de carbono emitida en el transporte del mismo.</p>
+        <p>Para este producto, la tasa adicional calculada es de </p>
+
         <section className="py-5 bg-light">
             {coordenadas.length !== 0?
                 <>
+                <p>Localización aproximada del producto (código postal {producto.direccion}):</p>
                 <GMap lat={Number(coordenadas.lat)} long={Number(coordenadas.long)}/>
                 </>
             :

@@ -53,6 +53,20 @@ const getCoordenadasByCodPostal = async (codPostal, setCoordenadas) => {
   }
 }
 
-const productoService = {getProductos, getProductosByUsuario, getProductoById, addProduct, deleteProduct, getCoordenadasByCodPostal}
+const pujar = async (usuario, cantidad, producto) => {
+  try {
+    await Axios.post('http://127.0.0.1:5001/puja/', {
+      usuario: usuario,
+      cantidad: cantidad,
+      producto: producto
+    }).then((res) => {
+      return {status: res.status, mensaje: res.data.mensaje}
+    })
+  } catch (error) {
+    return {status: error.response.status, mensaje: error.response.data}
+  }
+}
+
+const productoService = {getProductos, getProductosByUsuario, getProductoById, addProduct, deleteProduct, getCoordenadasByCodPostal, pujar}
 
 export default productoService;
