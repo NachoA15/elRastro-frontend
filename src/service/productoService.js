@@ -43,11 +43,15 @@ const deleteProduct = async (producto) => {
     }
 };
 
-const getCoordenadasByCodPostal = async (codPostal, setCoordenadas) => {
+const getCoordenadasByCodPostal = async (producto, setCoordenadas) => {
   try {
-    await Axios.get('http://127.0.0.1:5001/carbono/coord?codPostal=' + codPostal).then((res) => {
-      setCoordenadas(res.data)
-    })
+    if(producto.direccion && producto.direccion !== 29080){
+      await Axios.get('http://127.0.0.1:5001/carbono/coord?codPostal=' + producto.direccion).then((res) => {
+        res.data.title = producto.nombre
+        setCoordenadas(res.data)
+        console.log(res.data)
+      })
+    }
   } catch (error) {
     console.error(error);
   }
@@ -66,7 +70,24 @@ const pujar = async (usuario, cantidad, producto) => {
     return {status: error.response.status, mensaje: error.response.data}
   }
 }
+const getCoordenadasListByCodPostal = async (productos, setCoordenadas) => {
+  try {
+    let coordenadas = [];
 
-const productoService = {getProductos, getProductosByUsuario, getProductoById, addProduct, deleteProduct, getCoordenadasByCodPostal, pujar}
+    for (const producto of productos) {
+      if(producto.direccion && producto.direccion !== 29080){
+        const response = await Axios.get('http://127.0.0.1:5001/carbono/coord?codPostal=' + producto.direccion);
+        response.data.title = producto.nombre
+        coordenadas.push(response.data);
+      }
+      
+    }
+    setCoordenadas(coordenadas);
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+const productoService = {getProductos, getProductosByUsuario, getProductoById, addProduct, deleteProduct, getCoordenadasByCodPostal,getCoordenadasListByCodPostal, pujar}
 
 export default productoService;

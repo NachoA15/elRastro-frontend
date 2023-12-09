@@ -27,7 +27,7 @@ export default function PaginaProducto() {
 
     useEffect(() => {
         if (producto.length !== 0) {
-            productoService.getCoordenadasByCodPostal(producto.direccion, setCoordenadas)
+            productoService.getCoordenadasByCodPostal(producto, setCoordenadas)
         }
     }, [producto])
 
@@ -199,7 +199,7 @@ export default function PaginaProducto() {
             {coordenadas.length !== 0?
                 <>
                 <p>Localización aproximada del producto (código postal {producto.direccion}):</p>
-                <GMap lat={Number(coordenadas.lat)} long={Number(coordenadas.long)}/>
+                <GMap locations={[coordenadas]}/>
                 </>
             :
                 <></>

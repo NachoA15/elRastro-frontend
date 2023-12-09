@@ -4,10 +4,14 @@ import productoService from '../../service/productoService';
 import NavBar from '../NavBar'
 import Producto from './producto'
 import '../../assets/css/productsPage.css'
+import GMap from '../maps/GoogleMap';
+
 
 export default function paginaProductos({ misProductos }) {
     const usuario = localStorage.getItem("email")
     const [productos, setProductos] = useState([]);
+    const [coordenadas, setCoordenadas] = useState([]);
+    
 
     console.log(usuario)
 
@@ -20,6 +24,11 @@ export default function paginaProductos({ misProductos }) {
             productoService.getProductos(setProductos)
         }, [])
     }
+
+    useEffect(() => {
+        productoService.getCoordenadasListByCodPostal(productos, setCoordenadas)
+    }, [productos])
+    console.log(coordenadas)
 
     return(
         <>
@@ -64,6 +73,18 @@ export default function paginaProductos({ misProductos }) {
                     </div>
                 </div>
             </div>
+            <section className="py-5 bg-light">
+                <section className='map-section'>
+                {coordenadas.length !== 0?
+                    <>
+                    <GMap locations={[coordenadas]}/>
+                    </>
+                :
+                    <></>
+                }
+                </section>
+                
+            </section>
         </div>
         </>
     )

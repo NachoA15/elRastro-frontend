@@ -1,0 +1,13 @@
+version: "1.0"
+services:
+  app:
+    container_name: el-rastro-frontend
+    image: el-rastro-frontend
+    build:
+      context: .
+    volumes:
+      - ./elRastro-frontend:/elRastro-frontend
+    ports:
+      - 5173:5173
+    environment:
+      - NODE_OPTIONS=--max-old-space-size=4096  # Ajusta el valor según tus necesidades
