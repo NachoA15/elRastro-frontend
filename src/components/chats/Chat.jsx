@@ -97,11 +97,11 @@ export default function Chat() {
     <>
     <NavBar ubicacion={'Mis chats'}/>
 
-    <div className="container-fluid chat-div">
+    <div className="container-fluid chat-div d-flex flex-column vh-100">
       <br/>
       <br/>
       <br/>
-      <div className='row'>
+      <div className='row col-12'>
         <div className="col-md-6">
           <button
             className="btn-chat"
@@ -111,9 +111,9 @@ export default function Chat() {
           >Volver</button>
         </div>
       </div>
-      <div className='row' id="chat">
-        <div className="col-md-12 d-flex justify-content-center align-items-center">
-        <div ref={chatboxEl} style={{height: '900px', width: '700px', margin: '100px auto 0'}}/>
+      <div className='row chat-row flex-grow-1' >
+        <div className="col-md-12 d-flex align-items-center">
+        <div id='chat' ref={chatboxEl} className="flex-grow-1 mb-4"/>
         </div>
       </div>
     </div>
