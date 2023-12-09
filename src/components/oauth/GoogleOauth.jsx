@@ -33,6 +33,7 @@ export default function GoogleOAuth() {
         }).then((res) => {
             setProfile(res.data);
             localStorage.setItem('email', res.data.email)
+            localStorage.setItem('token', user.access_token)
         }).catch((err) => console.log(err));
         }
     }, [user]);
@@ -41,10 +42,10 @@ export default function GoogleOAuth() {
         <>
         {(profile !== undefined && profile.length !== 0) || (perfil !== null && perfil !== undefined && perfil.length !== 0)? (
           <div>
-              <a class="btn btn-outline-light btn-lg px-4" href="#!" onClick={logOut}>Log out</a>
+              <a className="btn btn-outline-light btn-lg px-4" href="/" onClick={logOut}>Log out</a>
           </div>
         ) : (
-            <a class="btn btn-outline-light btn-lg px-4" href="#!" onClick={() => {
+            <a className="btn btn-outline-light btn-lg px-4" href="#!" onClick={() => {
                 login();
                 //routerService.moveToProductos();
             }}>Sign in with Google</a>

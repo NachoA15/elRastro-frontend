@@ -18,6 +18,8 @@ export default function PaginaProducto() {
     let param = useParams();
     let idProducto = param.id;
 
+    //////////////////////////////////////////////////////////////////////
+
     useEffect(() => {
         const fetchData = async() => {
             await productoService.getProductoById(setProducto, idProducto);
@@ -31,7 +33,7 @@ export default function PaginaProducto() {
         }
     }, [producto])
 
-    //console.log(navigator.geolocation.getCurrentPosition())
+    //////////////////////////////////////////////////////////////////////
 
     let cierreSubasta = new Date(producto.fechaCierre);
     let hoy = new Date();
@@ -40,13 +42,36 @@ export default function PaginaProducto() {
     let diffTime = Math.abs(hoy - cierreSubasta);
     let diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
+    //////////////////////////////////////////////////////////////////////
+
+    let imagenProducto = new Image();
+    imagenProducto.src = producto.imagen;
+
+    //////////////////////////////////////////////////////////////////////
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(success, error);
+      } else {
+        console.log("Geolocation not supported");
+      }
+      
+      function success(position) {
+        const latitude = position.coords.latitude;
+        const longitude = position.coords.longitude;
+        console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
+      }
+      
+      function error() {
+        console.log("Unable to retrieve your location");
+      }
+
     return(
         <>
         <NavBar />
         <section className="py-5">
             <div className="container px-4 px-lg-5 my-5">
                 <div className="row gx-4 gx-lg-5 align-items-center">
-                    <div className="col-md-4" style={{height: "500px"}}>
+                    <div className="col-md-6" style={{height: "500px", objectFit: 'contain'}}>
                         {
                             subastaCerrada?
                             <>
@@ -58,28 +83,29 @@ export default function PaginaProducto() {
                             <>
                             </>
                         }
-                        <img className="card-img-top mb-5 mb-md-0 img-producto" src={producto.imagen} alt={producto.descripcion} />
+                        <img className="card-img-top mb-5 mb-md-0" src={producto.imagen} alt="..." style={imagenProducto.height > imagenProducto.width? {height: '500px', width: 'auto'} : {height: 'auto', width: '500px'}}/>
                     </div>
-                    <div className='col-md-2' />
-                    <div className="col-md-6 info-producto">
+                    <div className="col-md-6">
                         <div className="small mb-1"><a href={'/usuario/' + producto.usuario}>{producto.usuario}</a></div>
+                        <hr/>
                         <h1 className="display-5 fw-bolder">{producto.nombre}</h1>
-                        <hr/>
-                        <p className="lead descripcion">{producto.descripcion}</p>
-                        <hr/>
-                        <div className="fs-5 mb-5" style={{float: "left"}}>
-                                <div><p style={{float: 'left'}}>Subasta iniciada con un precio de {producto.precioInicial} €</p></div>
-                                <div>
-                                    {
-                                        subastaCerrada?
-                                        <p style={{float: 'left'}}>Esta subasta ya está cerrada.</p>
-                                        :
-                                        <p style={{float: 'left'}}>Esta subasta termina el {cierreSubasta.toString().substring(7, 10)} {cierreSubasta.toString().substring(4,7)} {cierreSubasta.toString().substring(11,15)} (Quedan {diffDays} días). </p>
-                                    }
-                                </div>
+                        <div className="fs-5 mb-5">
+                            <span>
+                            </span>
+                            <p className="lead">{producto.descripcion}</p>
+                            <hr/>
+                            <div className='row'><p style={{float: 'left'}}>Subasta iniciada con un precio de {producto.precioInicial} €</p></div>
+                            <div className='row'>
+                                {
+                                    subastaCerrada?
+                                    <p style={{float: 'left'}}>Esta subasta <b>ya está cerrada.</b></p>
+                                    :
+                                    <p style={{float: 'left'}}>Esta subasta termina el {cierreSubasta.toString().substring(7, 10)} {cierreSubasta.toString().substring(4,7)} {cierreSubasta.toString().substring(11,15)} (Quedan {diffDays} días). </p>
+                                }
+                            </div>
                         </div>
                         <div className="container-fluid bg-trasparent my-4 p-3"> 
-                            <div className="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3" style={{height: "170px"}}> 
+                            <div className="row row-cols-1 row-cols-xs-2 row-cols-sm-2 row-cols-lg-4 g-3" style={{height: "10%"}}> 
                                 <div className="col puja-container"> 
                                     <div className="card h-100 shadow-sm"> 
                                         <div className="label-top shadow-sm">{
@@ -88,7 +114,7 @@ export default function PaginaProducto() {
                                             :
                                             'Puja más alta'
                                         }</div> 
-                                        <div className="card-body"> 
+                                        <div className="card-body" style={{height: "120px", padding: '0px'}}> 
                                             <div className="clearfix mb-3"> 
                                                 {
                                                     producto.puja !== undefined && producto.puja != {}?
@@ -190,7 +216,6 @@ export default function PaginaProducto() {
                 </div>
             </div>
         </section>
-
         <hr/>
         <p>Según la distancia entre su localización y la del producto se calcula una tasa extra por la huella de carbono emitida en el transporte del mismo.</p>
         <p>Para este producto, la tasa adicional calculada es de </p>
