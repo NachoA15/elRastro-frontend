@@ -9,6 +9,8 @@ export default function paginaProductos({ misProductos }) {
     const usuario = localStorage.getItem("email")
     const [productos, setProductos] = useState([]);
 
+    console.log(usuario)
+
     if (misProductos) {
         useEffect(() => {
             productoService.getProductosByUsuario(setProductos, usuario)

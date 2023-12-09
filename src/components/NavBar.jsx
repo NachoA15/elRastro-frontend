@@ -1,4 +1,5 @@
 import React from "react";
+import GoogleOAuth from "./oauth/GoogleOauth";
 
 export default function NavBar({ubicacion}) {
     let usuario = localStorage.getItem("email");
@@ -17,20 +18,7 @@ export default function NavBar({ubicacion}) {
                             <li className="nav-item" style={{marginLeft: "20px"}}><a className={ubicacion === 'Mis chats'? 'nav-link active' : 'nav-link'} href="/chats"> Mis chats</a></li> 
                             <li className="nav-item" style={{marginLeft: "20px"}}><a className={ubicacion === 'Mis Pujas'? 'nav-link active' : 'nav-link'} href={"/misPujas"}> Mis pujas</a></li>
                             <li className="nav-item" style={{marginLeft: "20px"}}><a className={ubicacion === 'Mi perfil'? 'nav-link active' : 'nav-link'} href={"/usuario/" + usuario}>Mi perfil</a></li>
-                            <li className="nav-item" style={{marginLeft: "20px"}}><a className="nav-link" href="/" onClick={(e) => {
-                            
-                                e.preventDefault();
-                                Swal.fire({
-                                    icon: 'question',
-                                    html: '<h3>¿Quiere cerrar sesión?</h3> Volverás a la página principal.',
-                                    confirmButtonText: 'Sí',
-                                    confirmButtonColor: 'green',
-                                    showDenyButton: 'true',
-                                    denyButtonText: 'No'
-                                }).then((result) => {
-
-                                })
-                            }} >Cerrar sesión</a></li>
+                            <li className="nav-item" style={{marginLeft: "20px"}}><GoogleOAuth /></li>
                         </ul>
                     </div>
                 </div>

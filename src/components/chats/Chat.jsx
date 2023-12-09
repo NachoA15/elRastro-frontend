@@ -104,7 +104,7 @@ export default function Chat() {
       <div className='row'>
         <div className="col-md-6">
           <button
-            className="btn"
+            className="btn-chat"
             onClick={() => {
               window.location.href = "/chats";
             }}

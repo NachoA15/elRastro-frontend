@@ -4,9 +4,11 @@ import axios from 'axios'
 import { googleLogout, useGoogleLogin } from '@react-oauth/google'
 import routerService from "../../service/routerService";
 
-export default function GoogleOAuth({ perfil }) {
+export default function GoogleOAuth() {
     const [user, setUser] = useState([]);
     const [profile, setProfile] = useState([]);
+
+    const perfil = localStorage.getItem('email');
 
     const login = useGoogleLogin({
         onSuccess: (codeResponse) => setUser(codeResponse),
@@ -17,7 +19,8 @@ export default function GoogleOAuth({ perfil }) {
         googleLogout();
         setProfile([]);
         setUser([]);
-        appService.moveToMainPage();
+        localStorage.clear();
+        //appService.moveToMainPage();
     };
 
     useEffect(() => {
@@ -36,14 +39,14 @@ export default function GoogleOAuth({ perfil }) {
 
     return(
         <>
-        {(profile !== undefined && profile.length !== 0) || (perfil !== undefined && perfil.length !== 0)? (
+        {(profile !== undefined && profile.length !== 0) || (perfil !== null && perfil !== undefined && perfil.length !== 0)? (
           <div>
               <button onClick={logOut}>Log out</button>
           </div>
         ) : (
-            <button onClick={() => {
+            <button onClick={(e) => {
                 login();
-                routerService.moveToProductos();
+                //routerService.moveToProductos();
             }}>Sign in with Google </button>
         )}
         </>

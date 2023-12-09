@@ -10,7 +10,7 @@ div.chat-div {
     overflow: auto;
 }
 
-.btn {
+.btn-chat {
     background-color: #fff;
     color: black;
     padding: 10px 20px;
@@ -19,7 +19,7 @@ div.chat-div {
     cursor: pointer;
   }
   
-.btn:hover {
+.btn-chat:hover {
     background-color: #f2f2f2; 
     border: 2px solid black;
 }

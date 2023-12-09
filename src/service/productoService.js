@@ -43,6 +43,16 @@ const deleteProduct = async (producto) => {
     }
 };
 
-const productoService = {getProductos, getProductosByUsuario, getProductoById, addProduct, deleteProduct}
+const getCoordenadasByCodPostal = async (codPostal, setCoordenadas) => {
+  try {
+    await Axios.get('http://127.0.0.1:5001/carbono/coord?codPostal=' + codPostal).then((res) => {
+      setCoordenadas(res.data)
+    })
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+const productoService = {getProductos, getProductosByUsuario, getProductoById, addProduct, deleteProduct, getCoordenadasByCodPostal}
 
 export default productoService;
