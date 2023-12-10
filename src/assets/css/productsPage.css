@@ -23,12 +23,12 @@ div.main-div {
 	height: fit-content;
 	background-color: rgb(227, 227, 227);
 }
-
+/*
 div#titulo {
 	position: relative;
 	top: 60px;
 }
-
+*/
 h2::after {
 	content: "";
 	width: 250px;
