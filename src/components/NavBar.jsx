@@ -1,8 +1,14 @@
 import React from "react";
 import GoogleOAuth from "./oauth/GoogleOauth";
+import routerService from "../service/routerService";
 
 export default function NavBar({ubicacion}) {
     let usuario = localStorage.getItem("email");
+
+    if (usuario === null) {
+        routerService.moveToMainPage();
+    }
+
     return(
         <>
             <nav className="navbar navbar-expand-lg fixed-top navbar-dark bg-dark" id="profilepNav">
