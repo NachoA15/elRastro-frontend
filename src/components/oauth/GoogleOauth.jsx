@@ -34,6 +34,7 @@ export default function GoogleOAuth() {
             setProfile(res.data);
             localStorage.setItem('email', res.data.email)
             localStorage.setItem('token', user.access_token)
+            routerService.moveToProductos();
         }).catch((err) => console.log(err));
         }
     }, [user]);
@@ -47,7 +48,6 @@ export default function GoogleOAuth() {
         ) : (
             <a className="btn btn-outline-light btn-lg px-4" href="#!" onClick={() => {
                 login();
-                //routerService.moveToProductos();
             }}>Sign in with Google</a>
         )}
         </>

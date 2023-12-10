@@ -7,6 +7,7 @@ import Swal from 'sweetalert2';
 import GMap from '../maps/GoogleMap';
 import '../../assets/css/productPage.css'
 import routerService from '../../service/routerService';
+import ImageNotFound from '../../assets/images/imagenotfound.jpg'
 
 export default function PaginaProducto() {
 
@@ -83,7 +84,7 @@ export default function PaginaProducto() {
                             <>
                             </>
                         }
-                        <img className="card-img-top mb-5 mb-md-0" src={producto.imagen} alt="..." style={imagenProducto.height > imagenProducto.width? {height: '500px', width: 'auto'} : {height: 'auto', width: '500px'}}/>
+                        <img className="card-img-top mb-5 mb-md-0" src={producto.imagen !== undefined? producto.imagen : ImageNotFound} alt="..." style={imagenProducto.height > imagenProducto.width? {height: '500px', width: 'auto'} : {height: 'auto', width: '500px'}}/>
                     </div>
                     <div className="col-md-6">
                         <div className="small mb-1"><a href={'/usuario/' + producto.usuario}>{producto.usuario}</a></div>
