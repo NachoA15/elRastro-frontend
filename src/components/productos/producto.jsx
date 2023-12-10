@@ -31,8 +31,6 @@ export default function producto({producto}) {
             usuarioService.getUsuarioByCorreo(producto.puja.usuario, setUsuario);
         }
     }, [producto.puja]);
-
-    
     
 
     const valorado =

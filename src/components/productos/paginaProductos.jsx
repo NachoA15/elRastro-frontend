@@ -11,6 +11,7 @@ import Filter from './filter';
 export default function paginaProductos({ misProductos }) {
     const usuario = localStorage.getItem("email")
     const [productos, setProductos] = useState([]);
+    const [filtrando, setFiltrando] = useState(false);
     const [coordenadas, setCoordenadas] = useState([]);
 
     useEffect(() => {
@@ -31,14 +32,14 @@ export default function paginaProductos({ misProductos }) {
             <div className="row">
                 <NavBar ubicacion={misProductos? 'Mis Productos' : "Productos"}/>
             </div>
-            <br/>
-            <br/>
-            <br/>
             <div className="row" id='titulo'>
                 <div className="col-md-12">
                     {misProductos? 
                         (
                         productos.length === 0? 
+                            filtrando?
+                            <h2 tabIndex="0" className='product-page-title title'>No se ha encontrado ningún producto según el filtro</h2>
+                            :
                             <><h2 className='product-page-title title'>No tienes productos registrados actualmente</h2></> 
                         : 
                             <h2 className='product-page-title title'><b>Mis productos</b></h2>
@@ -47,12 +48,15 @@ export default function paginaProductos({ misProductos }) {
                         (
                         productos.length !== 0? 
                             <h2 tabIndex="0" className='product-page-title title'><b>Sección de los productos</b></h2> 
-                        : 
+                        :  
+                            filtrando?
+                            <h2 tabIndex="0" className='product-page-title title'>No se ha encontrado ningún producto según el filtro</h2>
+                            :
                             <h2 tabIndex="0" className='product-page-title title'><b>No hay ningún producto actualmente en subasta</b></h2>
                         )
                     }
                     
-                    <Filter setProductos={setProductos} misProductos={misProductos} usuario={usuario}/>
+                    <Filter setProductos={setProductos} misProductos={misProductos} usuario={usuario} setFiltrando={setFiltrando}/>
                 </div>
             </div>
             <div className='row' style={{width: "100%"}}>
