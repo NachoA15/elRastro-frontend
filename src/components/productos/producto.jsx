@@ -51,15 +51,6 @@ export default function producto({producto}) {
         // Redireccionar a la página de productos (o donde sea necesario)
         window.location.reload();
       };
-
-
-    /*const [usuario, setUsuario] = useState({} );
-
-    useEffect(() => {
-        usuarioService.getUsuario(token, setUsuario);
-    }, []);
-
-    console.log(token)*/
     
 
   return(

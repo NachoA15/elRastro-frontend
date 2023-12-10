@@ -50,21 +50,48 @@ export default function PaginaProducto() {
 
     //////////////////////////////////////////////////////////////////////
 
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(success, error);
-      } else {
-        console.log("Geolocation not supported");
-      }
-      
-      function success(position) {
-        const latitude = position.coords.latitude;
-        const longitude = position.coords.longitude;
-        console.log(`Latitude: ${latitude}, Longitude: ${longitude}`);
-      }
-      
-      function error() {
-        console.log("Unable to retrieve your location");
-      }
+    const [userLocation, setUserLocation] = useState([]);
+    // define the function that finds the users geolocation
+    const getUserLocation = () => {
+        // if geolocation is supported by the users browser
+        if (navigator.geolocation) {
+            // get the current users location
+            navigator.geolocation.getCurrentPosition(
+                (position) => {
+                    // save the geolocation coordinates in two variables
+                    const { latitude, longitude } = position.coords;
+                    // update the value of userlocation variable
+                    setUserLocation({ latitude, longitude });
+                },
+                // if there was an error getting the users location
+                (error) => {
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'No se puede obtener la localización del navegador',
+                        html: 'Por favor, compruebe que tiene los servicios de geolocalización de su navegador activados para realizar la estimación de la tasa adicional por la emisión de CO2 en el transporte del producto. <br/><br/> En caso contrario esta tasa no podrá calcularse.'
+                    })
+                }
+            );
+        }
+        // if geolocation is not supported by the users browser
+        else {
+            console.error('Geolocation is not supported by this browser.');
+        }
+    };
+
+    if (userLocation.length === 0) {
+        getUserLocation();
+    }
+
+    const [carbono, setCarbono] = useState(null); 
+
+    useEffect(() => {
+        if (userLocation.length !== 0) {
+            productoService.calcularHuellaCarbono(userLocation, producto.direccion, setCarbono);
+        }
+    }, [userLocation, producto])
+    
+
 
     return(
         <>
@@ -156,7 +183,6 @@ export default function PaginaProducto() {
                                                                         },
                                                                         allowOutsideClick: () => !Swal.isLoading()
                                                                     }).then((result) => {
-                                                                        console.log(result)
                                                                         if (result.value.status) {
                                                                             Swal.fire({
                                                                                 icon: 'error',
@@ -218,8 +244,20 @@ export default function PaginaProducto() {
             </div>
         </section>
         <hr/>
-        <p>Según la distancia entre su localización y la del producto se calcula una tasa extra por la huella de carbono emitida en el transporte del mismo.</p>
-        <p>Para este producto, la tasa adicional calculada es de </p>
+        {
+            carbono !== null?
+            <>
+            <p>Según la distancia entre su localización y la del producto se calcula una tasa extra por la huella de carbono emitida en el transporte del mismo.</p>
+            <p>La estimación de la cantidad de CO2 emitida en el transporte de este producto a su localización es de <b>{carbono.toString().substring(0,6)}Kg</b></p>
+            <p>Con dicha estimación, la tasa adicional calculada es de <b>{(Number(carbono)/10 * producto.precioInicial).toString().substring(0,5)}€</b></p>
+            
+            </>
+            :
+            <>
+            <p>Calculando tasa adicional de CO2...</p>
+            </>
+        }
+        <hr/>
 
         <section className="py-5 bg-light">
             {coordenadas.length !== 0?

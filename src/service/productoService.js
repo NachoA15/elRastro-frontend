@@ -57,7 +57,6 @@ const getCoordenadasByCodPostal = async (producto, setCoordenadas) => {
       await Axios.get('http://127.0.0.1:5001/carbono/coord?codPostal=' + producto.direccion).then((res) => {
         res.data.title = producto.nombre
         setCoordenadas(res.data)
-        console.log(res.data)
       })
     }
   } catch (error) {
@@ -78,6 +77,7 @@ const pujar = async (usuario, cantidad, producto) => {
     return {status: error.response.status, mensaje: error.response.data}
   }
 }
+
 const getCoordenadasListByCodPostal = async (productos, setCoordenadas) => {
   try {
     let coordenadas = [];
@@ -96,6 +96,18 @@ const getCoordenadasListByCodPostal = async (productos, setCoordenadas) => {
   }
 }
 
-const productoService = {getProductos, filtrarProductos, getProductosByUsuario, getProductoById, addProduct, deleteProduct, getCoordenadasByCodPostal,getCoordenadasListByCodPostal, pujar}
+const calcularHuellaCarbono = async (coordenadasUsuario, codPostalProducto, setCarbono) => {
+  try {
+      await Axios.get('http://127.0.0.1:5001/carbono/huella?userLat=' + coordenadasUsuario.latitude + '&userLong=' 
+        + coordenadasUsuario.longitude + '&codPostalProducto=' + codPostalProducto)
+        .then((res) => {
+          setCarbono(res.data.carbonEquivalent)
+        })
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+const productoService = {getProductos, filtrarProductos, getProductosByUsuario, getProductoById, addProduct, deleteProduct, getCoordenadasByCodPostal,getCoordenadasListByCodPostal, pujar, calcularHuellaCarbono}
 
 export default productoService;
