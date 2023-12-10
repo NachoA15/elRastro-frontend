@@ -40,7 +40,6 @@ const paginaChats = () => {
         const json = await res.json();
         const conversations = json.data;
         setChats(conversations);
-        console.log(conversations);
       } catch (error){
         console.error('Error initializing TalkJS: ', error);
       }

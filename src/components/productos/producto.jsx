@@ -44,9 +44,9 @@ export default function producto({producto}) {
     );
 
     
-    const handleEliminarProducto = (productoId) => {
+    const handleEliminarProducto = async (productoId, user) => {
         // Lógica para eliminar el producto
-        productoService.deleteProduct(productoId);
+        await productoService.deleteProduct(productoId, user);
       
         // Redireccionar a la página de productos (o donde sea necesario)
         window.location.reload();
@@ -101,8 +101,8 @@ export default function producto({producto}) {
                     </button>
             )}
 
-            { producto.usuario === usuario && producto.puja === undefined && <button className='button-anuncio eliminar' 
-                onClick={() => handleEliminarProducto(producto._id)}>Eliminar</button>
+            { producto.usuario === user && producto.puja === undefined && <button className='button-anuncio eliminar' 
+                onClick={() => handleEliminarProducto(producto._id, user)}>Eliminar</button>
             }
 
             

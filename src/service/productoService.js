@@ -42,14 +42,62 @@ const addProduct = async (productoFormData) => {
   };
 
 
-const deleteProduct = async (producto) => {
+  const deleteProduct = async (producto, user) => {
     try {
-      const response = await Axios.delete("http://127.0.0.1:5001/producto/" + producto);
-      console.log(response.data);
+        const appId = process.env.REACT_APP_ID;
+        const apiKey = process.env.REACT_APP_APIKEY;
+
+        let config = {
+            method: 'get',
+            maxBodyLength: Infinity,
+            url: 'https://api.talkjs.com/v1/' + appId + '/users/' + user + '/conversations',
+            headers: { 
+                'Authorization': 'Bearer ' + apiKey
+            }
+        };
+
+        const resConv = await Axios.request(config);
+
+        if (Array.isArray(resConv.data.data)) {
+            const deletePromises = resConv.data.data.map(async (chat) => {
+                let idProd = chat.id.split("_")[0];
+                let vend = chat.id.split("_")[1];
+                let comp = chat.id.split("_")[2];
+                if (idProd === producto) {
+                  let config = {
+                    method: 'delete',
+                    maxBodyLength: Infinity,
+                    url: 'https://api.talkjs.com/v1/' + appId +'/conversations/' + chat.id + '/participants/' + vend,
+                    headers: { 
+                        'Authorization': 'Bearer ' + apiKey,
+                    }
+                  };
+                  await Axios.request(config);
+                  config = {
+                    method: 'delete',
+                    maxBodyLength: Infinity,
+                    url: 'https://api.talkjs.com/v1/' + appId +'/conversations/' + chat.id + '/participants/' + comp,
+                    headers: { 
+                        'Authorization': 'Bearer ' + apiKey,
+                    }
+                  };
+                  return Axios.request(config);
+                }
+            });
+
+            await Promise.all(deletePromises);
+        } else {
+            throw new Error("Expected an array of conversations");
+        }
+
+        const response = await Axios.delete('http://127.0.0.1:5001/producto/' + producto);
+        console.log(response.data);
+
     } catch (error) {
-      console.error('Error al eliminar el producto:', error);
+        console.error('Error al eliminar el producto:', error);
     }
 };
+
 
 const getCoordenadasByCodPostal = async (producto, setCoordenadas) => {
   try {
