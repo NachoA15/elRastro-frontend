@@ -5,7 +5,7 @@ export default function NavBar({ubicacion}) {
     let usuario = localStorage.getItem("email");
     return(
         <>
-            <nav className="navbar navbar-expand-lg navbar-dark bg-dark" id="profilepNav">
+            <nav className="navbar navbar-expand-lg fixed-top navbar-dark bg-dark" id="profilepNav">
                 <div className="container px-4">
                     <a className="navbar-brand" href="/">elRastro</a>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span className="navbar-toggler-icon"></span></button>

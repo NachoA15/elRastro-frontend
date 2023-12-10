@@ -77,6 +77,9 @@ export default function paginaProductos({ misProductos }) {
             <div className="row">
                 <NavBar ubicacion={misProductos? 'Mis Productos' : "Productos"}/>
             </div>
+            <br/>
+            <br/>
+            <br/>
             <div className="row" id='titulo'>
                 <div className="col-md-12">
                     {misProductos? 
