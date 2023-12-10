@@ -51,7 +51,6 @@ const paginaChats = () => {
   return (
     <>
     <NavBar ubicacion={"Mis chats"}/>
-
     <div className="container-fluid chats-div">
       <div className="row" id="titulo">
         <div className="col-md-12">

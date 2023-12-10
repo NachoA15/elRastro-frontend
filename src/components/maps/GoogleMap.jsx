@@ -5,7 +5,6 @@ import '../../assets/css/map.css'
 
 export default function GMap({ locations }) {
     const { isLoaded } = useLoadScript({ googleMapsApiKey: 'AIzaSyCOT8uVlUdJC-W_c4JyNLObQNVycB2E5nY' })
-    console.log(locations.length)
     if (!isLoaded) return <div>Loading...</div>
 
     return (
@@ -27,21 +26,18 @@ function Map({ locations }) {
       }
   
       // Calcula el centro promedio de todas las ubicaciones
-      console.log(locations[0])
       if(locations === 1){
         locations = locations[0]
       }
-      console.log(locations)
+
       const sumLat = locations.reduce((acc, location) => acc + Number(location.lat), 0);
       const sumLng = locations.reduce((acc, location) => acc + Number(location.long), 0);
-      console.log(sumLat)
+      
       return {
         lat: Number(sumLat) / locations.length,
         lng: Number(sumLng) / locations.length
       };
     }, [locations]);
-
-    console.log(center)
 
   
     return (
