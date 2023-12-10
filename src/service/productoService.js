@@ -1,6 +1,5 @@
 import Axios from 'axios';
 
-
 const getProductos = async (setProductos) => {
     await Axios.get("http://127.0.0.1:5001/producto")
     .then((res) => {
@@ -35,11 +34,10 @@ const getProductosByUsuario = async (setProductos, usuario) => {
 
 const addProduct = async (productoFormData) => {
     try {
-        console.log("HOLA")
       const response = await Axios.post("http://127.0.0.1:5001/producto", productoFormData);
-      console.log(response.data);
+      return {status: response.data.status};
     } catch (error) {
-      console.error('Error al enviar el producto:', error);
+      return {status: error.response.status, mensaje: error.response.data.message};
     }
   };
 

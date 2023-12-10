@@ -4,6 +4,8 @@ import {
   TextField,
 } from '@mui/material';
 import productoService from '../../service/productoService';
+import Swal from 'sweetalert2'
+import routerService from '../../service/routerService';
 
 export default function upload_product() {
   const correo = localStorage.getItem("email") || "";
@@ -39,14 +41,11 @@ export default function upload_product() {
         <section className="panel panel-default">
           <div id="addProductForm">
             <form
-              onSubmit={(e) => {
+              onSubmit={async (e) => {
                 const nombre = document.getElementById('nombre').value;
                 let precio = document.getElementById('precio').value;
                 const descripcion = document.getElementById('descripcion').value;
                 const codPostal = document.getElementById('codPostal').value;
-
-                //const vendedor = idUsuarioRegistrado;
-
 
                 if (nombre !== '' && precio !== '') {
                   e.preventDefault();
@@ -60,12 +59,25 @@ export default function upload_product() {
                     imagen: selectedImagePath,
                     fechaCierre: selectedDate
                   };
+
+                  const resultado = await productoService.addProduct(anuncio);
                   
-                  console.log(anuncio)
-
-                  productoService.addProduct(anuncio);
-
-                  //window.location.href = '/productos';                
+                  if (resultado.status === 409) {
+                    Swal.fire({
+                      icon: 'error',
+                      title: 'No se puede publicar el producto',
+                      text: resultado.mensaje
+                    })
+                  } else {
+                    Swal.fire({
+                      icon: 'success',
+                      title: 'Producto publicado con éxito'
+                    }).then((result) => {
+                      if (result.isConfirmed) {
+                        routerService.moveToProductos();
+                      }
+                    })
+                  }           
                 }
               }}
             >
