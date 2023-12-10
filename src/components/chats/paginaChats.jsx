@@ -58,7 +58,6 @@ const paginaChats = () => {
         </div>
       </div>
       <br/>
-      <br/>
         {chats.map((chat) => (
           <div key={chat.id} className='col-md-4 mx-auto'>
             <ClickableChat chat={chat} />
