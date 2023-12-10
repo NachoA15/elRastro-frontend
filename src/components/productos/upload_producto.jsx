@@ -62,7 +62,6 @@ export default function upload_product() {
 
                   const resultado = await productoService.addProduct(anuncio);
                   
-<<<<<<< Updated upstream
                   if (resultado.status === 409) {
                     Swal.fire({
                       icon: 'error',
@@ -79,13 +78,6 @@ export default function upload_product() {
                       }
                     })
                   }           
-=======
-                  console.log(anuncio)
-
-                  productoService.addProduct(anuncio);
-
-                  window.location.href = '/productos';                
->>>>>>> Stashed changes
                 }
               }}
             >
