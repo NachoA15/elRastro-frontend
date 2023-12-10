@@ -23,12 +23,10 @@ export default function PaginaValorar() {
 
     const handleRatingChangeCalidad = (newValue) => {
         setCalidad(newValue);
-        console.log('Nuevo valor de puntuación calidad:', newValue);
     };
 
     const handleRatingChangeFiabilidad = (newValue) => {
         setFiabilidad(newValue);
-        console.log('Nuevo valor de puntuación fiabilidad:', newValue);
     };
 
     const handleDescripcionChange = (event) => {

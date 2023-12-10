@@ -26,9 +26,9 @@ const Valoracion = ({ index, valoracion }) => {
     <div key={index} className="card">
     <div id="comentario"className="card-body">
       <div id="valoracion" className="media-body u-shadow-v18 g-bg-secondary g-pa-30" >
-          <img id="img-valorador" class="d-flex g-width-50 g-height-50 rounded-circle" src={usuario.imagen} alt="Image Description"></img>
+          <img id="img-valorador" className="d-flex g-width-50 g-height-50 rounded-circle" src={usuario.imagen} alt="Image Description"></img>
           
-          {producto && <h5 id="valorador" class="h5 g-color-gray-dark-v1 mb-0"><a href={'/usuario/' + valoracion.valorador}>{valoracion.valorador}</a> - <a href={'/producto/' + valoracion.producto}>{producto.nombre}</a></h5>}
+          {producto && <h5 id="valorador" className="h5 g-color-gray-dark-v1 mb-0"><a href={'/usuario/' + valoracion.valorador}>{valoracion.valorador}</a> - <a href={'/producto/' + valoracion.producto}>{producto.nombre}</a></h5>}
           
           
           <div id="starsCalidad" className="d-flex flex-row align-items-center">

@@ -38,7 +38,6 @@ export default function Chat() {
         try{
           let idProd = idConv.split("_")[0];
           productoService.getProductoById(setProducto, idProd);
-          console.log(producto)
         }catch(error){
           console.log("Error al coger el producto: ", error);
         }
@@ -51,7 +50,6 @@ export default function Chat() {
   useEffect(() => {
 
     if (talkLoaded && producto && idConv) {
-      console.log("Entra")
       let correoVend = idConv.split("_")[1];
       let correoComp = idConv.split("_")[2];
       const vendedor = new Talk.User({

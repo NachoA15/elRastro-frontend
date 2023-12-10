@@ -91,7 +91,6 @@ const addProduct = async (productoFormData) => {
         }
 
         const response = await Axios.delete('http://127.0.0.1:5001/producto/' + producto);
-        console.log(response.data);
 
     } catch (error) {
         console.error('Error al eliminar el producto:', error);

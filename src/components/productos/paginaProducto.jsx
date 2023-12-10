@@ -178,7 +178,6 @@ export default function PaginaProducto() {
                                                                         showCancelButton: true,
                                                                         showLoaderOnConfirm: true,
                                                                         preConfirm: async (cantidad) => {
-                                                                            console.log('Pujando...')
                                                                             return await productoService.pujar(usuario, cantidad, producto._id);
                                                                         },
                                                                         allowOutsideClick: () => !Swal.isLoading()

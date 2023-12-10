@@ -4,6 +4,7 @@ import '../../assets/css/pujas.css';
 import NavBar from '../NavBar';
 import usuarioService from '../../service/usuarioService';
 import routerService from '../../service/routerService'
+import Foto from '../../assets/images/imagenotfound.jpg'
 
 const Puja = ({ index, puja, usuario}) => {
 
@@ -21,8 +22,6 @@ const Puja = ({ index, puja, usuario}) => {
 
     const [usuarioValoracion, setUsuario] = useState({});
 
-    console.log(producto.usuario)
-
     useEffect(() => {
         if (producto) {
             usuarioService.getUsuarioByCorreo(producto.usuario, setUsuario);
@@ -39,7 +38,6 @@ const Puja = ({ index, puja, usuario}) => {
             
             valoracion.valorador === puja.usuario && valoracion.producto === producto._id
     );
-    console.log(valorado)
 
    return (
     <>
@@ -50,12 +48,12 @@ const Puja = ({ index, puja, usuario}) => {
             
                 <div style={{ position: 'relative', display: 'inline-block', marginTop: '30px'}}>
                 
-                    <img id="img-producto" className="d-flex g-width-50 g-height-50 rounded-circle g-mt-3 g-mr-7" src={producto.imagen} alt={producto.descripcion} style={{ zIndex: 0, marginLeft: '10px'}} />
+                    <img id="img-producto" className="d-flex g-width-50 g-height-50 rounded-circle g-mt-3 g-mr-7" src={producto.imagen === undefined ? Foto : producto.imagen} alt={producto.descripcion} style={{ zIndex: 0, marginLeft: '10px'}} />
                     {
                         subastaCerrada?
                         <>
                         
-                            <div className='finalizada-aviso-imagen-pujas shadow-sm' style={{marginTop: '-30px', left:'-30', zIndex: 1}}>
+                            <div className='finalizada-aviso-imagen-pujas shadow-sm' style={{left:'-30', zIndex: 1}}>
                                 SUBASTA FINALIZADA
                             </div>
                             
@@ -86,7 +84,6 @@ const Puja = ({ index, puja, usuario}) => {
                         </button>
             )}
             </td>
-            <br></br>
         
         </tr>
 
@@ -100,8 +97,6 @@ export default function Pujas({ pujas, usuario }) {
   
     // Extraer el array de pujas de la propiedad 'pujas'
     const arrayDePujas = pujas && pujas.pujas;
-
-    console.log(pujas.length === 0)
   
     return (
         <>
@@ -128,9 +123,8 @@ export default function Pujas({ pujas, usuario }) {
                         <th style={{ padding: '0px 40px', textAlign: 'center'}}>Cantidad Máxima Pujada</th>
                         
                     </tr>
-                    <br></br>
                     </thead>
-                ) : ( <th></th>)}
+                ) : ( <thead></thead>)}
                 <tbody>
                 {Array.isArray(arrayDePujas) && arrayDePujas.length > 0 ? (
                     arrayDePujas.map((puja, index) => (
@@ -138,8 +132,10 @@ export default function Pujas({ pujas, usuario }) {
                         <Puja key={index} puja={puja} usuario={usuario}></Puja>
                     ))
                     ) : (
-                    <tr>
-                        No existe ningún producto actualmente por el que hayas pujado
+                    <tr>  
+                        <td>
+                            No existe ningún producto actualmente por el que hayas pujado
+                        </td>
                     </tr>
                     )}
                 </tbody>
