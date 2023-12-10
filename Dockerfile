@@ -1,5 +1,5 @@
 FROM node
-
+ENV .env
 WORKDIR /app
 
 COPY package.json .
