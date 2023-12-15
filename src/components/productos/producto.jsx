@@ -53,6 +53,44 @@ export default function producto({producto}) {
       };
     
 
+    return (
+        <>
+        <div class="col mb-5">
+            <div class="card h-100">
+                {/*<!-- Fecha cierre subasta-->*/}
+                <div class={'badge ' + subastaCerrada?  'bg-secondary' : (diffDays <= 10? 'bg-danger' : 'bg-info') + 'text-white position-absolute'} style={{top: '0.5rem', right: '0.5rem'}}>Hasta {cierreSubasta.toString().substring(3,15)}</div>
+                {/*<!-- Product owner --> */}
+                Subido por <a href={'/usuario/' + producto.usuario}>{producto.usuario}</a>
+                {/*<!-- Product image-->*/}
+                <img class="card-img-top" src={producto.imagen !== undefined && producto.imagen !== null? producto.imagen : ImageNotFound} alt="..." onClick={() => routerService.moveToProductPage(producto._id)}/>
+                {/*<!-- Product details-->*/}
+                <div class="card-body p-4">
+                    <div class="text-center">
+                        {/*<!-- Product name-->*/}
+                        <h5 class="fw-bolder">{producto.nombre}</h5>
+                        {/*<!-- Product reviews-->*/}
+                        <div class="d-flex justify-content-center small text-warning mb-2">
+                            <div class="bi-star-fill"></div>
+                            <div class="bi-star-fill"></div>
+                            <div class="bi-star-fill"></div>
+                            <div class="bi-star-fill"></div>
+                            <div class="bi-star-fill"></div>
+                        </div>
+                        {/*<!-- Product price-->*/}
+                        <b>{producto.puja !== undefined && producto.puja != {}? producto.puja.cantidad : producto.precioInicial} &euro;</b>
+                    </div>
+                </div>
+                {/*<!-- Product actions-->*/}
+                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#" onClick={() => routerService.moveToProductPage(producto._id)}>Detalles</a></div>
+                </div>
+            </div>
+        </div>
+        </>
+    )
+
+
+    /*
   return(
     <>
     <div className='card anuncio' tabIndex="0" aria-label={producto.nombre} style={{boxShadow: "2px 2px 5px"}}>
@@ -82,7 +120,6 @@ export default function producto({producto}) {
                 <p className={producto.nombre.length >= 20? 'nombre-anuncio size-small' : 'nombre-anuncio size-large'} tabIndex="0"><b>{producto.nombre.length > 20? producto.nombre.toString().substring(0,22) + '...' : producto.nombre}</b></p><br/>
                 <p className='precio-anuncio' tabIndex="0"><span>Precio actual: &nbsp; <span className="badge rounded-pill bg-precio" style={{fontSize: "20px"}}>{producto.puja !== undefined && producto.puja != {}? producto.puja.cantidad : producto.precioInicial} &euro;</span></span></p>
                 <p className='precio-anuncio' tabIndex="0">Precio inicial: &nbsp; {producto.precioInicial} €</p> 
-                {/*<span style={{float: 'right'}} tabIndex="0">{producto.fechaInicio.toString().substring(0,10)}</span>*/}
             </div>
         </div>
         <div className='card-body' style={{width: '100%', marginTop: "20px", marginBottom: "0px"}}>
@@ -110,5 +147,5 @@ export default function producto({producto}) {
         </div>
     </div>
     </>
-  )
+  )*/
 }

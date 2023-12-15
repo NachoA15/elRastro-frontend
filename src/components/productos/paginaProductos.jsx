@@ -28,6 +28,73 @@ export default function paginaProductos({ misProductos }) {
 
     return(
         <>
+        <NavBar ubicacion={misProductos? 'Mis Productos' : "Productos"}/>
+        <header class="bg-dark py-5">
+            <div class="container px-4 px-lg-5 my-5">
+                <div class="text-center text-white">
+                    <h1 class="display-4 fw-bolder">
+                        {
+                            misProductos? (
+                                'Mis productos'
+                            )
+                            : (
+                                'Sección de los productos'
+                            )
+                        }
+                    </h1>
+                    <p class="lead fw-normal text-white-50 mb-0">
+                        {
+                            misProductos? (
+                                productos.length === 0? (
+                                    filtrando? (
+                                        'No se ha encontrado ningún producto coincidente con el filtro'
+                                    )
+                                    : (
+                                        'No tienes productos registrados actualmente'
+                                    )
+                                ) : (
+                                    'Aquellos productos publicados por ti'
+                                )
+                            )
+                            : (
+                                productos.length === 0? (
+                                    filtrando? (
+                                        'No se ha encontrado ningún producto coincidente con el filtro'
+                                    )
+                                    : (
+                                        'No hay ningún producto actualmente en subasta'
+                                    )
+                                ) : (
+                                    'Una colección de todos los productos disponibles en elRastro'
+                                )
+                            )
+                        }
+                    </p>
+                </div>
+            </div>
+        </header>
+        {/*<!-- Section-->*/}
+        <section class="py-5">
+            <div class="container px-4 px-lg-5 mt-5">
+                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+                    {
+                        productos.map((producto, key) => {
+                            return <Producto producto={producto}/>
+                        })
+                    }
+                </div>
+            </div>
+        </section>
+        {/*<!-- Footer-->*/}
+        <footer class="py-5 bg-dark">
+            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; elRastro</p></div>
+        </footer>
+        </>
+    )
+
+    /*
+    return(
+        <>
         <div className="container-fluid main-div">
             <div className="row">
                 <NavBar ubicacion={misProductos? 'Mis Productos' : "Productos"}/>
@@ -91,4 +158,5 @@ export default function paginaProductos({ misProductos }) {
         </div>
         </>
     )
+    */
 }

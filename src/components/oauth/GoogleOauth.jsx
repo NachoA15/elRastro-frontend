@@ -20,7 +20,6 @@ export default function GoogleOAuth() {
         setProfile([]);
         setUser([]);
         localStorage.clear();
-        //appService.moveToMainPage();
     };
 
     useEffect(() => {
