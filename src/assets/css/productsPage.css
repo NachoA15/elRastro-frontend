@@ -191,6 +191,13 @@ button.eliminar {
 	border: 2px solid #ffffff;
 }
 
+button.modificar {
+	float: centre;
+	background-color: rgb(253, 182, 76);
+	color: white;
+	border: 2px solid #ffffff;
+}
+
 button.info {
 	float: right;
 }

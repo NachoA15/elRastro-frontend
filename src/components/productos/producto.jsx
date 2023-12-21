@@ -107,6 +107,10 @@ export default function producto({producto}) {
 
             
             <button className='button-anuncio info' onClick={() => routerService.moveToProductPage(producto._id)}>+ Info</button>
+
+            { producto.usuario === user && producto.puja === undefined && <button className='button-anuncio modificar' 
+                onClick={() => routerService.moveToUpdateProductPage(producto._id)}>Modificar</button>
+            }
         </div>
     </div>
     </>

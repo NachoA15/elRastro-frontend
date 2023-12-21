@@ -41,6 +41,15 @@ const addProduct = async (productoFormData) => {
     }
   };
 
+  const updateProduct = async (productoFormaData) => {
+    try{
+      const response = await Axios.put("http://127.0.0.1:5001/producto", productoFormaData);
+      return {status: response.data.status};
+    }catch (error) {
+      return {status: error.response.status, mensaje: error.response.data.message};
+    }
+  }
+
 
   const deleteProduct = async (producto, user) => {
     try {
@@ -155,6 +164,7 @@ const calcularHuellaCarbono = async (coordenadasUsuario, codPostalProducto, setC
   }
 }
 
-const productoService = {getProductos, filtrarProductos, getProductosByUsuario, getProductoById, addProduct, deleteProduct, getCoordenadasByCodPostal,getCoordenadasListByCodPostal, pujar, calcularHuellaCarbono}
+const productoService = {getProductos, filtrarProductos, getProductosByUsuario, getProductoById, addProduct,updateProduct, deleteProduct, 
+                        getCoordenadasByCodPostal,getCoordenadasListByCodPostal, pujar, calcularHuellaCarbono}
 
 export default productoService;

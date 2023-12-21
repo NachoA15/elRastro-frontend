@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Productos from './components/productos/paginaProductos.jsx'
 import Usuario from './components/usuarios/paginaUsuarios.jsx'
 import PaginaProducto from './components/productos/paginaProducto.jsx'
+import UpdateProduct from './components/productos/updateProducto.jsx'
 import PaginaPrincipal from './components/principal/Principal.jsx'
 import Chats from './components/chats/paginaChats.jsx'
 import Chat from './components/chats/Chat.jsx'
@@ -59,6 +60,10 @@ const router = createBrowserRouter([
   {
     path: '/misPujas',
     element: <Pujas/>
+  },
+  {
+    path: '/updateProducto/:idProducto',
+    element: <UploadProduct/>
   }
 ])
 
