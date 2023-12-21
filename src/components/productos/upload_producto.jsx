@@ -310,7 +310,7 @@ export default function upload_product() {
                           <TextField
                            required
                            id="fechaCierre"
-                           label="Fecha de Cierre"
+                           //label="Fecha de Cierre"
                            type="date"
                            value={selectedDate}
                            onChange={(e) => handleDateChange(e.target.value)}
