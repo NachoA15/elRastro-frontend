@@ -60,7 +60,7 @@ export default function upload_product() {
                     fechaCierre: selectedDate
                   };
 
-                  const resultado = await productoService.addPcroduct(anuncio);
+                  const resultado = await productoService.addProduct(anuncio);
                   
                   if (resultado.status === 409) {
                     Swal.fire({
