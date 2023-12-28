@@ -238,6 +238,27 @@ export default function PaginaProducto() {
                                 </div>
                             </div>
                         </div>
+                        {
+                            producto.usuario === usuario && producto.puja === undefined?
+                            <>
+                            <div className="text-center my-4"> 
+                                <a className='btn btn-danger'
+                                    onClick={() => {
+                                        productoService.deleteProduct(idProducto, usuario)
+                                    }}
+                                ><b>Eliminar</b></a> 
+                                <a className='btn btn-warning'
+                                    onClick={() => {
+                                        
+                                    }}
+                                ><b>Modificar</b></a> 
+                            </div>
+                            </>
+                            :
+                            <>
+                            </>
+                        }
+
                     </div>
                 </div>
             </div>

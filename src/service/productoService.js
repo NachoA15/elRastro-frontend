@@ -57,7 +57,6 @@ const addProduct = async (productoFormData) => {
         };
 
         const resConv = await Axios.request(config);
-
         if (Array.isArray(resConv.data.data)) {
             const deletePromises = resConv.data.data.map(async (chat) => {
                 let idProd = chat.id.split("_")[0];
@@ -91,6 +90,7 @@ const addProduct = async (productoFormData) => {
         }
 
         const response = await Axios.delete('http://127.0.0.1:5001/producto/' + producto);
+        window.location.href = "/productos"
 
     } catch (error) {
         console.error('Error al eliminar el producto:', error);
