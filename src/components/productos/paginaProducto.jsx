@@ -52,8 +52,8 @@ export default function PaginaProducto() {
 
     const [userLocation, setUserLocation] = useState([]);
     // define the function that finds the users geolocation
-    const getUserLocation = () => {
-        // if geolocation is supported by the users browser
+
+    useEffect(() => {
         if (navigator.geolocation) {
             // get the current users location
             navigator.geolocation.getCurrentPosition(
@@ -77,11 +77,7 @@ export default function PaginaProducto() {
         else {
             console.error('Geolocation is not supported by this browser.');
         }
-    };
-
-    if (userLocation.length === 0) {
-        getUserLocation();
-    }
+    }, [])
 
     const [carbono, setCarbono] = useState(null); 
 
@@ -243,8 +239,25 @@ export default function PaginaProducto() {
                             <>
                             <div className="text-center my-4"> 
                                 <a className='btn btn-danger'
-                                    onClick={() => {
-                                        productoService.deleteProduct(idProducto, usuario)
+                                    onClick={async () => {
+                                        Swal.fire({
+                                            icon: 'question',
+                                            title: '¿Está seguro de que quiere eliminar este producto?',
+                                            text: 'Esta acción no podrá deshacerse. Se borrarán además todos los chats asociados.',
+                                            showCancelButton: true
+                                        }).then((result) => {
+                                            if (result.isConfirmed) {
+                                                productoService.deleteProduct(idProducto, usuario);
+                                                Swal.fire({
+                                                    icon: 'success',
+                                                    title: 'Producto borrado con éxito'
+                                                }).then((result) => {
+                                                    if (result.isConfirmed) {
+                                                        routerService.moveToProductos();
+                                                    }
+                                                })
+                                            }
+                                        })
                                     }}
                                 ><b>Eliminar</b></a> 
                                 <a className='btn btn-warning'

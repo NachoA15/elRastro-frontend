@@ -1,14 +1,14 @@
 import Axios from 'axios';
 
 const getProductos = async (setProductos) => {
-    await Axios.get("http://127.0.0.1:5001/producto")
+    await Axios.get("http://127.0.0.1:5001")
     .then((res) => {
         setProductos(res.data.productos)
     })
 }
 
 const filtrarProductos = async (setProductos, usuario, texto, orden) => {
-  await Axios.post("http://127.0.0.1:5001/producto/filter", {
+  await Axios.post("http://127.0.0.1:5001/filter", {
     usuario: usuario,
     texto: texto,
     orden: orden
@@ -18,14 +18,14 @@ const filtrarProductos = async (setProductos, usuario, texto, orden) => {
 }
 
 const getProductoById = async (setProducto, idProducto) => {
-    await Axios.get("http://127.0.0.1:5001/producto/" + idProducto)
+    await Axios.get("http://127.0.0.1:5001/" + idProducto)
     .then((res) => {
         setProducto(res.data.producto)
     })
 }
 
 const getProductosByUsuario = async (setProductos, usuario) => {
-    await Axios.get("http://127.0.0.1:5001/producto?usuario=" + usuario)
+    await Axios.get("http://127.0.0.1:5001?usuario=" + usuario)
     .then((res) => {
         setProductos(res.data.productos)
     })
@@ -34,7 +34,7 @@ const getProductosByUsuario = async (setProductos, usuario) => {
 
 const addProduct = async (productoFormData) => {
     try {
-      const response = await Axios.post("http://127.0.0.1:5001/producto", productoFormData);
+      const response = await Axios.post("http://127.0.0.1:5001", productoFormData);
       return {status: response.data.status};
     } catch (error) {
       return {status: error.response.status, mensaje: error.response.data.message};
@@ -89,9 +89,7 @@ const addProduct = async (productoFormData) => {
             throw new Error("Expected an array of conversations");
         }
 
-        const response = await Axios.delete('http://127.0.0.1:5001/producto/' + producto);
-        window.location.href = "/productos"
-
+        const response = await Axios.delete('http://127.0.0.1:5001/' + producto);
     } catch (error) {
         console.error('Error al eliminar el producto:', error);
     }
@@ -101,7 +99,7 @@ const addProduct = async (productoFormData) => {
 const getCoordenadasByCodPostal = async (producto, setCoordenadas) => {
   try {
     if(producto.direccion && producto.direccion !== 29080){
-      await Axios.get('http://127.0.0.1:5001/carbono/coord?codPostal=' + producto.direccion).then((res) => {
+      await Axios.get('http://127.0.0.1:5004/coord?codPostal=' + producto.direccion).then((res) => {
         res.data.title = producto.nombre
         setCoordenadas(res.data)
       })
@@ -113,7 +111,7 @@ const getCoordenadasByCodPostal = async (producto, setCoordenadas) => {
 
 const pujar = async (usuario, cantidad, producto) => {
   try {
-    await Axios.post('http://127.0.0.1:5001/puja/', {
+    await Axios.post('http://127.0.0.1:5002/', {
       usuario: usuario,
       cantidad: cantidad,
       producto: producto
@@ -131,7 +129,7 @@ const getCoordenadasListByCodPostal = async (productos, setCoordenadas) => {
 
     for (const producto of productos) {
       if(producto.direccion && producto.direccion !== 29080){
-        const response = await Axios.get('http://127.0.0.1:5001/carbono/coord?codPostal=' + producto.direccion);
+        const response = await Axios.get('http://127.0.0.1:5004/coord?codPostal=' + producto.direccion);
         response.data.title = producto.nombre
         coordenadas.push(response.data);
       }
@@ -145,7 +143,7 @@ const getCoordenadasListByCodPostal = async (productos, setCoordenadas) => {
 
 const calcularHuellaCarbono = async (coordenadasUsuario, codPostalProducto, setCarbono) => {
   try {
-      await Axios.get('http://127.0.0.1:5001/carbono/huella?userLat=' + coordenadasUsuario.latitude + '&userLong=' 
+      await Axios.get('http://127.0.0.1:5004/huella?userLat=' + coordenadasUsuario.latitude + '&userLong=' 
         + coordenadasUsuario.longitude + '&codPostalProducto=' + codPostalProducto)
         .then((res) => {
           setCarbono(res.data.carbonEquivalent)

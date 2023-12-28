@@ -6,7 +6,6 @@ import '../../assets/css/map.css'
 export default function GMap({ locations }) {
     const { isLoaded } = useLoadScript({ googleMapsApiKey: 'AIzaSyCOT8uVlUdJC-W_c4JyNLObQNVycB2E5nY' })
     if (!isLoaded) return <div>Loading...</div>
-
     return (
       <>
           {locations[0].length === undefined ? 

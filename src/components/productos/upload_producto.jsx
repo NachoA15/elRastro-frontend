@@ -4,32 +4,17 @@ import {
   TextField,
 } from '@mui/material';
 import productoService from '../../service/productoService';
+import UploadWidget from '../cloudinary/uploadWidget';
 import Swal from 'sweetalert2'
 import routerService from '../../service/routerService';
 
 export default function upload_product() {
   const correo = localStorage.getItem("email") || "";
   const [selectedDate, setSelectedDate] = useState('');
-  const [selectedImagePath, setSelectedImagePath] = useState(null);
+  const [imageURL, setImageURL] = useState('');
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
-  };
-
-  const handleImageChange = (event) => {
-    const file = event.target.files[0];
-
-    if (file) {
-      const reader = new FileReader();
-
-      reader.onloadend = () => {
-        // `reader.result` contiene la URL de la imagen
-        const imagePath = reader.result;
-        setSelectedImagePath(imagePath);
-      };
-
-      reader.readAsDataURL(file);
-    }
   };
 
   return (
@@ -56,7 +41,7 @@ export default function upload_product() {
                     descripcion: descripcion,
                     direccion: codPostal,
                     usuario: correo,
-                    imagen: selectedImagePath,
+                    imagen: imageURL,
                     fechaCierre: selectedDate
                   };
 
@@ -152,16 +137,7 @@ export default function upload_product() {
                       <div className="col-md-2"></div>
                       <div className="col-md-8">
                         <div>
-                          <TextField
-                            id='imagen'
-                            label='Imagen (URL)'
-                            variant="standard"
-                            size='medium'
-                            type="file"
-                            onChange={handleImageChange}
-                            accept="image/*"
-                            multiple={false}
-                          />
+                          <UploadWidget setImageUrl={setImageURL}/>
                         </div>
                       </div>
                       <div className="col-md-2"></div>
