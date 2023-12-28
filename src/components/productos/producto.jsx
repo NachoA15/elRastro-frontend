@@ -42,15 +42,6 @@ export default function producto({producto}) {
         usuarioValoracion.valoracion.find(valoracion => 
             valoracion.valorador === producto.usuario && valoracion.producto === producto._id
     );
-
-    
-    const handleEliminarProducto = async (productoId, user) => {
-        // Lógica para eliminar el producto
-        await productoService.deleteProduct(productoId, user);
-      
-        // Redireccionar a la página de productos (o donde sea necesario)
-        window.location.reload();
-      };
     
 
     return (
@@ -58,7 +49,9 @@ export default function producto({producto}) {
         <div class="col mb-5">
             <div class="card h-100">
                 {/*<!-- Fecha cierre subasta-->*/}
-                <div class={'badge ' + subastaCerrada?  'bg-secondary' : (diffDays <= 10? 'bg-danger' : 'bg-info') + 'text-white position-absolute'} style={{top: '0.5rem', right: '0.5rem'}}>Hasta {cierreSubasta.toString().substring(3,15)}</div>
+                <div className={subastaCerrada?  'fecha-cierre cerrada shadow-sm' : (diffDays <= 10? 'fecha-cierre peligro shadow-sm' : 'fecha-cierre abierta shadow-sm')}>
+                        Hasta {cierreSubasta.toString().substring(3,15)}
+                </div>
                 {/*<!-- Product owner --> */}
                 Subido por <a href={'/usuario/' + producto.usuario}>{producto.usuario}</a>
                 {/*<!-- Product image-->*/}
