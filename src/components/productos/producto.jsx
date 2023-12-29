@@ -102,14 +102,15 @@ export default function producto({producto}) {
             )}
 
             { producto.usuario === user && producto.puja === undefined && <button className='button-anuncio eliminar' 
-                onClick={() => handleEliminarProducto(producto._id, user)}>Eliminar</button>
+                onClick={() => handleEliminarProducto(producto._id, user)}  
+                style={{width: '33%'}}>Eliminar</button>
             }
 
             
-            <button className='button-anuncio info' onClick={() => routerService.moveToProductPage(producto._id)}>+ Info</button>
+            <button className='button-anuncio info' onClick={() => routerService.moveToProductPage(producto._id)} style={{width: '33%'}}>+ Info</button>
 
             { producto.usuario === user && producto.puja === undefined && <button className='button-anuncio modificar' 
-                onClick={() => routerService.moveToUpdateProductPage(producto._id)}>Modificar</button>
+                onClick={() => routerService.moveToUpdateProductPage(producto._id)} style={{width: '33%'}}>Modificar</button>
             }
         </div>
     </div>

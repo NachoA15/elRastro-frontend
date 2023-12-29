@@ -207,6 +207,11 @@ button.eliminar:hover{
 	color: black;
 }
 
+button.modificar:hover{
+	background-color: rgb(240, 199, 137);
+	color: black;
+}
+
 span.favorito {
 	float: right;
 }
