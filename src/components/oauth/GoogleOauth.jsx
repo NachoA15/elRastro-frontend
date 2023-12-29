@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from 'react';
+import {useState, useEffect} from 'react';
 import axios from 'axios'
 import {GoogleLogin, googleLogout, useGoogleLogin} from '@react-oauth/google'
 import routerService from "../../service/routerService";
@@ -11,7 +11,7 @@ export default function GoogleOAuth() {
 
     const perfil = localStorage.getItem('email');
 
-    const login = (credential) =>{
+    const login = (credential) => {
         setUser(credential)
     };
 
@@ -20,6 +20,7 @@ export default function GoogleOAuth() {
         setProfile([]);
         setUser([]);
         localStorage.clear();
+        //appService.moveToMainPage();
     };
 
     useEffect(() => {
@@ -33,31 +34,31 @@ export default function GoogleOAuth() {
                     }
                 }
             ).then((res) => {
-            setProfile(res.data);
-            localStorage.setItem('email', res.data.email)
-            localStorage.setItem('token', user)
-            routerService.moveToProductos();
-        }).catch((err) => console.log(err));
+                setProfile(res.data);
+                localStorage.setItem('email', res.data.email)
+                localStorage.setItem('token', user)
+                routerService.moveToProductos();
+            }).catch((err) => console.log(err));
         }
     }, [user]);
 
-    return(
+    return (
         <>
-        {(profile !== undefined && profile.length !== 0) || (perfil !== null && perfil !== undefined && perfil.length !== 0)? (
-          <div>
-              <a className="btn btn-outline-light btn-lg px-4" href="/" onClick={logOut} style={{fontSize: '15px'}}>Log out</a>
-          </div>
-        ) : (
-            <GoogleLogin
-            onSuccess={credentialResponse => {
-            login(credentialResponse.credential);
-        }}
-        onError={() => {
-            console.log('Login Failed');
-        }}
-        useOneTap
-        />
-        )}
+            {(profile !== undefined && profile.length !== 0) || (perfil !== null && perfil !== undefined && perfil.length !== 0) ? (
+                <div>
+                    <a className="btn btn-outline-light btn-lg px-4" href="/" onClick={logOut}>Log out</a>
+                </div>
+            ) : (
+                <GoogleLogin
+                    onSuccess={credentialResponse => {
+                        login(credentialResponse.credential);
+                    }}
+                    onError={() => {
+                        console.log('Login Failed');
+                    }}
+                    useOneTap
+                />
+            )}
         </>
     )
 }
