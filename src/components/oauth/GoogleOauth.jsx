@@ -42,7 +42,7 @@ export default function GoogleOAuth() {
         <>
         {(profile !== undefined && profile.length !== 0) || (perfil !== null && perfil !== undefined && perfil.length !== 0)? (
           <div>
-              <a className="btn btn-outline-light btn-lg px-4" href="/" onClick={logOut}>Log out</a>
+              <a className="btn btn-outline-light btn-lg px-4" href="/" onClick={logOut} style={{fontSize: '15px'}}>Log out</a>
           </div>
         ) : (
             <a className="btn btn-outline-light btn-lg px-4" href="#!" onClick={() => {

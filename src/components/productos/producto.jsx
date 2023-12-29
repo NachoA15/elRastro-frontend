@@ -55,6 +55,17 @@ export default function producto({producto}) {
                 {/*<!-- Product owner --> */}
                 Subido por <a href={'/usuario/' + producto.usuario}>{producto.usuario}</a>
                 {/*<!-- Product image-->*/}
+                {
+                    subastaCerrada?
+                    <>
+                    <div className='finalizada-aviso-imagen shadow-sm'>
+                        SUBASTA FINALIZADA
+                    </div>
+                    </>
+                    :
+                    <>
+                    </>
+                }
                 <img class="card-img-top" src={producto.imagen !== undefined && producto.imagen !== null? producto.imagen : ImageNotFound} alt="..." onClick={() => routerService.moveToProductPage(producto._id)}/>
                 {/*<!-- Product details-->*/}
                 <div class="card-body p-4">

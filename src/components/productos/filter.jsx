@@ -32,7 +32,7 @@ export default function Filter({setProductos, misProductos, usuario, setFiltrand
         <>
         <div className='row'>
             <label htmlFor="filtro" style={{paddingLeft: "3%", width: "fit-content"}}><h6>Selecciona un filtro:</h6></label>
-            <select id="filtroSelect" onChange={handleFilterChange} value={orden} style={{width:"fit-content"}}>
+            <select id="filtroSelect" onChange={handleFilterChange} value={orden} style={{width:"fit-content", color: 'black'}}>
                 <option value="Fecha_Asc">Fecha Ascendente</option>
                 <option value="Fecha_Desc" defaultChecked>Fecha Descendente</option>
                 <option value="Precio_Asc">Precio Ascendente</option>
