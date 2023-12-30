@@ -34,9 +34,18 @@ const getProductosByUsuario = async (setProductos, usuario) => {
 
 const addProduct = async (productoFormData) => {
     try {
-      const response = await Axios.post("http://127.0.0.1:5001/api/v2/productos", productoFormData);
+      const response = await Axios.post("http://127.0.0.1:5001/api/v2/productos/", productoFormData);
       return {status: response.data.status};
     } catch (error) {
+      return {status: error.response.status, mensaje: error.response.data.message};
+    }
+  };
+
+  const updateProduct = async (productoFormaData) => {
+    try{
+      const response = await Axios.put("http://127.0.0.1:5001/api/v2/productos/", productoFormaData);
+      return {status: response.data.status};
+    }catch (error) {
       return {status: error.response.status, mensaje: error.response.data.message};
     }
   };
@@ -153,6 +162,6 @@ const calcularHuellaCarbono = async (coordenadasUsuario, codPostalProducto, setC
   }
 }
 
-const productoService = {getProductos, filtrarProductos, getProductosByUsuario, getProductoById, addProduct, deleteProduct, getCoordenadasByCodPostal,getCoordenadasListByCodPostal, pujar, calcularHuellaCarbono}
+const productoService = {getProductos, filtrarProductos, getProductosByUsuario, getProductoById, addProduct, deleteProduct, getCoordenadasByCodPostal,getCoordenadasListByCodPostal, pujar, calcularHuellaCarbono, updateProduct}
 
 export default productoService;

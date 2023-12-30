@@ -87,6 +87,21 @@ export default function producto({producto}) {
                 {/*<!-- Product actions-->*/}
                 <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
                     <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#" onClick={() => routerService.moveToProductPage(producto._id)}>Detalles</a></div>
+                    <br></br>
+                    { producto.usuario === user && subastaCerrada && producto.puja &&(
+                        <button type="button" 
+                            class="btn btn-outline-dark mt-auto"
+                            onClick={() => {routerService.moveToValorarPage(producto._id, producto.usuario, producto.puja.usuario)}}
+                            disabled={valorado !== undefined } 
+                            
+                            >
+                            Valorar
+                        </button>
+                    )}
+
+                    {producto.usuario !== user && <button class="btn btn-outline-dark mt-auto" onClick={() => {
+                        chatService.openChat(producto._id +"_" + producto.usuario + "_" + user)}}>Contacta</button>
+                    }
                 </div>
             </div>
         </div>
@@ -143,11 +158,15 @@ export default function producto({producto}) {
             )}
 
             { producto.usuario === user && producto.puja === undefined && <button className='button-anuncio eliminar' 
-                onClick={() => handleEliminarProducto(producto._id, user)}>Eliminar</button>
+                onClick={() => handleEliminarProducto(producto._id, user)} style={{width: '33%'}}>Eliminar</button>
             }
 
             
-            <button className='button-anuncio info' onClick={() => routerService.moveToProductPage(producto._id)}>+ Info</button>
+            <button className='button-anuncio info' onClick={() => routerService.moveToProductPage(producto._id)} style={{width: '33%'}}>+ Info</button>
+            
+            { producto.usuario === user && producto.puja === undefined && <button className='button-anuncio modificar' 
+                onClick={() => routerService.moveToUpdateProductPage(producto._id)} style={{width: '33%'}}>Modificar</button>
+            }
         </div>
     </div>
     </>

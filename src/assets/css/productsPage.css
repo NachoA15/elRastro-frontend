@@ -195,6 +195,18 @@ button.info {
 	float: right;
 }
 
+button.modificar {
+	float: centre;
+	background-color: rgb(253, 182, 76);
+	color: white;
+	border: 2px solid #ffffff;
+}
+
+button.modificar:hover{
+	background-color: rgb(240, 199, 137);
+	color: black;
+}
+
 button.eliminar:hover{
 	background-color: rgb(255, 101, 101);
 	color: black;
