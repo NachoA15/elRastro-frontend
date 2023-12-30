@@ -1,21 +1,21 @@
 import Axios from 'axios';
 
 const getUsuarioByCorreo = async (correo, setUsuario) => {
-    await Axios.get("http://127.0.0.1:5003?correo=" + correo)
+    await Axios.get("http://127.0.0.1:5003/api/v2/usuarios?correo=" + correo)
     .then ((res) => {
         setUsuario(res.data)
     })
 }
 
 const getValoraciones = async (correo, setValoraciones) => {
-    await Axios.get("http://127.0.0.1:5003/valoracion?correo=" + correo)
+    await Axios.get("http://127.0.0.1:5003/api/v2/usuarios/valoracion?correo=" + correo)
     .then ((res) => {
         setValoraciones(res.data)
     })
 }
 
 const getRating = async (correo, setRating) => {
-    await Axios.get("http://127.0.0.1:5003/valoracionMedia?correo=" + correo)
+    await Axios.get("http://127.0.0.1:5003/api/v2/usuarios/valoracionMedia?correo=" + correo)
     .then ((res) => {
         setRating(res.data)
     })
@@ -23,7 +23,7 @@ const getRating = async (correo, setRating) => {
 
 
 const getUsuario = async (token, setUsuario) => {
-    let result = await Axios.get("http://127.0.0.1:5003/checkOrCreate?token=" + token);
+    let result = await Axios.get("http://127.0.0.1:5003/api/v2/usuarios/checkOrCreate?token=" + token);
     if(result.status === 200){
         setUsuario(JSON.stringify(result.data));
     }
@@ -32,7 +32,7 @@ const getUsuario = async (token, setUsuario) => {
 
 const checkToken = async (token,logOutUser) => {
     try{
-        let result = await Axios.get("http://127.0.0.1:5003/checkToken?token=" + token)
+        let result = await Axios.get("http://127.0.0.1:5003/api/v2/usuarios/checkToken?token=" + token)
 
         //En caso de que el token no sea valido se cierra la sesion
         if(result.status !== 200){
@@ -49,7 +49,7 @@ const checkToken = async (token,logOutUser) => {
 
 const addValoracion = async(valoracionFormData) => {
     try{
-        const response = await Axios.put("http://127.0.0.1:5003/valoracion", valoracionFormData);
+        const response = await Axios.put("http://127.0.0.1:5003/api/v2/usuarios/valoracion", valoracionFormData);
     }catch(error){
         console.error('Error al enviar la valoracion:', error);
     }

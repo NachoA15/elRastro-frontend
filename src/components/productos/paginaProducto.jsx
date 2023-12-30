@@ -8,6 +8,7 @@ import GMap from '../maps/GoogleMap';
 import '../../assets/css/productPage.css'
 import routerService from '../../service/routerService';
 import ImageNotFound from '../../assets/images/imagenotfound.jpg'
+import Checkout from '../paypal/Checkout';
 
 export default function PaginaProducto() {
 
@@ -217,6 +218,26 @@ export default function PaginaProducto() {
                                                 </>
                                                 :
                                                 <>                                                
+                                                {usuario === producto.puja.usuario? (
+                                                <>
+                                                {!producto.pagado?(
+                                                    <>
+                                                    <div className="text-center my-4">
+                                                    <Checkout price={producto.puja.cantidad}/>
+                                                    </div> 
+                                                    </>
+                                                ):
+                                                (
+                                                    <>
+                                                    </>
+                                                )
+                                                
+                                                }
+                                                
+                                                </>
+                                                ) : 
+                                                (
+                                                <>
                                                 <div className="text-center my-4"> 
                                                     <a href="#" className="btn btn-secondary" style={{cursor: "default"}}
                                                     onClick={() => {
@@ -226,7 +247,10 @@ export default function PaginaProducto() {
                                                             text: 'No puedes pujar por la subasta porque ya ha terminado.'
                                                         })
                                                     }}><b>Pujar</b></a> 
-                                                </div> 
+                                                </div>
+                                                </>
+                                                )
+                                                }
                                                 </>
                                             }
                                         </div> 
