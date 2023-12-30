@@ -11,112 +11,93 @@ import { useParams } from 'react-router-dom';
 
 export default function upload_product() {
   const correo = localStorage.getItem("email") || "";
+  const params = useParams();
+  const idProducto = params.idProducto;
 
-  let params = useParams();
-  let idProducto = params.idProducto;
-
-
-  const [producto, setProducto] = useState([]);
+  const [producto, setProducto] = useState('');
+  const [nombreProducto, setNombreProducto] = useState('');
+  const [precioProducto, setPrecioProducto] = useState('');
+  const [codigoPostalProducto, setCodigoPostalProducto] = useState('');
+  const [descripcionProducto, setDescripcionProducto] = useState('');
   const [selectedDate, setSelectedDate] = useState('');
   const [imageURL, setImageURL] = useState('');
 
   useEffect(() => {
-    // Si existe un producto y tiene una fecha, actualiza el estado con la fecha del producto
-    if (idProducto && producto.fechaCierre) {
-      // La fecha del producto debe estar en un formato reconocible por el campo type="date"
-      const fechaProductoFormateada = new Date(producto.fechaCierre).toISOString().split('T')[0];
-      setSelectedDate(fechaProductoFormateada);
-    } else {
-      // Si no existe un producto o no tiene fecha, deja la fecha vacía
-      setSelectedDate('');
+    if (idProducto) {
+      productoService.getProductoById(setProducto, idProducto);
     }
-  }, [idProducto, producto]);
+  }, [idProducto]);
+
+  useEffect(() => {
+    if (producto) {
+      setNombreProducto(producto.nombre || '');
+      setPrecioProducto(producto.precioInicial || '');
+      setCodigoPostalProducto(producto.direccion || '');
+      setDescripcionProducto(producto.descripcion || '');
+
+      if (producto.fechaCierre) {
+        const fechaProductoFormateada = new Date(producto.fechaCierre).toISOString().split('T')[0];
+        setSelectedDate(fechaProductoFormateada);
+      } else {
+        setSelectedDate('');
+      }
+
+      setImageURL(producto.imagen || '');
+    }
+  }, [producto]);
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
 
-  const handleImageChange = (event) => {
-    const file = event.target.files[0];
-
-    if (file) {
-      const reader = new FileReader();
-
-      reader.onloadend = () => {
-        const imagePath = reader.result;
-        setImageURL(imagePath);
-      };
-
-      reader.readAsDataURL(file);
-    }
+  const handleImageUpload = (imageUrl) => {
+    setImageURL(imageUrl);
   };
 
-  useEffect(() => {
-    // Si existe un producto y tiene una imagen, actualiza el estado con la imagen del producto
-    if (idProducto && producto.imagen) {
-      setImageURL(producto.imagen);
-    } else {
-      // Si no existe un producto o no tiene imagen, deja la imagen como null
-      setImageURL(null);
-    }
-  }, [idProducto, producto]);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  if(idProducto){
-    useEffect(() => {
-    productoService.getProductoById (setProducto, idProducto);
-   
-    }, []); 
-  }
+    const nombre = document.getElementById('nombre').value;
+    let precio = document.getElementById('precio').value;
+    const descripcion = document.getElementById('descripcion').value;
+    const codPostal = document.getElementById('codPostal').value;
 
-  const [nombreProducto, setNombreProducto] = useState('');
+    console.log("HOLA")
 
-  useEffect(() => {
-    // Si hay un producto existente, actualiza el estado con el nombre del producto
-    if (idProducto && producto.nombre) {
-      setNombreProducto(producto.nombre);
-    } else {
-      // Si no hay un producto existente, deja el nombre vacío
-      setNombreProducto('');
-    }
-  }, [idProducto, producto]);
+    if (nombre !== '' && precio !== '') {
+      const anuncio = {
+        id: idProducto,
+        nombre: nombre,
+        precioInicial: precio,
+        descripcion: descripcion,
+        direccion: codPostal,
+        usuario: correo,
+        imagen: imageURL,
+        fechaCierre: selectedDate
+      };
 
-  const [precioProducto, setPrecioProducto] = useState('');
+      const resultado = idProducto
+        ? await productoService.updateProduct(anuncio)
+        : await productoService.addProduct(anuncio);
 
-  useEffect(() => {
-    // Si hay un producto existente, actualiza el estado con el nombre del producto
-    if (idProducto && producto.precioInicial) {
-      setPrecioProducto(producto.precioInicial);
-    } else {
-      // Si no hay un producto existente, deja el nombre vacío
-      setPrecioProducto('');
-    }
-  }, [idProducto, producto]);
-
-
-  const [codigoPostalProducto, setCodigoPostalProducto] = useState('');
-
-  useEffect(() => {
-    // Si hay un producto existente, actualiza el estado con el nombre del producto
-    if (idProducto && producto.direccion) {
-      setCodigoPostalProducto(producto.direccion);
-    } else {
-      // Si no hay un producto existente, deja el nombre vacío
-      setCodigoPostalProducto('');
-    }
-  }, [idProducto, producto]);
-
-  const [descripcionProducto, setDescripcionProducto] = useState('');
-
-  useEffect(() => {
-    // Si hay un producto existente, actualiza el estado con el nombre del producto
-    if (idProducto && producto.descripcion) {
-      setDescripcionProducto(producto.descripcion);
-    } else {
-      // Si no hay un producto existente, deja el nombre vacío
-      setDescripcionProducto('');
-    }
-  }, [idProducto, producto]);
-
+      if (resultado.status === 409) {
+        Swal.fire({
+          icon: 'error',
+          title: idProducto ? 'No se puede actualizar el producto' : 'No se puede publicar el producto',
+          text: resultado.mensaje
+        });
+      } else {
+        Swal.fire({
+          icon: 'success',
+          title: idProducto ? 'Producto actualizado con éxito' : 'Producto publicado con éxito'
+        }).then((result) => {
+          if (result.isConfirmed) {
+            routerService.moveToProductos();
+          }
+        });
+      }
+    } 
+  };
 
 
   return (
@@ -127,80 +108,7 @@ export default function upload_product() {
       <div className="container">
         <section className="panel panel-default">
           <div id="addProductForm">
-            <form
-              onSubmit={async (e) => {
-                const nombre = document.getElementById('nombre').value;
-                let precio = document.getElementById('precio').value;
-                const descripcion = document.getElementById('descripcion').value;
-                const codPostal = document.getElementById('codPostal').value;
-
-                if (nombre !== '' && precio !== '') {
-                  e.preventDefault();
-
-                  if(idProducto && producto){
-                    const anuncio = {
-                      id: idProducto,
-                      nombre: nombre,
-                      precioInicial: precio,
-                      descripcion: descripcion,
-                      direccion: codPostal,
-                      usuario: correo,
-                      imagen: imageURL,
-                      fechaCierre: selectedDate
-                    };
-
-                    const resultado = await productoService.updateProduct(anuncio);
-
-                    if (resultado.status === 409) {
-                      Swal.fire({
-                        icon: 'error',
-                        title: 'No se puede actualizar el producto',
-                        text: resultado.mensaje
-                      })
-                    } else {
-                      Swal.fire({
-                        icon: 'success',
-                        title: 'Producto actualizado con éxito'
-                      }).then((result) => {
-                        if (result.isConfirmed) {
-                          routerService.moveToProductos();
-                        }
-                      })
-                    }  
-                    
-                  }else{
-                    const anuncio = {
-                      nombre: nombre,
-                      precioInicial: precio,
-                      descripcion: descripcion,
-                      direccion: codPostal,
-                      usuario: correo,
-                      imagen: imageURL,
-                      fechaCierre: selectedDate
-                    };
-
-                    const resultado = await productoService.addProduct(anuncio);
-
-                    if (resultado.status === 409) {
-                      Swal.fire({
-                        icon: 'error',
-                        title: 'No se puede publicar el producto',
-                        text: resultado.mensaje
-                      })
-                    } else {
-                      Swal.fire({
-                        icon: 'success',
-                        title: 'Producto publicado con éxito'
-                      }).then((result) => {
-                        if (result.isConfirmed) {
-                          routerService.moveToProductos();
-                        }
-                      })
-                    }  
-                  }     
-                }
-              }}
-            >
+            <form onSubmit={handleSubmit}>
               <br />
               <div className="container center" style={{ maxWidth: 450 }}>
                 <div className="card bg-light">
@@ -223,14 +131,13 @@ export default function upload_product() {
                             variant="standard"
                             size="small"
                             value={nombreProducto}
-                            onChange={(e) => {setNombreProducto(e.target.value)}}
+                            onChange={(e) => setNombreProducto(e.target.value)}
                           />
                         </div>
                       </div>
                       <div className="col-md-2"></div>
                     </div>
-
-                    <br />
+                    <br/>
 
                     <div className="row text-left">
                       <div className="col-md-2"></div>
@@ -277,9 +184,8 @@ export default function upload_product() {
                     <div className="row text-left">
                       <div className="col-md-2"></div>
                       <div className="col-md-8">
-                      
                         <div>
-                          <UploadWidget setImageUrl={setImageURL}/>
+                          <UploadWidget setImageUrl={handleImageUpload} />
                         </div>
                         {imageURL && (
                           <div>
@@ -290,6 +196,7 @@ export default function upload_product() {
                       <div className="col-md-2"></div>
                     </div>
 
+                    
                     <br />
 
                     <div className="row text-left">
@@ -299,7 +206,6 @@ export default function upload_product() {
                           <TextField
                             required
                             id="fechaCierre"
-                            //label="Fecha de Cierre"
                             type="date"
                             value={selectedDate}
                             onChange={(e) => handleDateChange(e.target.value)}
@@ -331,6 +237,7 @@ export default function upload_product() {
                       <div className="col-md-2"></div>
                     </div>
 
+
                     <br />
 
                     <div className='container' style={{ maxWidth: 150 }}>
@@ -347,5 +254,5 @@ export default function upload_product() {
         </section>
       </div>
     </>
-  )
+  );
 }
