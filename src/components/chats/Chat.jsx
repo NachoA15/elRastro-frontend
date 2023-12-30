@@ -96,9 +96,11 @@ export default function Chat() {
     <NavBar ubicacion={'Mis chats'}/>
 
     <div className="container-fluid chat-div d-flex flex-column vh-100">
-      <br/>
-      <br/>
-      <br/>
+      <div className='row chat-row flex-grow-1'>
+        <div className="col-md-12 d-flex align-items-center">
+        <div id='chat' ref={chatboxEl} className="flex-grow-1 mb-4"/>
+        </div>
+      </div>
       <div className='row col-12'>
         <div className="col-md-6">
           <button
@@ -107,11 +109,6 @@ export default function Chat() {
               window.location.href = "/chats";
             }}
           >Volver</button>
-        </div>
-      </div>
-      <div className='row chat-row flex-grow-1' >
-        <div className="col-md-12 d-flex align-items-center">
-        <div id='chat' ref={chatboxEl} className="flex-grow-1 mb-4"/>
         </div>
       </div>
     </div>

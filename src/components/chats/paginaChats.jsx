@@ -50,22 +50,23 @@ const paginaChats = () => {
   return (
     <>
     <NavBar ubicacion={"Mis chats"}/>
-    <div className="container-fluid chats-div">
-      <div className="row" id="titulo">
-        <div className="col-md-12">
-          <h2 className='title'><b>Mis chats</b></h2>
-        </div>
-      </div>
-      <br/>
-        {chats.map((chat) => (
-          <div key={chat.id} className='col-md-4 mx-auto'>
-            <ClickableChat chat={chat} />
+    <header className="bg-dark py-5">
+      <div className="container px-4 px-lg-5 my-5">
+          <div className="text-center text-white">
+              <h1 className="display-4 fw-bolder">
+                  Mis chats
+              </h1>
+              <p className="lead fw-normal text-white-50 mb-0">
+                  
+              </p>
           </div>
-          ))}
-
-    </div>
-
-
+      </div>
+    </header>
+    {chats.map((chat) => (
+      <div key={chat.id} className='col-md-4 mx-auto'>
+        <ClickableChat chat={chat} />
+      </div>
+      ))}
     </>
   );
 };

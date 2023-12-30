@@ -45,8 +45,8 @@ export default function producto({producto}) {
 
     return (
         <>
-        <div class="col mb-5">
-            <div class="card h-100">
+        <div className="col mb-5">
+            <div className="card h-100">
                 {/*<!-- Fecha cierre subasta-->*/}
                 <div className={subastaCerrada?  'fecha-cierre cerrada shadow-sm' : (diffDays <= 10? 'fecha-cierre peligro shadow-sm' : 'fecha-cierre abierta shadow-sm')}>
                         Hasta {cierreSubasta.toString().substring(3,15)}
@@ -65,31 +65,31 @@ export default function producto({producto}) {
                     <>
                     </>
                 }
-                <img class="card-img-top" src={producto.imagen !== undefined && producto.imagen !== null? producto.imagen : ImageNotFound} alt="..." onClick={() => routerService.moveToProductPage(producto._id)}/>
+                <img className="card-img-top" src={producto.imagen !== undefined && producto.imagen !== null? producto.imagen : ImageNotFound} alt="..." onClick={() => routerService.moveToProductPage(producto._id)}/>
                 {/*<!-- Product details-->*/}
-                <div class="card-body p-4">
-                    <div class="text-center">
+                <div className="card-body p-4">
+                    <div className="text-center">
                         {/*<!-- Product name-->*/}
-                        <h5 class="fw-bolder">{producto.nombre}</h5>
+                        <h5 className="fw-bolder">{producto.nombre}</h5>
                         {/*<!-- Product reviews-->*/}
-                        <div class="d-flex justify-content-center small text-warning mb-2">
-                            <div class="bi-star-fill"></div>
-                            <div class="bi-star-fill"></div>
-                            <div class="bi-star-fill"></div>
-                            <div class="bi-star-fill"></div>
-                            <div class="bi-star-fill"></div>
+                        <div className="d-flex justify-content-center small text-warning mb-2">
+                            <div className="bi-star-fill"></div>
+                            <div className="bi-star-fill"></div>
+                            <div className="bi-star-fill"></div>
+                            <div className="bi-star-fill"></div>
+                            <div className="bi-star-fill"></div>
                         </div>
                         {/*<!-- Product price-->*/}
                         <b>{producto.puja !== undefined && producto.puja != {}? producto.puja.cantidad : producto.precioInicial} &euro;</b>
                     </div>
                 </div>
                 {/*<!-- Product actions-->*/}
-                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                    <div class="text-center"><a class="btn btn-outline-dark mt-auto" href="#" onClick={() => routerService.moveToProductPage(producto._id)}>Detalles</a></div>
+                <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                    <div className="text-center"><a className="btn btn-outline-dark mt-auto" href="#" onClick={() => routerService.moveToProductPage(producto._id)}>Detalles</a></div>
                     <br></br>
                     { producto.usuario === user && subastaCerrada && producto.puja &&(
                         <button type="button" 
-                            class="btn btn-outline-dark mt-auto"
+                            className="btn btn-outline-dark mt-auto"
                             onClick={() => {routerService.moveToValorarPage(producto._id, producto.usuario, producto.puja.usuario)}}
                             disabled={valorado !== undefined } 
                             

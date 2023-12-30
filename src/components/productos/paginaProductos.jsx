@@ -29,10 +29,10 @@ export default function paginaProductos({ misProductos }) {
     return(
         <>
         <NavBar ubicacion={misProductos? 'Mis Productos' : "Productos"}/>
-        <header class="bg-dark py-5">
-            <div class="container px-4 px-lg-5 my-5">
-                <div class="text-center text-white">
-                    <h1 class="display-4 fw-bolder">
+        <header className="bg-dark py-5">
+            <div className="container px-4 px-lg-5 my-5">
+                <div className="text-center text-white">
+                    <h1 className="display-4 fw-bolder">
                         {
                             misProductos? (
                                 'Mis productos'
@@ -42,7 +42,7 @@ export default function paginaProductos({ misProductos }) {
                             )
                         }
                     </h1>
-                    <p class="lead fw-normal text-white-50 mb-0">
+                    <p className="lead fw-normal text-white-50 mb-0">
                         {
                             misProductos? (
                                 productos.length === 0? (
@@ -74,12 +74,12 @@ export default function paginaProductos({ misProductos }) {
             </div>
         </header>
         {/*<!-- Section-->*/}
-        <section class="py-5">
+        <section className="py-5">
             <Filter setProductos={setProductos} setFiltrando={setFiltrando} usuario={usuario} misProductos={misProductos}></Filter>
         </section>
-        <section class="py-5">
-            <div class="container px-4 px-lg-5 mt-5">
-                <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+        <section className="py-5">
+            <div className="container px-4 px-lg-5 mt-5">
+                <div className="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                     {
                         productos.map((producto, key) => {
                             return <Producto producto={producto}/>
@@ -88,9 +88,21 @@ export default function paginaProductos({ misProductos }) {
                 </div>
             </div>
         </section>
+        <section className="py-5 bg-light">
+            <section className='map-section'>
+            {coordenadas.length !== 0?
+                <>
+                <GMap locations={[coordenadas]}/>
+                </>
+            :
+                <></>
+            }
+            </section>
+            
+        </section>
         {/*<!-- Footer-->*/}
-        <footer class="py-5 bg-dark">
-            <div class="container"><p class="m-0 text-center text-white">Copyright &copy; elRastro</p></div>
+        <footer className="py-5 bg-dark">
+            <div className="container"><p className="m-0 text-center text-white">Copyright &copy; elRastro</p></div>
         </footer>
         </>
     )

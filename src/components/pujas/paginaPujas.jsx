@@ -16,10 +16,7 @@ export default function paginaPujas() {
 
     return(
         <>
-         <div className='container-fluid'>
-            <NavBar ubicacion={"Mis Pujas"}/>
-            {pujas && <Pujas pujas={pujas} usuario={usuario}/>}
-        </div>
+        {pujas && <Pujas pujas={pujas} usuario={usuario}/>}
         </>
         
     )

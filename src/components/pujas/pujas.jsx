@@ -41,14 +41,12 @@ const Puja = ({ index, puja, usuario}) => {
 
    return (
     <>
-
-        
         <tr key={index} style={{borderBottom: '1px solid #ddd'}}>
-            <td style={{padding: '0px 10px', textAlign: 'left',}}> 
+            <td style={{padding: '0px 10px', textAlign: 'center'}}> 
             
                 <div style={{ position: 'relative', display: 'inline-block', marginTop: '30px'}}>
                 
-                    <img id="img-producto" className="d-flex g-width-50 g-height-50 rounded-circle g-mt-3 g-mr-7" src={producto.imagen === undefined ? Foto : producto.imagen} alt={producto.descripcion} style={{ zIndex: 0, marginLeft: '10px'}} />
+                    <img id="img-producto" className="d-flex g-width-50 g-height-50 rounded-circle g-mt-3 g-mr-7" onClick={() => routerService.moveToProductPage(producto._id)} src={producto.imagen === undefined ? Foto : producto.imagen} alt={producto.descripcion} style={{ zIndex: 0, marginLeft: '10px'}} />
                     {
                         subastaCerrada?
                         <>
@@ -86,9 +84,6 @@ const Puja = ({ index, puja, usuario}) => {
             </td>
         
         </tr>
-
-    
-    
     </>
    )
 }
@@ -101,27 +96,28 @@ export default function Pujas({ pujas, usuario }) {
     return (
         <>
         <NavBar ubicacion={"Mis Pujas"}/>
-
-        <div className="row" id="titulo-pujas">
-            <div className="col-md-12">
-                
-                <h2 className="product-page-title title">
-                <b>Mis pujas</b>
-                </h2>
-
-                
+        <header class="bg-dark py-5">
+            <div class="container px-4 px-lg-5 my-5">
+                <div class="text-center text-white">
+                    <h1 class="display-4 fw-bolder">
+                        Mis pujas
+                    </h1>
+                    <p class="lead fw-normal text-white-50 mb-0">
+                        Aquellos productos por los que has pujado
+                    </p>
                 </div>
             </div>
-                <table style={{ width: '100%', maxWidth: '800px', borderBottom: '1px solid #ddd' }}>
+        </header>
+                <table style={{ width: '100%', borderBottom: '1px solid #ddd' }}>
                 {Array.isArray(arrayDePujas) && arrayDePujas.length > 0 ? (
-                    <thead>
+                    <thead style={{backgroundColor: 'lightgray'}}>
                     <tr>
                         <th style={{ padding: '0px 200px', textAlign: 'center' }}>Producto</th>
                         
                         <th style={{ padding: '0px 80px', textAlign: 'center' }}>Mi Cantidad Pujada</th>
                         
                         <th style={{ padding: '0px 40px', textAlign: 'center'}}>Cantidad Máxima Pujada</th>
-                        
+                        <th></th>
                     </tr>
                     </thead>
                 ) : ( <thead></thead>)}
@@ -139,11 +135,7 @@ export default function Pujas({ pujas, usuario }) {
                     </tr>
                     )}
                 </tbody>
-                </table>
-            
-            
-        
-          
+                </table>        
         </>
     );
   }

@@ -17,6 +17,8 @@ div.chat-div {
     border: 2px solid black;
     border-radius: 5px;
     cursor: pointer;
+    position: absolute;
+    top: 100px;
   }
   
 .btn-chat:hover {
