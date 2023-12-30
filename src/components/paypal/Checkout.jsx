@@ -5,7 +5,7 @@ import routerService from "../../service/routerService";
 
 import productoService from "../../service/productoService";
 
-export default function Checkout({price, producto}) {
+export default function Checkout({usuario, producto}) {
     const options = { 
         "client-id": "AZte9y79PwgBayOc9EegAbG0E_fCwok3erAYKlaMGynqXlUaOo_gbHLvhPH7SceELnW1bUK6Lv6G8RhI",
         "disable-funding": "sofort,card",
@@ -17,7 +17,7 @@ export default function Checkout({price, producto}) {
             purchase_units: [
                 {
                     amount: {
-                        value: price,
+                        value: producto.puja.cantidad,
                     },
                 },
             ],
@@ -29,7 +29,8 @@ export default function Checkout({price, producto}) {
             const name = details.payer.name.given_name;
             alert(`Transaction completed by ${name}`);
             producto.pagado = true;
-            productoService.updateProducto(producto)
+            producto.id = producto._id
+            productoService.updateProduct(producto)
             routerService.moveToValorarPage(producto._id, usuario, producto.usuario);
         });
     }

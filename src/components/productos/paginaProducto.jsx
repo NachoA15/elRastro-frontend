@@ -218,12 +218,12 @@ export default function PaginaProducto() {
                                                 </>
                                                 :
                                                 <>                                                
-                                                {usuario === producto.puja.usuario? (
+                                                {producto.puja && usuario === producto.puja.usuario? (
                                                 <>
                                                 {!producto.pagado?(
                                                     <>
                                                     <div className="text-center my-4">
-                                                    <Checkout price={producto.puja.cantidad}/>
+                                                    <Checkout usuario={usuario} producto={producto}/>
                                                     </div> 
                                                     </>
                                                 ):
