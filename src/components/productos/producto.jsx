@@ -1,10 +1,9 @@
 import routerService from '../../service/routerService'
 import ImageNotFound from '../../assets/images/imagenotfound.jpg'
-import chatService from '../../service/chatService'
 import usuarioService from '../../service/usuarioService';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import productoService from '../../service/productoService';
+
 
 export default function producto({producto}) {
 
@@ -99,9 +98,7 @@ export default function producto({producto}) {
                         </button>
                     )}
 
-                    {producto.usuario !== user && <button class="btn btn-outline-dark mt-auto" onClick={() => {
-                        chatService.openChat(producto._id +"_" + producto.usuario + "_" + user)}}>Contacta</button>
-                    }
+                    
                 </div>
             </div>
         </div>

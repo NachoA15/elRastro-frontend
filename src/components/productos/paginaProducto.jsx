@@ -9,6 +9,7 @@ import '../../assets/css/productPage.css'
 import routerService from '../../service/routerService';
 import ImageNotFound from '../../assets/images/imagenotfound.jpg'
 import Checkout from '../paypal/Checkout';
+import chatService from '../../service/chatService'
 
 export default function PaginaProducto() {
 
@@ -284,12 +285,29 @@ export default function PaginaProducto() {
                                         })
                                     }}
                                 ><b>Eliminar</b></a> 
+
                                 <a className='btn btn-warning'
                                     onClick={() => {
                                         routerService.moveToUpdateProductPage(producto._id)
                                     }}
                                 ><b>Modificar</b></a> 
+
                                 
+                                
+                            </div>
+                            </>
+                            :
+                            <>
+                            </>
+                        }
+
+                        {producto.usuario !== usuario && !subastaCerrada?
+                            <>
+                            <div className="text-center my-4"> 
+                                <a className='btn btn-primary'
+                                    onClick={() => {
+                                    chatService.openChat(producto._id +"_" + producto.usuario + "_" + usuario)}}
+                                >Contacta</a>
                             </div>
                             </>
                             :
