@@ -262,9 +262,10 @@ export default function PaginaProducto() {
                                 ><b>Eliminar</b></a> 
                                 <a className='btn btn-warning'
                                     onClick={() => {
-                                        
+                                        routerService.moveToUpdateProductPage(producto._id)
                                     }}
                                 ><b>Modificar</b></a> 
+                                
                             </div>
                             </>
                             :

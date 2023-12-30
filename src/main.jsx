@@ -59,6 +59,10 @@ const router = createBrowserRouter([
   {
     path: '/misPujas',
     element: <Pujas/>
+  },
+  {
+    path: '/updateProducto/:idProducto',
+    element: <UploadProduct/>
   }
 ])
 

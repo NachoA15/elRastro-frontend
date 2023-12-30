@@ -7,15 +7,117 @@ import productoService from '../../service/productoService';
 import UploadWidget from '../cloudinary/uploadWidget';
 import Swal from 'sweetalert2'
 import routerService from '../../service/routerService';
+import { useParams } from 'react-router-dom';
 
 export default function upload_product() {
   const correo = localStorage.getItem("email") || "";
+
+  let params = useParams();
+  let idProducto = params.idProducto;
+
+
+  const [producto, setProducto] = useState([]);
   const [selectedDate, setSelectedDate] = useState('');
   const [imageURL, setImageURL] = useState('');
+
+  useEffect(() => {
+    // Si existe un producto y tiene una fecha, actualiza el estado con la fecha del producto
+    if (idProducto && producto.fechaCierre) {
+      // La fecha del producto debe estar en un formato reconocible por el campo type="date"
+      const fechaProductoFormateada = new Date(producto.fechaCierre).toISOString().split('T')[0];
+      setSelectedDate(fechaProductoFormateada);
+    } else {
+      // Si no existe un producto o no tiene fecha, deja la fecha vacía
+      setSelectedDate('');
+    }
+  }, [idProducto, producto]);
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
+
+  const handleImageChange = (event) => {
+    const file = event.target.files[0];
+
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        const imagePath = reader.result;
+        setImageURL(imagePath);
+      };
+
+      reader.readAsDataURL(file);
+    }
+  };
+
+  useEffect(() => {
+    // Si existe un producto y tiene una imagen, actualiza el estado con la imagen del producto
+    if (idProducto && producto.imagen) {
+      setImageURL(producto.imagen);
+    } else {
+      // Si no existe un producto o no tiene imagen, deja la imagen como null
+      setImageURL(null);
+    }
+  }, [idProducto, producto]);
+
+  if(idProducto){
+    useEffect(() => {
+    productoService.getProductoById (setProducto, idProducto);
+   
+    }, []); 
+  }
+
+  const [nombreProducto, setNombreProducto] = useState('');
+
+  useEffect(() => {
+    // Si hay un producto existente, actualiza el estado con el nombre del producto
+    if (idProducto && producto.nombre) {
+      setNombreProducto(producto.nombre);
+    } else {
+      // Si no hay un producto existente, deja el nombre vacío
+      setNombreProducto('');
+    }
+  }, [idProducto, producto]);
+
+  const [precioProducto, setPrecioProducto] = useState('');
+
+  useEffect(() => {
+    // Si hay un producto existente, actualiza el estado con el nombre del producto
+    if (idProducto && producto.precioInicial) {
+      setPrecioProducto(producto.precioInicial);
+    } else {
+      // Si no hay un producto existente, deja el nombre vacío
+      setPrecioProducto('');
+    }
+  }, [idProducto, producto]);
+
+
+  const [codigoPostalProducto, setCodigoPostalProducto] = useState('');
+
+  useEffect(() => {
+    // Si hay un producto existente, actualiza el estado con el nombre del producto
+    if (idProducto && producto.direccion) {
+      setCodigoPostalProducto(producto.direccion);
+    } else {
+      // Si no hay un producto existente, deja el nombre vacío
+      setCodigoPostalProducto('');
+    }
+  }, [idProducto, producto]);
+
+  const [descripcionProducto, setDescripcionProducto] = useState('');
+
+  useEffect(() => {
+    // Si hay un producto existente, actualiza el estado con el nombre del producto
+    if (idProducto && producto.descripcion) {
+      setDescripcionProducto(producto.descripcion);
+    } else {
+      // Si no hay un producto existente, deja el nombre vacío
+      setDescripcionProducto('');
+    }
+  }, [idProducto, producto]);
+
+
 
   return (
     <>
@@ -35,34 +137,67 @@ export default function upload_product() {
                 if (nombre !== '' && precio !== '') {
                   e.preventDefault();
 
-                  const anuncio = {
-                    nombre: nombre,
-                    precioInicial: precio,
-                    descripcion: descripcion,
-                    direccion: codPostal,
-                    usuario: correo,
-                    imagen: imageURL,
-                    fechaCierre: selectedDate
-                  };
+                  if(idProducto && producto){
+                    const anuncio = {
+                      id: idProducto,
+                      nombre: nombre,
+                      precioInicial: precio,
+                      descripcion: descripcion,
+                      direccion: codPostal,
+                      usuario: correo,
+                      imagen: imageURL,
+                      fechaCierre: selectedDate
+                    };
 
-                  const resultado = await productoService.addProduct(anuncio);
-                  
-                  if (resultado.status === 409) {
-                    Swal.fire({
-                      icon: 'error',
-                      title: 'No se puede publicar el producto',
-                      text: resultado.mensaje
-                    })
-                  } else {
-                    Swal.fire({
-                      icon: 'success',
-                      title: 'Producto publicado con éxito'
-                    }).then((result) => {
-                      if (result.isConfirmed) {
-                        routerService.moveToProductos();
-                      }
-                    })
-                  }           
+                    const resultado = await productoService.updateProduct(anuncio);
+
+                    if (resultado.status === 409) {
+                      Swal.fire({
+                        icon: 'error',
+                        title: 'No se puede actualizar el producto',
+                        text: resultado.mensaje
+                      })
+                    } else {
+                      Swal.fire({
+                        icon: 'success',
+                        title: 'Producto actualizado con éxito'
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                          routerService.moveToProductos();
+                        }
+                      })
+                    }  
+                    
+                  }else{
+                    const anuncio = {
+                      nombre: nombre,
+                      precioInicial: precio,
+                      descripcion: descripcion,
+                      direccion: codPostal,
+                      usuario: correo,
+                      imagen: imageURL,
+                      fechaCierre: selectedDate
+                    };
+
+                    const resultado = await productoService.addProduct(anuncio);
+
+                    if (resultado.status === 409) {
+                      Swal.fire({
+                        icon: 'error',
+                        title: 'No se puede publicar el producto',
+                        text: resultado.mensaje
+                      })
+                    } else {
+                      Swal.fire({
+                        icon: 'success',
+                        title: 'Producto publicado con éxito'
+                      }).then((result) => {
+                        if (result.isConfirmed) {
+                          routerService.moveToProductos();
+                        }
+                      })
+                    }  
+                  }     
                 }
               }}
             >
@@ -87,6 +222,8 @@ export default function upload_product() {
                             label="Nombre del producto"
                             variant="standard"
                             size="small"
+                            value={nombreProducto}
+                            onChange={(e) => {setNombreProducto(e.target.value)}}
                           />
                         </div>
                       </div>
@@ -106,6 +243,8 @@ export default function upload_product() {
                             variant="standard"
                             size="small"
                             inputProps={{ inputMode: 'numeric', pattern: '[0-9,.]*' }}
+                            value={precioProducto}
+                            onChange={(e) => {setPrecioProducto(e.target.value)}}
                           />
                         </div>
                       </div>
@@ -125,6 +264,8 @@ export default function upload_product() {
                             variant="standard"
                             size="small"
                             inputProps={{ inputMode: 'numeric', pattern: '[0-9,.]*' }}
+                            value={codigoPostalProducto}
+                            onChange={(e) => {setCodigoPostalProducto(e.target.value)}}
                           />
                         </div>
                       </div>
@@ -136,9 +277,15 @@ export default function upload_product() {
                     <div className="row text-left">
                       <div className="col-md-2"></div>
                       <div className="col-md-8">
+                      
                         <div>
                           <UploadWidget setImageUrl={setImageURL}/>
                         </div>
+                        {imageURL && (
+                          <div>
+                            <img src={imageURL} alt="Producto" style={{ maxWidth: '100%', marginTop: '10px' }} />
+                          </div>
+                        )}
                       </div>
                       <div className="col-md-2"></div>
                     </div>
@@ -176,6 +323,8 @@ export default function upload_product() {
                             size="small"
                             multiline
                             rows={5}
+                            value={descripcionProducto}
+                            onChange={(e) => {setDescripcionProducto(e.target.value)}}
                           />
                         </div>
                       </div>
