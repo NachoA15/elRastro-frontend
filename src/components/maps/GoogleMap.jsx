@@ -4,7 +4,7 @@ import { useMemo } from "react";
 import '../../assets/css/map.css'
 
 export default function GMap({ locations }) {
-    const { isLoaded } = useLoadScript({ googleMapsApiKey: 'AIzaSyCOT8uVlUdJC-W_c4JyNLObQNVycB2E5nY' })
+    const { isLoaded } = useLoadScript({ googleMapsApiKey: `${import.meta.env.VITE_GOOGLE_MAPS_API_KEY}` })
     if (!isLoaded) return <div>Loading...</div>
     return (
       <>

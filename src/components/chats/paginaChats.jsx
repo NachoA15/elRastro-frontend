@@ -18,17 +18,18 @@ const paginaChats = () => {
   useEffect(() => {
     const initializeTalkJS = async () => {
       try {
+        console.log(`${import.meta.env.VITE_CHAT_REACT_APP_ID}`)
         await Talk.ready;
         const talkSession = new Talk.Session({
-          appId: process.env.REACT_APP_ID,
+          appId: `${import.meta.env.VITE_CHAT_REACT_APP_ID}`,
           me: new Talk.User({
             id: usuario,
             name: usuario,
           }),
         });
-        const appId = process.env.REACT_APP_ID;
+        const appId = `${import.meta.env.VITE_CHAT_REACT_APP_ID}`
         const userId = usuario;
-        const apiKey = process.env.REACT_APP_APIKEY;
+        const apiKey = `${import.meta.env.VITE_CHAT_REACT_APP_APIKEY}`;
         const res = await fetch(
           `https://api.talkjs.com/v1/${appId}/users/${userId}/conversations`,
           {

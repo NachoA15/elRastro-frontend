@@ -4,7 +4,7 @@ import {googleLogout} from "@react-oauth/google";
 import routerService from "./routerService.js";
 
 const getUsuarioByCorreo = async (correo, setUsuario) => {
-    await Axios.get("http://127.0.0.1:5003/api/v2/usuarios?correo=" + correo,
+    await Axios.get("https://el-rastro-a7-backend.vercel.app/api/v2/usuarios?correo=" + correo,
         {
             headers: {
                 'Authorization': localStorage.getItem('token')
@@ -19,7 +19,7 @@ const getUsuarioByCorreo = async (correo, setUsuario) => {
 }
 
 const getValoraciones = async (correo, setValoraciones) => {
-    await Axios.get("http://127.0.0.1:5003/api/v2/usuarios/valoracion?correo=" + correo,
+    await Axios.get("https://el-rastro-a7-backend.vercel.app/api/v2/usuarios/valoracion?correo=" + correo,
         {
             headers: {
                 'Authorization': localStorage.getItem('token')
@@ -35,7 +35,7 @@ const getValoraciones = async (correo, setValoraciones) => {
 }
 
 const getRating = async (correo, setRating) => {
-    await Axios.get("http://127.0.0.1:5003/api/v2/usuarios/valoracionMedia?correo=" + correo,
+    await Axios.get("https://el-rastro-a7-backend.vercel.app/api/v2/usuarios/valoracionMedia?correo=" + correo,
         {
             headers: {
                 'Authorization': localStorage.getItem('token')
@@ -52,7 +52,7 @@ const getRating = async (correo, setRating) => {
 
 const logOut = async (badToken) => {
     console.log("LogOut");
-    Axios.post("http://127.0.0.1:5003/api/v2/usuarios/logOut", {},
+    Axios.post("https://el-rastro-a7-backend.vercel.app/api/v2/usuarios/logOut", {},
         {
             headers: {
                 'Authorization': localStorage.getItem('token')
@@ -70,7 +70,7 @@ const logOut = async (badToken) => {
 
 const addValoracion = async (valoracionFormData) => {
     try {
-        const response = await Axios.put("http://127.0.0.1:5003/api/v2/usuarios/valoracion", valoracionFormData,
+        const response = await Axios.put("https://el-rastro-a7-backend.vercel.app/api/v2/usuarios/valoracion", valoracionFormData,
             {
                 headers: {
                     'Authorization': localStorage.getItem('token')

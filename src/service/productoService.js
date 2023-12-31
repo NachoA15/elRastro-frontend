@@ -1,9 +1,10 @@
 import Axios from 'axios';
 
 import usuarioService from "./usuarioService.js";
+import Swal from 'sweetalert2';
 
 const getProductos = async (setProductos) => {
-    await Axios.get("http://127.0.0.1:5001/api/v2/productos", {
+    await Axios.get("https://el-rastro-a7-backend.vercel.app/api/v2/productos", {
         headers: {
             "Authorization": localStorage.getItem("token")
         }
@@ -17,7 +18,7 @@ const getProductos = async (setProductos) => {
 }
 
 const filtrarProductos = async (setProductos, usuario, texto, orden) => {
-    let res = await Axios.post("http://127.0.0.1:5001/api/v2/productos/filter", {
+    let res = await Axios.post("https://el-rastro-a7-backend.vercel.app/api/v2/productos/filter", {
         usuario: usuario,
         texto: texto,
         orden: orden
@@ -36,7 +37,7 @@ const filtrarProductos = async (setProductos, usuario, texto, orden) => {
 }
 
 const getProductoById = async (setProducto, idProducto) => {
-    await Axios.get("http://127.0.0.1:5001/api/v2/productos/" + idProducto,
+    await Axios.get("https://el-rastro-a7-backend.vercel.app/api/v2/productos/" + idProducto,
         {
             headers: {
                 "Authorization": localStorage.getItem("token")
@@ -52,7 +53,7 @@ const getProductoById = async (setProducto, idProducto) => {
 }
 
 const getProductosByUsuario = async (setProductos, usuario) => {
-    await Axios.get("http://127.0.0.1:5001/api/v2/productos?usuario=" + usuario,
+    await Axios.get("https://el-rastro-a7-backend.vercel.app/api/v2/productos?usuario=" + usuario,
         {
             headers: {
                 "Authorization": localStorage.getItem("token")
@@ -70,12 +71,17 @@ const getProductosByUsuario = async (setProductos, usuario) => {
 
 const addProduct = async (productoFormData) => {
     try {
-        const response = await Axios.post("http://127.0.0.1:5001/api/v2/productos/", productoFormData,
+        const response = await Axios.post("https://el-rastro-a7-backend.vercel.app/api/v2/productos/", productoFormData,
             {
                 headers: {
                     "Authorization": localStorage.getItem("token")
                 }
             }).catch((error) => {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'No se puede subir el producto',
+                    text: `${error.response.data.message}`
+                })
             if (error.response.status === 401) {
                 usuarioService.logOut(true)
             }
@@ -88,7 +94,7 @@ const addProduct = async (productoFormData) => {
 
 const updateProduct = async (productoFormaData) => {
     try {
-        const response = await Axios.put("http://127.0.0.1:5001/api/v2/productos/", productoFormaData,
+        const response = await Axios.put("https://el-rastro-a7-backend.vercel.app/api/v2/productos/", productoFormaData,
             {
                 headers: {
                     "Authorization": localStorage.getItem("token")
@@ -107,7 +113,7 @@ const updateProduct = async (productoFormaData) => {
 
 const deleteProduct = async (producto, user) => {
     try {
-        const response = await Axios.delete('http://127.0.0.1:5001/api/v2/productos/' + producto,
+        const response = await Axios.delete('https://el-rastro-a7-backend.vercel.app/api/v2/productos/' + producto,
             {
                 headers: {
                     "Authorization": localStorage.getItem("token")
@@ -171,7 +177,7 @@ const deleteProduct = async (producto, user) => {
 const getCoordenadasByCodPostal = async (producto, setCoordenadas) => {
     try {
         if (producto.direccion && producto.direccion !== 29080) {
-            await Axios.get('http://127.0.0.1:5004/api/v2/carbono/coord?codPostal=' + producto.direccion,
+            await Axios.get('https://el-rastro-a7-backend.vercel.app/api/v2/carbono/coord?codPostal=' + producto.direccion,
                 {
                     headers: {
                         "Authorization": localStorage.getItem("token")
@@ -192,7 +198,7 @@ const getCoordenadasByCodPostal = async (producto, setCoordenadas) => {
 
 const pujar = async (usuario, cantidad, producto) => {
     try {
-        await Axios.post('http://127.0.0.1:5002/api/v2/pujas/', {
+        await Axios.post('https://el-rastro-a7-backend.vercel.app/api/v2/pujas/', {
                 usuario: usuario,
                 cantidad: cantidad,
                 producto: producto
@@ -219,7 +225,7 @@ const getCoordenadasListByCodPostal = async (productos, setCoordenadas) => {
 
         for (const producto of productos) {
             if (producto.direccion && producto.direccion !== 29080) {
-                const response = await Axios.get('http://127.0.0.1:5004/api/v2/carbono/coord?codPostal=' + producto.direccion, {
+                const response = await Axios.get('https://el-rastro-a7-backend.vercel.app/api/v2/carbono/coord?codPostal=' + producto.direccion, {
                     headers: {
                         "Authorization": localStorage.getItem("token")
                     }
@@ -241,7 +247,7 @@ const getCoordenadasListByCodPostal = async (productos, setCoordenadas) => {
 
 const calcularHuellaCarbono = async (coordenadasUsuario, codPostalProducto, setCarbono) => {
     try {
-        await Axios.get('http://127.0.0.1:5004/api/v2/carbono/huella?userLat=' + coordenadasUsuario.latitude + '&userLong='
+        await Axios.get('https://el-rastro-a7-backend.vercel.app/api/v2/carbono/huella?userLat=' + coordenadasUsuario.latitude + '&userLong='
             + coordenadasUsuario.longitude + '&codPostalProducto=' + codPostalProducto, {
             headers: {
                 "Authorization": localStorage.getItem("token")
