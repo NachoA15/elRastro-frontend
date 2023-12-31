@@ -1,5 +1,6 @@
 @import url(https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css);
-h2 {
+
+h2.product-page-title {
 	color: #000;
 	font-size: 26px;
 	font-weight: 300;
@@ -9,20 +10,25 @@ h2 {
 	margin: 30px 0 60px;
 }
 
+.map-section {
+	margin: 0 auto; /* Centra horizontalmente */
+    width: 80%; /* Ancho inicial */
+}
+
 div.main-div {
 	padding: 0%;
 	position: absolute;
 	left: 0%;
 	top: 0%;
-	height: 100%;
+	height: fit-content;
 	background-color: rgb(227, 227, 227);
 }
-
+/*
 div#titulo {
 	position: relative;
 	top: 60px;
 }
-
+*/
 h2::after {
 	content: "";
 	width: 250px;
@@ -30,10 +36,13 @@ h2::after {
 	margin: 0 auto;
 	height: 4px;
 	border-radius: 1px;
-	background: #00afe9;
 	left: 0;
 	right: 0;
 	bottom: -20px;
+}
+
+h2.title::after {
+	background: #00afe9;
 }
 
 div.placement-anuncios {
@@ -67,7 +76,7 @@ div.anuncio-info {
 	display: inline-block;
 	width: 100%;
 	padding-top: 10px;
-	padding-left: 30px;
+	padding-left: 10px;
 }
 
 div.placement-imagen {
@@ -104,6 +113,14 @@ p.nombre-anuncio {
 	font-size: 21px;
 	margin-bottom: 1px;
 	float: left;
+}
+
+p.size-large {
+	font-size: 21px;
+}
+
+p.size-small {
+	font-size: 17px;
 }
 
 p.precio-anuncio {
@@ -156,11 +173,41 @@ button.contacta {
 	float: left;
 }
 
+button.valora{
+	float: left;
+}
+
+button.valora:disabled {
+	border: 2px solid #ffffff;
+	background-color: #ccc;
+  	cursor: not-allowed;
+	color: white;
+}
+
+button.eliminar {
+	float: left;
+	background-color: rgb(229, 44, 44);
+	color: white;
+	border: 2px solid #ffffff;
+}
+
 button.info {
 	float: right;
 }
 
-button.elimina:hover{
+button.modificar {
+	float: centre;
+	background-color: rgb(253, 182, 76);
+	color: white;
+	border: 2px solid #ffffff;
+}
+
+button.modificar:hover{
+	background-color: rgb(240, 199, 137);
+	color: black;
+}
+
+button.eliminar:hover{
 	background-color: rgb(255, 101, 101);
 	color: black;
 }
@@ -171,6 +218,47 @@ span.favorito {
 
 span.favorito:hover {
 	cursor: pointer;
+}
+
+div.fecha-cierre {
+    color: #fff;
+	width: fit-content;
+    padding: 5px 10px 5px 10px;
+    font-size: 10px;
+    font-weight: 600;
+    border-radius: 3px;
+    text-transform: uppercase;
+}
+
+div.cerrada {
+	background-color: rgb(109, 109, 109);
+}
+
+div.abierta {
+	background-color: rgb(0, 170, 250);
+}
+
+div.peligro {
+	background-color: #ff0000;
+}
+
+div.finalizada-aviso-imagen {
+	position: absolute;
+    background-color: #e33030;
+    color: #fff;
+    top: 30%;
+	left: 15%;
+	width: 70%;
+    transform: rotate(-20deg);
+    padding: 5px 10px 5px 10px;
+    font-size: 15px;
+    font-weight: 600;
+    border-radius: 3px;
+    text-transform: uppercase
+}
+
+span.bg-precio {
+	background-color: #00afe9;
 }
 
 .fav-icon {

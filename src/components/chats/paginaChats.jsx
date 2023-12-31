@@ -1,26 +1,35 @@
 import React, { useEffect, useState } from 'react';
+import {useParams} from 'react-router-dom';
 import Talk from 'talkjs';
-import Chat from './Chat';
+import chatService from '../../service/chatService';
+import NavBar from '../NavBar';
+import '../../assets/css/chatsPage.css'
 
-const App = () => {
+const paginaChats = () => {
 
   const [chats, setChats] = useState([]);
+
+  const usuario = localStorage.getItem("email");
+
+  if(usuario === ""){
+    window.location.href = "/"
+  }
 
   useEffect(() => {
     const initializeTalkJS = async () => {
       try {
+        console.log(`${import.meta.env.VITE_CHAT_REACT_APP_ID}`)
         await Talk.ready;
         const talkSession = new Talk.Session({
-          appId: 'tvYAZZjb',
+          appId: `${import.meta.env.VITE_CHAT_REACT_APP_ID}`,
           me: new Talk.User({
-            id: '2',
-            name: 'Nombre del Usuario',
-            email: 'correo@usuario.com',
+            id: usuario,
+            name: usuario,
           }),
         });
-        const appId = 'tvYAZZjb';
-        const userId = '2';
-        const apiKey = 'sk_test_1afi8LJyR7BPrOXlMp3VgK4aSniBaf9d';
+        const appId = `${import.meta.env.VITE_CHAT_REACT_APP_ID}`
+        const userId = usuario;
+        const apiKey = `${import.meta.env.VITE_CHAT_REACT_APP_APIKEY}`;
         const res = await fetch(
           `https://api.talkjs.com/v1/${appId}/users/${userId}/conversations`,
           {
@@ -32,7 +41,6 @@ const App = () => {
         const json = await res.json();
         const conversations = json.data;
         setChats(conversations);
-        console.log(conversations[0].custom)
       } catch (error){
         console.error('Error initializing TalkJS: ', error);
       }
@@ -40,32 +48,43 @@ const App = () => {
     initializeTalkJS();
   }, []);
 
-  const handleChatClick = (chatId) => {
-    // Lógica para manejar el clic en un chat
-    console.log(`Chat clicado: ${chatId}`);
-  };
-
-
   return (
-    <div>
-      <h2>Mis chats</h2>
-      {chats.map((chat) => (
-        <ClickableChat
-          key={chat.id}
-          chat={chat}
-          onClick={() => handleChatClick(chat.id)}
-        />
+    <>
+    <NavBar ubicacion={"Mis chats"}/>
+    <header className="bg-dark py-5">
+      <div className="container px-4 px-lg-5 my-5">
+          <div className="text-center text-white">
+              <h1 className="display-4 fw-bolder">
+                  Mis chats
+              </h1>
+              <p className="lead fw-normal text-white-50 mb-0">
+                  
+              </p>
+          </div>
+      </div>
+    </header>
+    {chats.map((chat) => (
+      <div key={chat.id} className='col-md-4 mx-auto'>
+        <ClickableChat chat={chat} />
+      </div>
       ))}
-    </div>
+    </>
   );
 };
 
-const ClickableChat = ({ chat, onClick }) => {
+const ClickableChat = ({ chat }) => {
+  const handleChatClick = () => {
+    chatService.openChat(chat.id);
+  };
   return (
-    <div onClick={onClick} style={{ cursor: 'pointer', padding: '10px', borderBottom: '1px solid #ccc' }}>
-      <h6>{chat.subject}</h6>
+    <>
+    <div className='chat' onClick={handleChatClick}>
+      <img className='img-chat' src={chat.photoUrl} alt=''/>
+      <h6 className='subject-chat'>{chat.subject}</h6>
     </div>
+    </>
+
   );
 };
 
-export default App;
+export default paginaChats;
