@@ -10,7 +10,9 @@ const getProductos = async (setProductos) => {
     }).then((res) => {
         setProductos(res.data.productos)
     }).catch((error) => {
-        usuarioService.logOut(true)
+        if (error.response.status === 401) {
+            usuarioService.logOut(true)
+        }
     });
 }
 
@@ -26,7 +28,9 @@ const filtrarProductos = async (setProductos, usuario, texto, orden) => {
     }).then((res) => {
         setProductos(res.data.productos)
     }).catch((error) => {
-        usuarioService.logOut(true)
+        if (error.response.status === 401) {
+            usuarioService.logOut(true)
+        }
     });
 
 }
@@ -41,7 +45,9 @@ const getProductoById = async (setProducto, idProducto) => {
         .then((res) => {
             setProducto(res.data.producto)
         }).catch((error) => {
-            usuarioService.logOut(true)
+            if (error.response.status === 401) {
+                usuarioService.logOut(true)
+            }
         })
 }
 
@@ -55,7 +61,9 @@ const getProductosByUsuario = async (setProductos, usuario) => {
         .then((res) => {
             setProductos(res.data.productos)
         }).catch((error) => {
-            usuarioService.logOut(true)
+            if (error.response.status === 401) {
+                usuarioService.logOut(true)
+            }
         })
 }
 
@@ -68,7 +76,9 @@ const addProduct = async (productoFormData) => {
                     "Authorization": localStorage.getItem("token")
                 }
             }).catch((error) => {
-            usuarioService.logOut(true)
+            if (error.response.status === 401) {
+                usuarioService.logOut(true)
+            }
         });
         return {status: response.data.status};
     } catch (error) {
@@ -84,7 +94,9 @@ const updateProduct = async (productoFormaData) => {
                     "Authorization": localStorage.getItem("token")
                 }
             }).catch((error) => {
-            usuarioService.logOut(true)
+            if (error.response.status === 401) {
+                usuarioService.logOut(true)
+            }
         });
         return {status: response.data.status};
     } catch (error) {
@@ -101,7 +113,9 @@ const deleteProduct = async (producto, user) => {
                     "Authorization": localStorage.getItem("token")
                 }
             }).catch((error) => {
-            usuarioService.logOut(true)
+            if (error.response.status === 401) {
+                usuarioService.logOut(true)
+            }
         });
         const appId = process.env.REACT_APP_ID;
         const apiKey = process.env.REACT_APP_APIKEY;
@@ -166,7 +180,9 @@ const getCoordenadasByCodPostal = async (producto, setCoordenadas) => {
                 res.data.title = producto.nombre
                 setCoordenadas(res.data)
             }).catch((error) => {
-                usuarioService.logOut(true)
+                if (error.response.status === 401) {
+                    usuarioService.logOut(true)
+                }
             });
         }
     } catch (error) {
@@ -188,7 +204,9 @@ const pujar = async (usuario, cantidad, producto) => {
             }).then((res) => {
             return {status: res.status, mensaje: res.data.mensaje}
         }).catch((error) => {
-            usuarioService.logOut(true)
+            if (error.response.status === 401) {
+                usuarioService.logOut(true)
+            }
         });
     } catch (error) {
         return {status: error.response.status, mensaje: error.response.data}
@@ -206,7 +224,9 @@ const getCoordenadasListByCodPostal = async (productos, setCoordenadas) => {
                         "Authorization": localStorage.getItem("token")
                     }
                 }).catch((error) => {
-                    usuarioService.logOut(true)
+                    if (error.response.status === 401) {
+                        usuarioService.logOut(true)
+                    }
                 });
                 response.data.title = producto.nombre
                 coordenadas.push(response.data);
@@ -229,7 +249,9 @@ const calcularHuellaCarbono = async (coordenadasUsuario, codPostalProducto, setC
         }).then((res) => {
             setCarbono(res.data.carbonEquivalent)
         }).catch((error) => {
-            usuarioService.logOut(true)
+            if (error.response.status === 401) {
+                usuarioService.logOut(true)
+            }
         });
     } catch (error) {
         console.error(error);

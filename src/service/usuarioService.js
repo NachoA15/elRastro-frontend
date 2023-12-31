@@ -1,6 +1,6 @@
 import Axios from 'axios';
 
-import { googleLogout } from "@react-oauth/google";
+import {googleLogout} from "@react-oauth/google";
 import routerService from "./routerService.js";
 
 const getUsuarioByCorreo = async (correo, setUsuario) => {
@@ -9,9 +9,13 @@ const getUsuarioByCorreo = async (correo, setUsuario) => {
             headers: {
                 'Authorization': localStorage.getItem('token')
             }
-        }).then ((res) => {
+        }).then((res) => {
         setUsuario(res.data)
-    }).catch((error) => {logOut(true)});
+    }).catch((error) => {
+        if (error.response.status === 401) {
+            usuarioService.logOut(true)
+        }
+    });
 }
 
 const getValoraciones = async (correo, setValoraciones) => {
@@ -21,9 +25,13 @@ const getValoraciones = async (correo, setValoraciones) => {
                 'Authorization': localStorage.getItem('token')
             }
         })
-    .then ((res) => {
-        setValoraciones(res.data)
-    }).catch((error) => {logOut(true)});
+        .then((res) => {
+            setValoraciones(res.data)
+        }).catch((error) => {
+            if (error.response.status === 401) {
+                usuarioService.logOut(true)
+            }
+        });
 }
 
 const getRating = async (correo, setRating) => {
@@ -33,9 +41,13 @@ const getRating = async (correo, setRating) => {
                 'Authorization': localStorage.getItem('token')
             }
         })
-    .then ((res) => {
-        setRating(res.data)
-    }).catch((error) => {logOut(true)});
+        .then((res) => {
+            setRating(res.data)
+        }).catch((error) => {
+            if (error.response.status === 401) {
+                usuarioService.logOut(true)
+            }
+        });
 }
 
 const logOut = async (badToken) => {
@@ -45,24 +57,30 @@ const logOut = async (badToken) => {
             headers: {
                 'Authorization': localStorage.getItem('token')
             }
-        }).catch(error => {console.log(error.data)});
+        }).catch(error => {
+        console.log(error.data)
+    });
     googleLogout();
     localStorage.clear();
-    if(badToken){
+    if (badToken) {
         window.alert("Token de sesion no valido, se ha cerrado la sesion")
     }
     routerService.moveToMainPage();
 }
 
-const addValoracion = async(valoracionFormData) => {
-    try{
+const addValoracion = async (valoracionFormData) => {
+    try {
         const response = await Axios.put("http://127.0.0.1:5003/api/v2/usuarios/valoracion", valoracionFormData,
             {
                 headers: {
                     'Authorization': localStorage.getItem('token')
                 }
-            }).catch(error => {logOut(true)});
-    }catch(error){
+            }).catch(error => {
+            if (error.response.status === 401) {
+                usuarioService.logOut(true)
+            }
+        });
+    } catch (error) {
         console.error('Error al enviar la valoracion:', error);
     }
 };

@@ -8,7 +8,10 @@ const getPujasByUser = async (correo, setPujas) => {
         }
     }).then ((res) => {
         setPujas(res.data)
-    }).catch((error) => {usuarioService.logOut(true)});
+    }).catch((error) => {
+        if(error.response.status === 401){
+            usuarioService.logOut(true)
+        }});
 }
 
 const pujasService = {getPujasByUser}
