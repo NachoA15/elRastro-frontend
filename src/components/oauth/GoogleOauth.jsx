@@ -22,7 +22,7 @@ export default function GoogleOAuth() {
 
     useEffect(() => {
         if (user.length !== 0) {
-            Axios.post('http://localhost:5003/api/v2/usuarios/checkToken',
+            Axios.post('https://el-rastro-a7-frontend.vercel.app/api/v2/usuarios/checkToken',
                 {},
                 {
                     headers: {
