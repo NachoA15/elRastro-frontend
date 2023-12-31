@@ -126,7 +126,7 @@ export default function PaginaProducto() {
                                     subastaCerrada?
                                     <p style={{float: 'left'}}>Esta subasta <b>ya está cerrada.</b></p>
                                     :
-                                    <p style={{float: 'left'}}>Esta subasta termina el {cierreSubasta.toString().substring(7, 10)} {cierreSubasta.toString().substring(4,7)} {cierreSubasta.toString().substring(11,15)} (Quedan {diffDays} días). </p>
+                                    <p style={{float: 'left'}}>Esta subasta termina el {cierreSubasta.toString().substring(7, 10)} {cierreSubasta.toString().substring(4,7)} {cierreSubasta.toString().substring(11,15)} (Quedan {diffDays} {diffDays > 1? 'días' : 'día'}). </p>
                                 }
                             </div>
                         </div>
@@ -230,6 +230,7 @@ export default function PaginaProducto() {
                                                 ):
                                                 (
                                                     <>
+                                                    <h3>Este producto ya está pagado.</h3>
                                                     </>
                                                 )
                                                 

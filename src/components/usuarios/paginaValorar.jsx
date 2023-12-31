@@ -8,6 +8,7 @@ import { useParams } from 'react-router-dom';
 import Rating from 'react-rating-stars-component';
 import React, { useEffect, useState } from 'react';
 import routerService from "../../service/routerService";
+import Swal from "sweetalert2";
 
 
 
@@ -86,12 +87,9 @@ export default function PaginaValorar() {
                                 <div className="col-md-1"></div>
                                 <div className="col-md-10">
                                     <div>
-                                    <div className="d-flex flex-row align-items-center">
-                                        
-                                        
+                                    <div className="d-flex flex-row align-items-center">             
                                             <>
                                             Calidad del producto:  
-                                            
                                             <Rating
                                                 required
                                                 id="calidad"
@@ -167,8 +165,21 @@ export default function PaginaValorar() {
 
                                 <br />
 
-                                <div className='container' style={{ maxWidth: 150 }}>
+                                <div className='container' style={{ maxWidth: 200 }}>
                                     <button type="submit" className="btn btn-outline-primary">Confirmar</button>
+                                    <br/>
+                                    <br/>
+                                    <button onClick={() => {
+                                        Swal.fire({
+                                            icon: 'info',
+                                            title: 'Vas a salir de la valoración',
+                                            text: 'No te preocupes, podrás hacerla más tarde desde la página de "Mis Pujas".'
+                                        }).then((result) => {
+                                            if (result.isConfirmed) {
+                                                routerService.moveToMisPujas();
+                                            }
+                                        })
+                                    }} className="btn btn-outline-secondary">Volver a 'Mis pujas'</button>
                                 </div>
 
                             </div>

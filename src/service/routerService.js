@@ -18,7 +18,11 @@ const moveToUpdateProductPage = (idProducto) => {
     window.location.href = '/updateProducto/' + idProducto;
 }
 
+const moveToMisPujas = () => {
+    window.location.href = '/misPujas';
+}
 
-const routerService = {moveToProductos, moveToProductPage, moveToValorarPage, moveToMainPage, moveToUpdateProductPage}
+
+const routerService = {moveToProductos, moveToProductPage, moveToValorarPage, moveToMainPage, moveToUpdateProductPage, moveToMisPujas}
 
 export default routerService;
