@@ -18,7 +18,6 @@ const paginaChats = () => {
   useEffect(() => {
     const initializeTalkJS = async () => {
       try {
-        console.log(`${import.meta.env.VITE_CHAT_REACT_APP_ID}`)
         await Talk.ready;
         const talkSession = new Talk.Session({
           appId: `${import.meta.env.VITE_CHAT_REACT_APP_ID}`,
