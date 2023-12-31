@@ -1,62 +1,65 @@
 import Axios from 'axios';
 
+import { googleLogout } from "@react-oauth/google";
+import routerService from "./routerService.js";
+
 const getUsuarioByCorreo = async (correo, setUsuario) => {
-    await Axios.get("http://127.0.0.1:5003/api/v2/usuarios?correo=" + correo)
-    .then ((res) => {
+    await Axios.get("http://127.0.0.1:5003/api/v2/usuarios?correo=" + correo,
+        {
+            headers: {
+                'Authorization': localStorage.getItem('token')
+            }
+        }).then ((res) => {
         setUsuario(res.data)
-    })
+    }).catch((error) => {logOut()});
 }
 
 const getValoraciones = async (correo, setValoraciones) => {
-    await Axios.get("http://127.0.0.1:5003/api/v2/usuarios/valoracion?correo=" + correo)
+    await Axios.get("http://127.0.0.1:5003/api/v2/usuarios/valoracion?correo=" + correo,
+        {
+            headers: {
+                'Authorization': localStorage.getItem('token')
+            }
+        })
     .then ((res) => {
         setValoraciones(res.data)
-    })
+    }).catch((error) => {logOut()});
 }
 
 const getRating = async (correo, setRating) => {
-    await Axios.get("http://127.0.0.1:5003/api/v2/usuarios/valoracionMedia?correo=" + correo)
+    await Axios.get("http://127.0.0.1:5003/api/v2/usuarios/valoracionMedia?correo=" + correo,
+        {
+            headers: {
+                'Authorization': localStorage.getItem('token')
+            }
+        })
     .then ((res) => {
         setRating(res.data)
-    })
+    }).catch((error) => {logOut()});
 }
 
-
-const getUsuario = async (token, setUsuario) => {
-    let result = await Axios.get("http://127.0.0.1:5003/api/v2/usuarios/checkOrCreate?token=" + token);
-    if(result.status === 200){
-        setUsuario(JSON.stringify(result.data));
-    }
-
-}
-
-const checkToken = async (token,logOutUser) => {
-    try{
-        let result = await Axios.get("http://127.0.0.1:5003/api/v2/usuarios/checkToken?token=" + token)
-
-        //En caso de que el token no sea valido se cierra la sesion
-        if(result.status !== 200){
-            logOutUser();
-        }
-    }catch (error) {
-        logOutUser();
-        console.error('Error al verificar el token de Google:', error);
-    }
-
+const logOut = async () => {
+    googleLogout();
+    localStorage.clear();
+    window.alert("Token de sesion no valido, se ha cerrado la sesion")
+    routerService.moveToMainPage();
 
 }
-
 
 const addValoracion = async(valoracionFormData) => {
     try{
-        const response = await Axios.put("http://127.0.0.1:5003/api/v2/usuarios/valoracion", valoracionFormData);
-        console.log(response)
+        const response = await Axios.put("http://127.0.0.1:5003/api/v2/usuarios/valoracion", valoracionFormData,
+            {
+                headers: {
+                    'Authorization': localStorage.getItem('token')
+                }
+            }).catch(error => {logOut()});
     }catch(error){
         console.error('Error al enviar la valoracion:', error);
     }
 };
 
 
-const usuarioService = {getUsuario, checkToken, getValoraciones, getRating, getUsuarioByCorreo, addValoracion}
+const usuarioService = {getValoraciones, getRating, getUsuarioByCorreo, addValoracion, logOut}
 
 export default usuarioService;
