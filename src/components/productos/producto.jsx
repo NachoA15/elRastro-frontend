@@ -87,85 +87,9 @@ export default function producto({producto}) {
                 <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
                     <div className="text-center"><a className="btn btn-outline-dark mt-auto" href="#" onClick={() => routerService.moveToProductPage(producto._id)}>Detalles</a></div>
                     <br></br>
-                    { subastaCerrada && producto.puja && producto.puja.usuario === user && (
-                        <button type="button" 
-                            className="btn btn-outline-dark mt-auto"
-                            onClick={() => {routerService.moveToValorarPage(producto._id, producto.usuario, producto.puja.usuario)}}
-                            disabled={valorado !== undefined } 
-                            
-                            >
-                            Valorar
-                        </button>
-                    )}
-
-                    
                 </div>
             </div>
         </div>
         </>
     )
-
-
-    /*
-  return(
-    <>
-    <div className='card anuncio' tabIndex="0" aria-label={producto.nombre} style={{boxShadow: "2px 2px 5px"}}>
-        <div className='card-header anuncio-header' tabIndex="0">
-            <span style={{float: "left"}}>Subido por <a href={'/usuario/' + producto.usuario}>{producto.usuario}</a></span>
-        </div>
-        <div className='card-body anuncio-thumbnail' style={{width: '100%'}}>
-            <div className='placement-imagen'>
-                    <div className={subastaCerrada?  'fecha-cierre cerrada shadow-sm' : (diffDays <= 10? 'fecha-cierre peligro shadow-sm' : 'fecha-cierre abierta shadow-sm')}>
-                        Hasta {cierreSubasta.toString().substring(3,15)}
-                    </div>
-                    {
-                        subastaCerrada?
-                        <>
-                        <div className='finalizada-aviso-imagen shadow-sm'>
-                            SUBASTA FINALIZADA
-                        </div>
-                        </>
-                        :
-                        <>
-                        </>
-                    }
-                <img src={producto.imagen !== undefined && producto.imagen !== null? producto.imagen : ImageNotFound} alt={producto.descripcion === null? producto.nombre + '. Este anuncio no tiene descripción.' : producto.nombre + '. Descripción: ' + producto.descripcion} 
-                tabIndex="0" onClick={() => routerService.moveToProductPage(producto._id)}/>
-            </div>
-            <div className='anuncio-info'>
-                <p className={producto.nombre.length >= 20? 'nombre-anuncio size-small' : 'nombre-anuncio size-large'} tabIndex="0"><b>{producto.nombre.length > 20? producto.nombre.toString().substring(0,22) + '...' : producto.nombre}</b></p><br/>
-                <p className='precio-anuncio' tabIndex="0"><span>Precio actual: &nbsp; <span className="badge rounded-pill bg-precio" style={{fontSize: "20px"}}>{producto.puja !== undefined && producto.puja != {}? producto.puja.cantidad : producto.precioInicial} &euro;</span></span></p>
-                <p className='precio-anuncio' tabIndex="0">Precio inicial: &nbsp; {producto.precioInicial} €</p> 
-            </div>
-        </div>
-        <div className='card-body' style={{width: '100%', marginTop: "20px", marginBottom: "0px"}}>
-            <br/>
-            {producto.usuario !== user && <button className='button-anuncio contacta' onClick={() => {
-                chatService.openChat(producto._id +"_" + producto.usuario + "_" + user)}}>Contacta</button>
-            }
-            { producto.usuario === user && subastaCerrada && producto.puja &&(
-                    <button type="button" 
-                    className='button-anuncio valora'
-                    onClick={() => {routerService.moveToValorarPage(producto._id, producto.usuario, producto.puja.usuario)}}
-                    disabled={valorado !== undefined } 
-                    
-                    >
-                    Valorar
-                    </button>
-            )}
-
-            { producto.usuario === user && producto.puja === undefined && <button className='button-anuncio eliminar' 
-                onClick={() => handleEliminarProducto(producto._id, user)} style={{width: '33%'}}>Eliminar</button>
-            }
-
-            
-            <button className='button-anuncio info' onClick={() => routerService.moveToProductPage(producto._id)} style={{width: '33%'}}>+ Info</button>
-            
-            { producto.usuario === user && producto.puja === undefined && <button className='button-anuncio modificar' 
-                onClick={() => routerService.moveToUpdateProductPage(producto._id)} style={{width: '33%'}}>Modificar</button>
-            }
-        </div>
-    </div>
-    </>
-  )*/
 }

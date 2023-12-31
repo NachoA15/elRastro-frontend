@@ -4,6 +4,7 @@ import axios from 'axios'
 import {GoogleLogin, googleLogout, useGoogleLogin} from '@react-oauth/google'
 import routerService from "../../service/routerService";
 import Axios from "axios";
+import UsuarioService from "../../service/usuarioService.js";
 
 export default function GoogleOAuth() {
     const [user, setUser] = useState([]);
@@ -16,11 +17,7 @@ export default function GoogleOAuth() {
     };
 
     const logOut = () => {
-        googleLogout();
-        setProfile([]);
-        setUser([]);
-        localStorage.clear();
-        //appService.moveToMainPage();
+        UsuarioService.logOut(false);
     };
 
     useEffect(() => {

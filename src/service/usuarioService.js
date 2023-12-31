@@ -11,7 +11,7 @@ const getUsuarioByCorreo = async (correo, setUsuario) => {
             }
         }).then ((res) => {
         setUsuario(res.data)
-    }).catch((error) => {logOut()});
+    }).catch((error) => {logOut(true)});
 }
 
 const getValoraciones = async (correo, setValoraciones) => {
@@ -23,7 +23,7 @@ const getValoraciones = async (correo, setValoraciones) => {
         })
     .then ((res) => {
         setValoraciones(res.data)
-    }).catch((error) => {logOut()});
+    }).catch((error) => {logOut(true)});
 }
 
 const getRating = async (correo, setRating) => {
@@ -35,15 +35,23 @@ const getRating = async (correo, setRating) => {
         })
     .then ((res) => {
         setRating(res.data)
-    }).catch((error) => {logOut()});
+    }).catch((error) => {logOut(true)});
 }
 
-const logOut = async () => {
+const logOut = async (badToken) => {
+    console.log("LogOut");
+    Axios.post("http://127.0.0.1:5003/api/v2/usuarios/logOut", {},
+        {
+            headers: {
+                'Authorization': localStorage.getItem('token')
+            }
+        }).catch(error => {console.log(error.data)});
     googleLogout();
     localStorage.clear();
-    window.alert("Token de sesion no valido, se ha cerrado la sesion")
+    if(badToken){
+        window.alert("Token de sesion no valido, se ha cerrado la sesion")
+    }
     routerService.moveToMainPage();
-
 }
 
 const addValoracion = async(valoracionFormData) => {
@@ -53,7 +61,7 @@ const addValoracion = async(valoracionFormData) => {
                 headers: {
                     'Authorization': localStorage.getItem('token')
                 }
-            }).catch(error => {logOut()});
+            }).catch(error => {logOut(true)});
     }catch(error){
         console.error('Error al enviar la valoracion:', error);
     }
