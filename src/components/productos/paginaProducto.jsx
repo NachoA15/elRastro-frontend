@@ -284,16 +284,15 @@ export default function PaginaProducto() {
                                             }
                                         })
                                     }}
+                                    style={{marginRight: '15px'}}
                                 ><b>Eliminar</b></a> 
 
                                 <a className='btn btn-warning'
                                     onClick={() => {
                                         routerService.moveToUpdateProductPage(producto._id)
                                     }}
-                                ><b>Modificar</b></a> 
-
-                                
-                                
+                                    style={{marginLeft: '40px'}}
+                                ><b>Modificar</b></a>                            
                             </div>
                             </>
                             :

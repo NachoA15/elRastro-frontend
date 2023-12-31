@@ -50,6 +50,7 @@ const checkToken = async (token,logOutUser) => {
 const addValoracion = async(valoracionFormData) => {
     try{
         const response = await Axios.put("http://127.0.0.1:5003/api/v2/usuarios/valoracion", valoracionFormData);
+        console.log(response)
     }catch(error){
         console.error('Error al enviar la valoracion:', error);
     }

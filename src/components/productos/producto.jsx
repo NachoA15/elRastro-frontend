@@ -87,7 +87,7 @@ export default function producto({producto}) {
                 <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
                     <div className="text-center"><a className="btn btn-outline-dark mt-auto" href="#" onClick={() => routerService.moveToProductPage(producto._id)}>Detalles</a></div>
                     <br></br>
-                    { producto.usuario === user && subastaCerrada && producto.puja &&(
+                    { subastaCerrada && producto.puja && producto.puja.usuario === user && (
                         <button type="button" 
                             className="btn btn-outline-dark mt-auto"
                             onClick={() => {routerService.moveToValorarPage(producto._id, producto.usuario, producto.puja.usuario)}}

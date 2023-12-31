@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom';
 
 import Rating from 'react-rating-stars-component';
 import React, { useEffect, useState } from 'react';
+import routerService from "../../service/routerService";
 
 
 
@@ -65,7 +66,7 @@ export default function PaginaValorar() {
                                 
                                 usuarioService.addValoracion(valoration);
 
-                                window.location.href = '/productos';  
+                                routerService.moveToProductos();
                            }
 
                             

@@ -35,9 +35,8 @@ const Puja = ({ index, puja, usuario}) => {
         usuarioValoracion.valoracion &&
         Array.isArray(usuarioValoracion.valoracion) &&
         usuarioValoracion.valoracion.find(valoracion => 
-            
             valoracion.valorador === puja.usuario && valoracion.producto === producto._id
-    );
+        );
 
    return (
     <>
@@ -96,13 +95,13 @@ export default function Pujas({ pujas, usuario }) {
     return (
         <>
         <NavBar ubicacion={"Mis Pujas"}/>
-        <header class="bg-dark py-5">
-            <div class="container px-4 px-lg-5 my-5">
-                <div class="text-center text-white">
-                    <h1 class="display-4 fw-bolder">
+        <header className="bg-dark py-5">
+            <div className="container px-4 px-lg-5 my-5">
+                <div className="text-center text-white">
+                    <h1 className="display-4 fw-bolder">
                         Mis pujas
                     </h1>
-                    <p class="lead fw-normal text-white-50 mb-0">
+                    <p className="lead fw-normal text-white-50 mb-0">
                         Aquellos productos por los que has pujado
                     </p>
                 </div>

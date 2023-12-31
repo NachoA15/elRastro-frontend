@@ -62,8 +62,6 @@ export default function upload_product() {
     const descripcion = document.getElementById('descripcion').value;
     const codPostal = document.getElementById('codPostal').value;
 
-    console.log("HOLA")
-
     if (nombre !== '' && precio !== '') {
       const anuncio = {
         id: idProducto,
