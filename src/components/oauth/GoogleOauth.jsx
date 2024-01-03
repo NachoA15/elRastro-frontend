@@ -43,7 +43,7 @@ export default function GoogleOAuth() {
             }
         }).then((res) => {
             console.log(res)
-            console.log(res.data.token)
+            routerService.moveToProductos();
         })
         }
     }, [user]);
