@@ -11,6 +11,7 @@ const getProductos = async (setProductos) => {
     }).then((res) => {
         setProductos(res.data.productos)
     }).catch((error) => {
+        console.log(error)
         if (error.response.status === 401) {
             usuarioService.logOut(true)
         }
@@ -123,8 +124,8 @@ const deleteProduct = async (producto, user) => {
                 usuarioService.logOut(true)
             }
         });
-        const appId = process.env.REACT_APP_ID;
-        const apiKey = process.env.REACT_APP_APIKEY;
+        const appId = `${import.meta.env.VITE_CHAT_REACT_APP_ID}`;
+        const apiKey = `${import.meta.env.VITE_CHAT_REACT_APP_APIKEY}`;
 
         let config = {
             method: 'get',

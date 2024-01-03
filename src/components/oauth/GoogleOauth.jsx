@@ -1,61 +1,64 @@
 import React from "react";
-import {useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios'
-import {GoogleLogin, googleLogout, useGoogleLogin} from '@react-oauth/google'
+import { googleLogout, useGoogleLogin } from '@react-oauth/google'
 import routerService from "../../service/routerService";
-import Axios from "axios";
-import UsuarioService from "../../service/usuarioService.js";
 
 export default function GoogleOAuth() {
     const [user, setUser] = useState([]);
     const [profile, setProfile] = useState([]);
 
-    const perfil = localStorage.getItem('email');
+    let email = localStorage.getItem('email');
 
-    const login = (credential) => {
-        setUser(credential)
-    };
+    const login = useGoogleLogin({
+        onSuccess: (codeResponse) => setUser(codeResponse),
+        onError: (error) => console.log('Login failed: ', error)
+    });
 
     const logOut = () => {
-        UsuarioService.logOut(false);
+        googleLogout();
+        setProfile([]);
+        setUser([]);
+        localStorage.clear();
+        routerService.moveToMainPage();
     };
 
     useEffect(() => {
         if (user.length !== 0) {
-            Axios.post('https://el-rastro-a7-backend.vercel.app/api/v2/usuarios/checkToken',
-                {},
-                {
-                    headers: {
-                        Authorization: user,
-                        Accept: 'application/json'
-                    }
-                }
-            ).then((res) => {
-                setProfile(res.data);
-                localStorage.setItem('email', res.data.email)
-                localStorage.setItem('token', user)
-                routerService.moveToProductos();
-            }).catch((err) => console.log(err));
+        axios.get(`https://www.googleapis.com/oauth2/v1/userinfo?access_token=${user.access_token}`, {
+            headers: {
+            Authorization: `Bearer ${user.access_token}`,
+            Accept: 'application/json'
+            }
+        }).then((res) => {
+            setProfile(res.data);
+            localStorage.setItem('email', res.data.email)
+            localStorage.setItem('token', user.access_token)
+        }).catch((err) => console.log(err));
+
+        axios.post('https://el-rastro-a7-backend.vercel.app/api/v2/usuarios/checkToken', {}, {
+            headers: {
+                Authorization: `${user.access_token}`,
+                Accept: 'application/json'
+            }
+        }).then((res) => {
+            console.log(res)
+            console.log(res.data.token)
+        })
         }
     }, [user]);
 
-    return (
+    return(
         <>
-            {(profile !== undefined && profile.length !== 0) || (perfil !== null && perfil !== undefined && perfil.length !== 0) ? (
-                <div>
-                    <a className="btn btn-outline-light btn-lg px-4" href="/" onClick={logOut}>Log out</a>
-                </div>
-            ) : (
-                <GoogleLogin
-                    onSuccess={credentialResponse => {
-                        login(credentialResponse.credential);
-                    }}
-                    onError={() => {
-                        console.log('Login Failed');
-                    }}
-                    useOneTap
-                />
-            )}
+        {(profile !== undefined && profile.length !== 0) || (email !== null && email.length !== 0)? (
+          <div>
+              <button onClick={logOut}>Log out</button>
+          </div>
+        ) : (
+            <button onClick={() => {
+                login();
+            }}>Sign in with Google </button>
+        )}
         </>
     )
 }

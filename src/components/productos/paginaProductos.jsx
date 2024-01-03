@@ -13,7 +13,7 @@ export default function paginaProductos({ misProductos }) {
     const [productos, setProductos] = useState([]);
     const [filtrando, setFiltrando] = useState(false);
     const [coordenadas, setCoordenadas] = useState([]);
-
+    
     useEffect(() => {
         if (misProductos) {
             productoService.getProductosByUsuario(setProductos, usuario);
